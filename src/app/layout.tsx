@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { fontVariables } from '@/lib/fonts';
+import { Providers } from './providers';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -41,7 +42,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={fontVariables} suppressHydrationWarning>
-      <body className="min-h-dvh bg-void text-ink antialiased">{children}</body>
+      <body className="min-h-dvh bg-void text-ink antialiased">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

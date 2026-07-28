@@ -1,4 +1,4 @@
-import type { Brand, Category, ShippingOption, Testimonial } from '@/core/domain/entities';
+import type { Brand, Category, Testimonial } from '@/core/domain/entities';
 
 export const categories: Category[] = [
   { id: 'c1', slug: 'pokemon-tcg', name: 'Pokémon TCG', tagline: 'Singles, boosters e Elite Trainer Boxes', kind: 'tcg', accent: 48, glyph: 'zap' },
@@ -44,13 +44,6 @@ export const brands: Brand[] = [
   { id: 'b20', slug: 'elgato', name: 'Elgato', origin: 'Alemanha' },
   { id: 'b21', slug: 'gengar-games', name: 'Gengar Games', origin: 'Brasil' },
   { id: 'b22', slug: 'square-enix', name: 'Square Enix', origin: 'Japão' },
-];
-
-export const shippingOptions: ShippingOption[] = [
-  { id: 'sedex', name: 'SEDEX', carrier: 'Correios', price: 3490, etaDays: [2, 4] },
-  { id: 'pac', name: 'PAC', carrier: 'Correios', price: 1990, etaDays: [6, 11] },
-  { id: 'express', name: 'Gengar Express', carrier: 'Loggi', price: 4990, etaDays: [1, 2] },
-  { id: 'retirada', name: 'Retirar na loja', carrier: 'Gengar Games — Pinheiros', price: 0, etaDays: [0, 1] },
 ];
 
 export const testimonials: Testimonial[] = [

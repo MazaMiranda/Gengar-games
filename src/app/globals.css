@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
 
 /* ==========================================================================
    GENGAR GAMES — DESIGN SYSTEM
@@ -56,9 +57,9 @@
 
   --text-2xs: 0.6875rem;
   --text-2xs--line-height: 1rem;
-  --text-hero: clamp(2.75rem, 8vw, 7rem);
-  --text-hero--line-height: 0.92;
-  --text-hero--letter-spacing: -0.045em;
+  --text-hero: clamp(2.5rem, 5.2vw, 4.75rem);
+  --text-hero--line-height: 0.98;
+  --text-hero--letter-spacing: -0.04em;
   --text-display: clamp(2rem, 4.6vw, 3.75rem);
   --text-display--line-height: 1;
   --text-display--letter-spacing: -0.035em;
@@ -97,6 +98,8 @@
   --animate-scan: scan 5s linear infinite;
   --animate-drift: drift 22s ease-in-out infinite alternate;
   --animate-rise: rise 0.7s var(--ease-out-expo) both;
+  --animate-accordion-down: accordion-down 0.35s var(--ease-out-expo);
+  --animate-accordion-up: accordion-up 0.3s var(--ease-out-expo);
 
   /* ── Larguras de conteúdo ───────────────────────────────────────────── */
   --spacing-gutter: 1.25rem;
@@ -169,6 +172,28 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
   }
 }
 
