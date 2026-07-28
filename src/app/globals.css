@@ -1,0 +1,451 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   GENGAR GAMES — DESIGN SYSTEM
+   Camada de tokens. Nenhum valor cromático deve ser escrito à mão fora daqui.
+   ========================================================================== */
+
+@theme {
+  /* ── Cores: superfícies ─────────────────────────────────────────────── */
+  --color-void: #09090b;
+  --color-surface: #111114;
+  --color-elevated: #18181b;
+  --color-overlay: #202024;
+
+  /* ── Cores: marca ───────────────────────────────────────────────────── */
+  --color-brand-50: #f5f0ff;
+  --color-brand-100: #ede4ff;
+  --color-brand-200: #ddccff;
+  --color-brand-300: #c084fc;
+  --color-brand-400: #a855f7;
+  --color-brand-500: #9333ea;
+  --color-brand-600: #6d28d9;
+  --color-brand-700: #5b21b6;
+  --color-brand-800: #3f1178;
+  --color-brand-900: #240a44;
+  --color-brand-950: #14062a;
+
+  /* ── Cores: texto ───────────────────────────────────────────────────── */
+  --color-ink: #ffffff;
+  --color-ink-muted: #a1a1aa;
+  --color-ink-faint: #71717a;
+  --color-ink-ghost: #3f3f46;
+
+  /* ── Cores: traços ──────────────────────────────────────────────────── */
+  --color-line: rgba(255, 255, 255, 0.07);
+  --color-line-strong: rgba(255, 255, 255, 0.13);
+  --color-line-brand: rgba(168, 85, 247, 0.32);
+
+  /* ── Cores: semântica ───────────────────────────────────────────────── */
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-danger: #fb7185;
+  --color-info: #38bdf8;
+
+  /* ── Cores: raridades TCG ───────────────────────────────────────────── */
+  --color-rarity-common: #a1a1aa;
+  --color-rarity-uncommon: #34d399;
+  --color-rarity-rare: #38bdf8;
+  --color-rarity-ultra: #c084fc;
+  --color-rarity-secret: #fbbf24;
+
+  /* ── Tipografia ─────────────────────────────────────────────────────── */
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-tech: var(--font-chakra), ui-monospace, monospace;
+
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-hero: clamp(2.75rem, 8vw, 7rem);
+  --text-hero--line-height: 0.92;
+  --text-hero--letter-spacing: -0.045em;
+  --text-display: clamp(2rem, 4.6vw, 3.75rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.035em;
+  --text-title: clamp(1.5rem, 2.6vw, 2.25rem);
+  --text-title--line-height: 1.1;
+  --text-title--letter-spacing: -0.025em;
+
+  /* ── Raio ───────────────────────────────────────────────────────────── */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+  --radius-3xl: 2.25rem;
+
+  /* ── Sombra e glow ──────────────────────────────────────────────────── */
+  --shadow-plate: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 20px 50px -24px rgba(0, 0, 0, 0.9);
+  --shadow-lift: 0 32px 64px -32px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --shadow-glow-sm: 0 0 18px -4px rgba(147, 51, 234, 0.5);
+  --shadow-glow: 0 0 40px -8px rgba(147, 51, 234, 0.55);
+  --shadow-glow-lg: 0 0 80px -12px rgba(147, 51, 234, 0.6);
+  --shadow-inset-top: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+
+  /* ── Movimento ──────────────────────────────────────────────────────── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ── Animações ──────────────────────────────────────────────────────── */
+  --animate-shimmer: shimmer 2.4s ease-in-out infinite;
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 4s ease-in-out infinite;
+  --animate-scan: scan 5s linear infinite;
+  --animate-drift: drift 22s ease-in-out infinite alternate;
+  --animate-rise: rise 0.7s var(--ease-out-expo) both;
+
+  /* ── Larguras de conteúdo ───────────────────────────────────────────── */
+  --spacing-gutter: 1.25rem;
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateX(-30%);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(30%);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(1.2deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(400%);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6%, -4%, 0) scale(1.12);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(220%) skewX(-18deg);
+  }
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'ss01', 'cv01';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  ::selection {
+    background: var(--color-brand-500);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-400);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(147, 51, 234, 0.35) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(147, 51, 234, 0.55), rgba(109, 40, 217, 0.35));
+    border-radius: 99px;
+    border: 3px solid var(--color-void);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.85), rgba(147, 51, 234, 0.5));
+  }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   UTILITÁRIOS DE MARCA
+   ========================================================================== */
+
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  max-width: 88rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 1280px) {
+    padding-inline: 3rem;
+  }
+}
+
+/* Vidro — camada base de todos os painéis flutuantes */
+@utility glass {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.045) 0%,
+    rgba(255, 255, 255, 0.015) 100%
+  );
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--color-line);
+}
+
+@utility glass-solid {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012)),
+    rgba(9, 9, 11, 0.86);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid var(--color-line);
+}
+
+/* Placa — superfície sólida de card, com luz superior */
+@utility plate {
+  background: linear-gradient(168deg, #16161a 0%, #101013 55%, #0d0d10 100%);
+  border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-plate);
+}
+
+@utility hairline-t {
+  border-top: 1px solid var(--color-line);
+}
+
+@utility text-gradient {
+  background: linear-gradient(120deg, #ffffff 10%, #e9d5ff 45%, #a855f7 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-gradient-brand {
+  background: linear-gradient(105deg, #c084fc 0%, #a855f7 40%, #6d28d9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Eyebrow: rótulo técnico usado no topo de cada seção */
+@utility eyebrow {
+  font-family: var(--font-tech);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-brand-300);
+}
+
+/* Corte de canto — assinatura geométrica da marca */
+@utility notch {
+  clip-path: polygon(0 0, calc(100% - 0.7rem) 0, 100% 0.7rem, 100% 100%, 0.7rem 100%, 0 calc(100% - 0.7rem));
+}
+
+@utility notch-sm {
+  clip-path: polygon(0 0, calc(100% - 0.4rem) 0, 100% 0.4rem, 100% 100%, 0.4rem 100%, 0 calc(100% - 0.4rem));
+}
+
+/* Grão — textura fina que tira o aspecto "digital plano" das superfícies */
+@utility grain {
+  position: relative;
+  isolation: isolate;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Holo — brilho holográfico das cartas, seguindo o ponteiro (--mx/--my) */
+@utility holo {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.45s var(--ease-out-quart);
+    background:
+      radial-gradient(
+        130% 90% at var(--mx, 50%) var(--my, 50%),
+        rgba(255, 255, 255, 0.28) 0%,
+        rgba(192, 132, 252, 0.22) 22%,
+        rgba(56, 189, 248, 0.14) 42%,
+        transparent 68%
+      );
+    mix-blend-mode: color-dodge;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Varredura de luz — usada em botões primários no hover */
+@utility sweep {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    bottom: -50%;
+    left: 0;
+    width: 45%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+    transform: translateX(-120%) skewX(-18deg);
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    animation: sweep 0.85s var(--ease-out-quart);
+  }
+}
+
+/* Máscaras de esmaecimento para carrosséis e listas longas */
+@utility mask-fade-x {
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+@utility mask-fade-b {
+  mask-image: linear-gradient(180deg, #000 55%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent);
+}
+
+/* Malha técnica de fundo */
+@utility grid-tech {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+@utility scanlines {
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.045) 0px,
+    rgba(255, 255, 255, 0.045) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+/* Estabiliza animações longas fora da viewport */
+@utility perf-contain {
+  content-visibility: auto;
+  contain-intrinsic-size: 720px;
+}

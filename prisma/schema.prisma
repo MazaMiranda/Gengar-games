@@ -1,0 +1,213 @@
+// Gengar Games — modelo de dados PostgreSQL.
+// Objetos de valor aninhados (specs, mídia, atributos de carta/console) são
+// persistidos como JSON para espelhar as entidades de domínio sem explodir o
+// número de tabelas.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  slug     String    @unique
+  name     String
+  tagline  String
+  kind     String
+  accent   Int
+  glyph    String
+  products Product[]
+
+  @@index([kind])
+}
+
+model Brand {
+  id       String    @id @default(cuid())
+  slug     String    @unique
+  name     String
+  origin   String
+  products Product[]
+}
+
+model Product {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  name           String
+  subtitle       String
+  type           String
+  categorySlug   String
+  brandSlug      String
+  price          Int
+  compareAtPrice Int?
+  stock          Int      @default(0)
+  sku            String   @unique
+  rating         Float    @default(0)
+  reviewCount    Int      @default(0)
+  soldCount      Int      @default(0)
+  condition      String
+  platform       String?
+  tcg            String?
+  accent         Int      @default(265)
+  description    String
+  highlights     String[]
+  specs          Json
+  media          Json
+  tags           String[]
+  releasedAt     DateTime
+  featured       Boolean  @default(false)
+  preOrder       Boolean  @default(false)
+  card           Json?
+  consoleInfo    Json?
+  relatedSlugs   String[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  category    Category     @relation(fields: [categorySlug], references: [slug])
+  brand       Brand        @relation(fields: [brandSlug], references: [slug])
+  reviews     Review[]
+  questions   Question[]
+  pricePoints PricePoint[]
+
+  @@index([categorySlug])
+  @@index([brandSlug])
+  @@index([type])
+  @@index([platform])
+  @@index([tcg])
+  @@index([featured])
+  @@index([price])
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  productSlug String
+  author      String
+  rating      Int
+  title       String
+  body        String
+  verified    Boolean  @default(false)
+  helpful     Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  product Product @relation(fields: [productSlug], references: [slug], onDelete: Cascade)
+
+  @@index([productSlug])
+}
+
+model Question {
+  id          String   @id @default(cuid())
+  productSlug String
+  author      String
+  question    String
+  answer      String?
+  createdAt   DateTime @default(now())
+
+  product Product @relation(fields: [productSlug], references: [slug], onDelete: Cascade)
+
+  @@index([productSlug])
+}
+
+model PricePoint {
+  id          String   @id @default(cuid())
+  productSlug String
+  date        DateTime
+  price       Int
+
+  product Product @relation(fields: [productSlug], references: [slug], onDelete: Cascade)
+
+  @@unique([productSlug, date])
+  @@index([productSlug])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  passwordHash  String
+  role          String    @default("customer")
+  phone         String?
+  document      String?
+  loyaltyPoints Int       @default(0)
+  wishlist      String[]
+  coupons       String[]
+  createdAt     DateTime  @default(now())
+  addresses     Address[]
+  orders        Order[]
+}
+
+model Address {
+  id         String  @id @default(cuid())
+  userId     String
+  label      String
+  recipient  String
+  street     String
+  number     String
+  complement String?
+  district   String
+  city       String
+  state      String
+  zip        String
+  isDefault  Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Coupon {
+  code        String   @id
+  type        String
+  value       Int
+  minSubtotal Int      @default(0)
+  description String
+  expiresAt   DateTime
+  active      Boolean  @default(true)
+  usageCount  Int      @default(0)
+  usageLimit  Int      @default(0)
+  orders      Order[]
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  number        String      @unique
+  userId        String
+  customerName  String
+  customerEmail String
+  status        String      @default("aguardando-pagamento")
+  subtotal      Int
+  discount      Int         @default(0)
+  shipping      Int         @default(0)
+  total         Int
+  couponCode    String?
+  paymentMethod String
+  installments  Int         @default(1)
+  address       Json
+  trackingCode  String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  user   User        @relation(fields: [userId], references: [id])
+  coupon Coupon?     @relation(fields: [couponCode], references: [code])
+  items  OrderItem[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model OrderItem {
+  id          String @id @default(cuid())
+  orderId     String
+  productSlug String
+  name        String
+  unitPrice   Int
+  quantity    Int
+  accent      Int    @default(265)
+  type        String
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+}
