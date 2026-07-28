@@ -93,17 +93,19 @@ export function evaluateCoupon(coupon: Coupon | null, subtotal: Money): CouponEv
   };
 }
 
-export function computeTotals(
+/**
+ * Totais a partir de um desconto já apurado — usado no cliente, onde o cupom é
+ * validado pelo servidor e só o resultado trafega de volta.
+ */
+export function totalsFrom(
   lines: CartLine[],
-  options: { coupon?: Coupon | null; shipping?: Money } = {},
+  options: { discount?: Money; freeShipping?: boolean; shipping?: Money } = {},
 ): CartTotals {
   const subtotal = subtotalOf(lines);
-  const baseShipping = options.shipping ?? 0;
-  const evaluation = evaluateCoupon(options.coupon ?? null, subtotal);
-
-  const qualifiesFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD || evaluation.freeShipping;
-  const shipping = qualifiesFreeShipping ? 0 : baseShipping;
-  const discount = evaluation.valid ? evaluation.discount : 0;
+  const qualifiesFreeShipping =
+    subtotal >= FREE_SHIPPING_THRESHOLD || Boolean(options.freeShipping) || !lines.length;
+  const shipping = qualifiesFreeShipping ? 0 : (options.shipping ?? 0);
+  const discount = Math.min(options.discount ?? 0, subtotal);
 
   return {
     subtotal,
@@ -115,4 +117,17 @@ export function computeTotals(
     freeShippingRemaining: Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal),
     freeShippingProgress: Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100)),
   };
+}
+
+/** Totais no servidor, onde o cupom completo está disponível. */
+export function computeTotals(
+  lines: CartLine[],
+  options: { coupon?: Coupon | null; shipping?: Money } = {},
+): CartTotals {
+  const evaluation = evaluateCoupon(options.coupon ?? null, subtotalOf(lines));
+  return totalsFrom(lines, {
+    discount: evaluation.valid ? evaluation.discount : 0,
+    freeShipping: evaluation.freeShipping,
+    shipping: options.shipping,
+  });
 }

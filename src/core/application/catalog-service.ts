@@ -64,10 +64,11 @@ export async function getProductDetail(slug: string): Promise<ProductDetail | nu
 export async function getHomeData() {
   const { products } = await getRepositories();
 
-  const [categories, brands, novidades, ofertas, maisVendidos, destaquesTcg, consoles, jogos, acessorios, colecionaveis] =
+  const [categories, brands, destaques, novidades, ofertas, maisVendidos, destaquesTcg, consoles, jogos, acessorios, colecionaveis] =
     await Promise.all([
       products.listCategories(),
       products.listBrands(),
+      products.search({ featured: true, inStock: true, sort: 'maior-preco', perPage: 40 }),
       products.search({ sort: 'lancamentos', perPage: 8, inStock: true }),
       products.search({ onSale: true, sort: 'relevancia', perPage: 8 }),
       products.search({ sort: 'mais-vendidos', perPage: 8 }),
@@ -78,12 +79,20 @@ export async function getHomeData() {
       products.search({ categories: ['colecionaveis', 'edicoes-colecionador', 'geek'], sort: 'relevancia', perPage: 8 }),
     ]);
 
-  const hero = maisVendidos.items.filter((p) => p.featured).slice(0, 3);
+  // Vitrine do hero: uma carta, um console e um colecionável — variedade garantida.
+  const pickFeatured = (predicate: (slug: string) => boolean) =>
+    destaques.items.find((product) => predicate(product.type) || predicate(product.categorySlug));
+
+  const hero = [
+    pickFeatured((value) => value === 'tcg-card'),
+    pickFeatured((value) => value === 'console'),
+    pickFeatured((value) => value === 'collectible' || value === 'accessory'),
+  ].filter((product): product is NonNullable<typeof product> => Boolean(product));
 
   return {
     categories,
     brands,
-    hero: hero.length ? hero : maisVendidos.items.slice(0, 3),
+    hero: hero.length >= 3 ? hero : destaques.items.slice(0, 3),
     novidades: novidades.items,
     ofertas: ofertas.items,
     maisVendidos: maisVendidos.items,
