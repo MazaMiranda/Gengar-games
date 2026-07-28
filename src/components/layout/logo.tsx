@@ -30,11 +30,11 @@ export function Logo({ className, compact, href = '/' }: LogoProps) {
 
       {!compact ? (
         <span className="flex flex-col leading-none">
-          <span className="font-display text-base font-extrabold tracking-tight text-ink">
+          <span className="whitespace-nowrap font-display text-base font-extrabold tracking-tight text-ink">
             GENGAR
             <span className="text-gradient-brand"> GAMES</span>
           </span>
-          <span className="mt-0.5 font-tech text-[0.5625rem] uppercase tracking-[0.34em] text-ink-faint">
+          <span className="mt-0.5 hidden whitespace-nowrap font-tech text-[0.5625rem] uppercase tracking-[0.34em] text-ink-faint sm:block">
             TCG · Consoles
           </span>
         </span>
