@@ -83,8 +83,8 @@ export function Header() {
             : 'border-transparent bg-void/40 backdrop-blur-lg',
         )}
       >
-        <div className="container-page flex h-16 items-center justify-between gap-6 md:h-18">
-          <div className="flex items-center gap-8">
+        <div className="container-page flex h-16 items-center justify-between gap-3 md:h-18 md:gap-6">
+          <div className="flex min-w-0 items-center gap-3 lg:gap-8">
             <MobileNav>
               <button
                 type="button"
@@ -95,7 +95,7 @@ export function Header() {
               </button>
             </MobileNav>
 
-            <Logo />
+            <Logo markOnlyOnMobile />
 
             <nav className="hidden items-center gap-1 lg:flex" aria-label="Navegação principal">
               {primaryNav.map((entry) => {

@@ -3,12 +3,15 @@ import { cn } from '@/lib/utils';
 
 interface LogoProps {
   className?: string;
+  /** Apenas o símbolo, sem wordmark. */
   compact?: boolean;
+  /** Esconde o wordmark em telas estreitas — usado no header da loja. */
+  markOnlyOnMobile?: boolean;
   href?: string;
 }
 
 /** Marca da casa: coroa espectral + wordmark. */
-export function Logo({ className, compact, href = '/' }: LogoProps) {
+export function Logo({ className, compact, markOnlyOnMobile, href = '/' }: LogoProps) {
   return (
     <Link
       href={href}
@@ -29,7 +32,7 @@ export function Logo({ className, compact, href = '/' }: LogoProps) {
       </span>
 
       {!compact ? (
-        <span className="flex flex-col leading-none">
+        <span className={cn('flex flex-col leading-none', markOnlyOnMobile && 'hidden sm:flex')}>
           <span className="whitespace-nowrap font-display text-base font-extrabold tracking-tight text-ink">
             GENGAR
             <span className="text-gradient-brand"> GAMES</span>
