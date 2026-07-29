@@ -76,7 +76,7 @@ export function ProductCard({ product, className, layout = 'grid', priority }: P
   return (
     <article
       className={cn(
-        'plate group relative flex flex-col overflow-hidden rounded-lg transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:border-line-brand hover:shadow-lift',
+        'plate group relative flex h-full flex-col overflow-hidden rounded-lg transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:border-line-brand hover:shadow-lift',
         soldOut && 'opacity-70',
         className,
       )}
@@ -155,7 +155,7 @@ export function ProductCard({ product, className, layout = 'grid', priority }: P
           <Rating value={product.rating} count={product.reviewCount} />
 
           <div className="flex items-end justify-between gap-3 pt-1">
-            <Price value={product.price} compareAt={product.compareAtPrice} size="md" />
+            <Price value={product.price} compareAt={product.compareAtPrice} size="md" reserveCompare />
             {lowStock ? (
               <span className="pb-1 font-tech text-2xs font-semibold uppercase tracking-wider text-warning">
                 {product.stock} restantes

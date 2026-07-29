@@ -71,7 +71,7 @@ export default async function HomePage() {
         />
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
           {data.ofertas.slice(0, 8).map((product) => (
-            <Reveal key={product.slug} delay={0.03}>
+            <Reveal key={product.slug} delay={0.03} className="h-full">
               <ProductCard product={product} />
             </Reveal>
           ))}
@@ -109,7 +109,7 @@ export default async function HomePage() {
 
         <div className="mt-12 grid gap-4 md:grid-cols-3">
           {data.consoles.slice(0, 3).map((product, index) => (
-            <Reveal key={product.slug} delay={index * 0.06}>
+            <Reveal key={product.slug} delay={index * 0.06} className="h-full">
               <ProductCard product={product} />
             </Reveal>
           ))}
@@ -159,7 +159,7 @@ export default async function HomePage() {
         />
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
           {data.maisVendidos.slice(0, 8).map((product) => (
-            <Reveal key={product.slug} delay={0.03}>
+            <Reveal key={product.slug} delay={0.03} className="h-full">
               <ProductCard product={product} />
             </Reveal>
           ))}

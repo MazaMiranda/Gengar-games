@@ -50,7 +50,7 @@ export function CatalogResults({ items, facets, total, page, pageCount }: Catalo
           }
         >
           {items.map((product, index) => (
-            <StaggerItem key={product.slug} index={index % 8}>
+            <StaggerItem key={product.slug} index={index % 8} className="h-full">
               {density === 'comfortable' ? (
                 <ProductCard product={product} priority={index < 4} />
               ) : (
