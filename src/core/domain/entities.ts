@@ -7,14 +7,9 @@ export type Money = number;
 
 export type ProductType = 'tcg-card' | 'tcg-sealed' | 'console' | 'game' | 'accessory' | 'collectible';
 
-export type TcgGame =
-  | 'pokemon'
-  | 'one-piece'
-  | 'magic'
-  | 'yugioh'
-  | 'lorcana'
-  | 'flesh-and-blood'
-  | 'digimon';
+// A loja vende só Pokémon TCG — é também o único jogo coberto pela TCGdex
+// (https://tcgdex.dev/pt-br), fonte da arte das cartas cadastradas.
+export type TcgGame = 'pokemon';
 
 export type GamingPlatform = 'playstation' | 'xbox' | 'nintendo' | 'pc' | 'retro';
 

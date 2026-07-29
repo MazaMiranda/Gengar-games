@@ -20,48 +20,6 @@ export const TCG_GAMES: Record<
     publisher: 'The Pokémon Company',
     tagline: 'Do Base Set às coleções Scarlet & Violet.',
   },
-  'one-piece': {
-    name: 'One Piece Card Game',
-    short: 'One Piece',
-    accent: 8,
-    publisher: 'Bandai',
-    tagline: 'Líderes, don!! e as artes alternativas mais disputadas.',
-  },
-  magic: {
-    name: 'Magic: The Gathering',
-    short: 'Magic',
-    accent: 265,
-    publisher: 'Wizards of the Coast',
-    tagline: 'Do Commander ao Modern, singles e boosters selados.',
-  },
-  yugioh: {
-    name: 'Yu-Gi-Oh!',
-    short: 'Yu-Gi-Oh!',
-    accent: 28,
-    publisher: 'Konami',
-    tagline: 'Structure decks, tins e as staples do meta atual.',
-  },
-  lorcana: {
-    name: 'Disney Lorcana',
-    short: 'Lorcana',
-    accent: 190,
-    publisher: 'Ravensburger',
-    tagline: 'Enchanted, foils e capítulos completos.',
-  },
-  'flesh-and-blood': {
-    name: 'Flesh and Blood',
-    short: 'Flesh & Blood',
-    accent: 350,
-    publisher: 'Legend Story Studios',
-    tagline: 'Heróis, armas lendárias e blitz decks.',
-  },
-  digimon: {
-    name: 'Digimon Card Game',
-    short: 'Digimon',
-    accent: 205,
-    publisher: 'Bandai',
-    tagline: 'Evoluções, secret rares e starter decks.',
-  },
 };
 
 export const PLATFORMS: Record<

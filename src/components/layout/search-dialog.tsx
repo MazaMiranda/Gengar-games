@@ -27,9 +27,9 @@ const SUGGESTIONS = [
   'Charizard',
   'PlayStation 5',
   'Booster box',
-  'One Piece',
+  'Pikachu',
   'DualSense',
-  'Lorcana',
+  'Elite Trainer Box',
 ];
 
 async function fetchResults(term: string): Promise<SearchHit[]> {

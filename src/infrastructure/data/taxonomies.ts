@@ -2,12 +2,6 @@ import type { Brand, Category, Testimonial } from '@/core/domain/entities';
 
 export const categories: Category[] = [
   { id: 'c1', slug: 'pokemon-tcg', name: 'Pokémon TCG', tagline: 'Singles, boosters e Elite Trainer Boxes', kind: 'tcg', accent: 48, glyph: 'zap' },
-  { id: 'c2', slug: 'one-piece-tcg', name: 'One Piece Card Game', tagline: 'Líderes, alt arts e caixas seladas', kind: 'tcg', accent: 8, glyph: 'anchor' },
-  { id: 'c3', slug: 'magic', name: 'Magic: The Gathering', tagline: 'Commander, Modern e Collector Boosters', kind: 'tcg', accent: 265, glyph: 'sparkles' },
-  { id: 'c4', slug: 'yugioh', name: 'Yu-Gi-Oh!', tagline: 'Staples do meta, tins e structure decks', kind: 'tcg', accent: 28, glyph: 'eye' },
-  { id: 'c5', slug: 'lorcana', name: 'Disney Lorcana', tagline: 'Enchanted, foils e capítulos completos', kind: 'tcg', accent: 190, glyph: 'wand' },
-  { id: 'c6', slug: 'flesh-and-blood', name: 'Flesh and Blood', tagline: 'Heróis, armas lendárias e blitz decks', kind: 'tcg', accent: 350, glyph: 'sword' },
-  { id: 'c7', slug: 'digimon', name: 'Digimon Card Game', tagline: 'Evoluções, secret rares e starters', kind: 'tcg', accent: 205, glyph: 'cpu' },
   { id: 'c8', slug: 'consoles', name: 'Consoles', tagline: 'PlayStation, Xbox, Nintendo e portáteis', kind: 'gaming', accent: 214, glyph: 'gamepad' },
   { id: 'c9', slug: 'jogos', name: 'Jogos', tagline: 'Mídia física para todas as plataformas', kind: 'gaming', accent: 275, glyph: 'disc' },
   { id: 'c10', slug: 'jogos-usados', name: 'Jogos usados', tagline: 'Testados, garantidos e com preço justo', kind: 'gaming', accent: 150, glyph: 'recycle' },
@@ -23,11 +17,8 @@ export const categories: Category[] = [
 
 export const brands: Brand[] = [
   { id: 'b1', slug: 'the-pokemon-company', name: 'The Pokémon Company', origin: 'Japão' },
-  { id: 'b2', slug: 'bandai', name: 'Bandai', origin: 'Japão' },
-  { id: 'b3', slug: 'wizards-of-the-coast', name: 'Wizards of the Coast', origin: 'EUA' },
+  // konami fica: silent-hill-2-remake (products.gaming.ts) depende dela e não é TCG.
   { id: 'b4', slug: 'konami', name: 'Konami', origin: 'Japão' },
-  { id: 'b5', slug: 'ravensburger', name: 'Ravensburger', origin: 'Alemanha' },
-  { id: 'b6', slug: 'legend-story-studios', name: 'Legend Story Studios', origin: 'Nova Zelândia' },
   { id: 'b7', slug: 'sony', name: 'Sony', origin: 'Japão' },
   { id: 'b8', slug: 'microsoft', name: 'Microsoft', origin: 'EUA' },
   { id: 'b9', slug: 'nintendo', name: 'Nintendo', origin: 'Japão' },
@@ -68,20 +59,20 @@ export const testimonials: Testimonial[] = [
   {
     id: 't3',
     author: 'Diego Salles',
-    handle: '@salles.mtg',
+    handle: '@salles.tcg',
     city: 'Belo Horizonte, MG',
     rating: 4,
-    quote: 'Uso a Gengar pra montar Commander há um ano. Os singles vêm sempre NM de verdade, não aquele "NM" duvidoso.',
-    purchase: 'Sheoldred, the Apocalypse',
+    quote: 'Uso a Gengar pra completar minha coleção de Pokémon há um ano. Os singles vêm sempre NM de verdade, não aquele "NM" duvidoso.',
+    purchase: 'Mewtwo ex — 151',
   },
   {
     id: 't4',
     author: 'Carol Pimentel',
-    handle: '@carolzinha.op',
+    handle: '@carolzinha.tcg',
     city: 'Recife, PE',
     rating: 5,
-    quote: 'Peguei o booster box de One Piece na pré-venda com desconto e ainda ganhei sleeves. Meta de loja atendida.',
-    purchase: 'OP-09 Emperors in the New World',
+    quote: 'Peguei o Elite Trainer Box na pré-venda com desconto e ainda ganhei sleeves. Meta de loja atendida.',
+    purchase: 'Elite Trainer Box · Pokémon 151',
   },
   {
     id: 't5',
@@ -95,10 +86,10 @@ export const testimonials: Testimonial[] = [
   {
     id: 't6',
     author: 'Juliana Reis',
-    handle: '@ju.lorcana',
+    handle: '@ju.tcg',
     city: 'Florianópolis, SC',
     rating: 5,
-    quote: 'A Enchanted da Elsa chegou impecável e o preço estava abaixo do mercado. Já virou minha loja padrão de Lorcana.',
-    purchase: 'Elsa, Spirit of Winter — Enchanted',
+    quote: 'A Pikachu VMAX rainbow chegou impecável e o preço estava abaixo do mercado. Já virou minha loja padrão de Pokémon.',
+    purchase: 'Pikachu VMAX Rainbow',
   },
 ];

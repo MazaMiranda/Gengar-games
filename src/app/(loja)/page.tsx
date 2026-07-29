@@ -9,7 +9,6 @@ import {
   CategoryBento,
   PlatformStrip,
   PromoBanner,
-  TcgShowcase,
 } from '@/components/home/sections';
 import { Testimonials } from '@/components/home/testimonials';
 import { ProductRail } from '@/components/shop/product-rail';
@@ -83,17 +82,13 @@ export default async function HomePage() {
       <Section className="perf-contain" aria-labelledby="tcg">
         <SectionHeading
           eyebrow="Área TCG"
-          title={<span id="tcg">Sete jogos, uma curadoria só</span>}
+          title={<span id="tcg">Pokémon TCG, uma curadoria só</span>}
           description="Cada single é avaliado sob luz UV, classificado por estado e enviado protegido."
           href="/tcg"
           linkLabel="Entrar na área TCG"
           className="mb-10"
         />
-        <TcgShowcase />
-
-        <div className="mt-12">
-          <ProductRail products={data.destaquesTcg} />
-        </div>
+        <ProductRail products={data.destaquesTcg} />
       </Section>
 
       <Section className="perf-contain" aria-labelledby="consoles">

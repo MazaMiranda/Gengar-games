@@ -10,14 +10,11 @@ export const metadata: Metadata = {
     template: '%s · Gengar Games',
   },
   description:
-    'Loja premium de Trading Card Games, consoles, jogos, acessórios e colecionáveis. Pokémon, One Piece, Magic, Yu-Gi-Oh!, Lorcana, Flesh and Blood e Digimon.',
+    'Loja premium de Pokémon TCG, consoles, jogos, acessórios e colecionáveis.',
   keywords: [
     'TCG',
     'Pokémon TCG',
-    'One Piece Card Game',
-    'Magic The Gathering',
-    'Yu-Gi-Oh',
-    'Lorcana',
+    'cartas Pokémon',
     'consoles',
     'jogos',
     'colecionáveis',

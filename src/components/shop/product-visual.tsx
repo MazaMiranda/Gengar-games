@@ -1,10 +1,7 @@
 import Image from 'next/image';
 import {
-  Anchor,
-  Cpu,
   Crown,
   Disc3,
-  Eye,
   Gamepad2,
   Headphones,
   Plug,
@@ -13,9 +10,7 @@ import {
   Shirt,
   Sparkles,
   Star,
-  Sword,
   Trophy,
-  Wand2,
   Zap,
   type LucideIcon,
 } from 'lucide-react';
@@ -24,12 +19,7 @@ import { cn, hashString } from '@/lib/utils';
 
 const GLYPHS: Record<string, LucideIcon> = {
   zap: Zap,
-  anchor: Anchor,
   sparkles: Sparkles,
-  eye: Eye,
-  wand: Wand2,
-  sword: Sword,
-  cpu: Cpu,
   gamepad: Gamepad2,
   disc: Disc3,
   recycle: Recycle,
@@ -44,12 +34,6 @@ const GLYPHS: Record<string, LucideIcon> = {
 
 const CATEGORY_GLYPH: Record<string, string> = {
   'pokemon-tcg': 'zap',
-  'one-piece-tcg': 'anchor',
-  magic: 'sparkles',
-  yugioh: 'eye',
-  lorcana: 'wand',
-  'flesh-and-blood': 'sword',
-  digimon: 'cpu',
   consoles: 'gamepad',
   'consoles-limitados': 'star',
   jogos: 'disc',
