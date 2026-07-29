@@ -81,6 +81,7 @@ export interface CatalogResult {
 export interface ProductRepository {
   search(query: CatalogQuery): Promise<CatalogResult>;
   findBySlug(slug: string): Promise<Product | null>;
+  create(product: Product): Promise<Product>;
   findManyBySlugs(slugs: string[]): Promise<Product[]>;
   listCategories(): Promise<Category[]>;
   listBrands(): Promise<Brand[]>;
