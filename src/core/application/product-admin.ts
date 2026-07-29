@@ -1,6 +1,7 @@
 import { getRepositories } from '@/infrastructure/container';
+import { lookupTcgdexCard, parseLocalId } from '@/infrastructure/tcgdex/client';
 import type { ProductDraft } from '@/lib/product-schema';
-import type { Product } from '../domain/entities';
+import type { MediaItem, Product } from '../domain/entities';
 
 export type CreateProductResult =
   | { ok: true; product: Product }
@@ -33,6 +34,21 @@ export async function createProduct(draft: ProductDraft): Promise<CreateProductR
     return { ok: false, field: 'sku', message: 'Já existe um produto com este SKU.' };
   }
 
+  // Carta avulsa: busca a arte real na TCGdex a partir de nome + número. Sem
+  // correspondência (ou API fora do ar), o produto ainda é criado — a arte
+  // procedural do ProductVisual assume, exatamente como hoje.
+  const media: MediaItem[] = [];
+  if (draft.type === 'tcg-card' && draft.card) {
+    const match = await lookupTcgdexCard({
+      name: draft.name,
+      localId: parseLocalId(draft.card.number),
+      setName: draft.card.set,
+    });
+    if (match?.imageUrl) {
+      media.push({ id: match.id, kind: 'image', label: `${match.name} — TCGdex`, src: match.imageUrl });
+    }
+  }
+
   const product: Product = {
     id: crypto.randomUUID(),
     slug: draft.slug,
@@ -55,7 +71,7 @@ export async function createProduct(draft: ProductDraft): Promise<CreateProductR
     description: draft.description,
     highlights: [],
     specs: [],
-    media: [],
+    media,
     tags: draft.tags,
     releasedAt: new Date().toISOString().slice(0, 10),
     featured: draft.featured,

@@ -1,10 +1,11 @@
 'use client';
 
 import * as React from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2, PackagePlus } from 'lucide-react';
+import { CheckCircle2, ImageOff, Loader2, PackagePlus, SearchCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Brand, Category } from '@/core/domain/entities';
 import {
@@ -34,6 +35,19 @@ interface ProductFormProps {
 }
 
 const LANGUAGES = ['português', 'inglês', 'japonês'] as const;
+
+interface TcgdexPreview {
+  name: string;
+  setName: string | null;
+  rarity: string | null;
+  imageUrl: string | null;
+}
+
+type TcgdexLookupState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'found'; match: TcgdexPreview }
+  | { status: 'not-found' };
 
 /** Estado inicial da ficha de carta — só entra no envio quando o tipo pede. */
 const EMPTY_CARD: ProductDraft['card'] = {
@@ -83,6 +97,7 @@ function MoneyInput({
 export function ProductForm({ categories, brands }: ProductFormProps) {
   const router = useRouter();
   const [slugTouched, setSlugTouched] = React.useState(false);
+  const [tcgdex, setTcgdex] = React.useState<TcgdexLookupState>({ status: 'idle' });
 
   const {
     register,
@@ -127,6 +142,39 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
   React.useEffect(() => {
     setValue('card', isCard ? EMPTY_CARD : null, { shouldValidate: false });
   }, [isCard, setValue]);
+
+  const cardSet = watch('card.set');
+  const cardNumber = watch('card.number');
+
+  // Nome, coleção ou número mudaram: a prévia anterior não vale mais.
+  React.useEffect(() => {
+    setTcgdex({ status: 'idle' });
+  }, [name, cardSet, cardNumber]);
+
+  /**
+   * Só uma prévia para o operador conferir a arte antes de salvar — não
+   * preenche nada sozinha. A busca que efetivamente entra no produto roda de
+   * novo no servidor, no POST de cadastro (core/application/product-admin.ts),
+   * então esta chamada nunca é a fonte de verdade.
+   */
+  const previewOnTcgdex = async () => {
+    if (!name || !cardNumber) {
+      toast.error('Preencha nome e número da carta antes de buscar.');
+      return;
+    }
+    setTcgdex({ status: 'loading' });
+    try {
+      const response = await fetch('/api/admin/tcgdex/lookup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, number: cardNumber, set: cardSet || undefined }),
+      });
+      const payload = await response.json().catch(() => null);
+      setTcgdex(payload?.ok ? { status: 'found', match: payload.match } : { status: 'not-found' });
+    } catch {
+      setTcgdex({ status: 'not-found' });
+    }
+  };
 
   const onSubmit = handleSubmit(async (draft) => {
     const response = await fetch('/api/admin/produtos', {
@@ -337,26 +385,55 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
 
       {isCard ? (
         <AdminCard title="Ficha da carta">
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            <Field label="Card game" required>
-              <Controller
-                control={control}
-                name="card.game"
-                render={({ field }) => (
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.entries(TCG_GAMES).map(([value, meta]) => (
-                        <SelectItem key={value} value={value}>
-                          {meta.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+          <div className="mb-6 flex flex-col gap-4 rounded-lg border border-line bg-white/2 p-4 sm:flex-row sm:items-center">
+            <div className="flex flex-1 items-center gap-4">
+              {tcgdex.status === 'found' && tcgdex.match.imageUrl ? (
+                <div className="relative aspect-4/5 w-16 shrink-0 overflow-hidden rounded-md border border-line">
+                  <Image src={tcgdex.match.imageUrl} alt={tcgdex.match.name} fill className="object-cover" />
+                </div>
+              ) : (
+                <div className="grid aspect-4/5 w-16 shrink-0 place-items-center rounded-md border border-line bg-void/50 text-ink-ghost">
+                  <ImageOff className="size-5" />
+                </div>
+              )}
+              <div className="flex flex-col gap-1">
+                <p className="text-xs font-semibold text-ink">Arte na TCGdex</p>
+                {tcgdex.status === 'found' ? (
+                  <p className="flex items-center gap-1.5 text-xs text-success">
+                    <CheckCircle2 className="size-3.5" />
+                    {tcgdex.match.name} · {tcgdex.match.setName ?? 'coleção não identificada'}
+                  </p>
+                ) : tcgdex.status === 'not-found' ? (
+                  <p className="text-xs text-ink-faint">
+                    Não encontrada — o cadastro segue normal, com a arte gerada da loja.
+                  </p>
+                ) : (
+                  <p className="text-xs text-ink-faint">
+                    Confira a arte real antes de salvar. A mesma busca roda de novo ao cadastrar.
+                  </p>
                 )}
-              />
+              </div>
+            </div>
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={previewOnTcgdex}
+              disabled={tcgdex.status === 'loading'}
+            >
+              {tcgdex.status === 'loading' ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <SearchCheck className="size-4" />
+              )}
+              Pré-visualizar na TCGdex
+            </Button>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {/* A loja vende só Pokémon TCG — único jogo coberto pela TCGdex também. */}
+            <Field label="Card game" hint="A loja cadastra só cartas de Pokémon TCG.">
+              <Input value={TCG_GAMES.pokemon.name} disabled />
             </Field>
 
             <Field label="Coleção" required error={errors.card?.set?.message} htmlFor="card-set">
