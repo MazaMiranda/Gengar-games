@@ -22,6 +22,9 @@ export type ProductCondition = 'lacrado' | 'novo' | 'seminovo' | 'usado';
 
 export type CardRarity = 'comum' | 'incomum' | 'rara' | 'ultra-rara' | 'secreta';
 
+/** Escala de conservação da carta, na sigla que o mercado de TCG usa. */
+export type CardGrade = 'NM' | 'SP' | 'MP' | 'D';
+
 export type CardLanguage = 'português' | 'inglês' | 'japonês';
 
 export type CategoryKind = 'tcg' | 'gaming' | 'collectible' | 'accessory';
@@ -68,7 +71,7 @@ export interface CardAttributes {
   hp?: number;
   illustrator: string;
   foil: boolean;
-  grade: string;
+  grade: CardGrade;
 }
 
 export interface ConsoleAttributes {

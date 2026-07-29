@@ -1,4 +1,5 @@
 import type {
+  CardGrade,
   CardLanguage,
   CardRarity,
   GamingPlatform,
@@ -29,6 +30,9 @@ export const PARAM = {
   set: 'colecao',
   rarity: 'raridade',
   language: 'idioma',
+  // 'estado' já nomeia a condição do produto (lacrado/novo/usado); a
+  // conservação da carta é uma escala própria e precisa de chave distinta.
+  grade: 'conservacao',
   condition: 'estado',
   type: 'tipo',
   tag: 'tag',
@@ -66,6 +70,7 @@ export function parseCatalogParams(params: SearchParamsInput, perPage = 12): Cat
     sets: toArray(params[PARAM.set]),
     rarities: toArray(params[PARAM.rarity]) as CardRarity[],
     languages: toArray(params[PARAM.language]) as CardLanguage[],
+    grades: toArray(params[PARAM.grade]) as CardGrade[],
     conditions: toArray(params[PARAM.condition]) as ProductCondition[],
     types: toArray(params[PARAM.type]) as ProductType[],
     tags: toArray(params[PARAM.tag]),
@@ -110,6 +115,7 @@ export const FILTER_KEYS = [
   PARAM.set,
   PARAM.rarity,
   PARAM.language,
+  PARAM.grade,
   PARAM.condition,
   PARAM.type,
   PARAM.tag,

@@ -1,5 +1,6 @@
 import type {
   Brand,
+  CardGrade,
   CardLanguage,
   CardRarity,
   Category,
@@ -34,6 +35,7 @@ export interface CatalogQuery {
   sets?: string[];
   rarities?: CardRarity[];
   languages?: CardLanguage[];
+  grades?: CardGrade[];
   conditions?: ProductCondition[];
   types?: ProductType[];
   tags?: string[];
@@ -61,6 +63,7 @@ export interface CatalogFacets {
   sets: FacetBucket[];
   rarities: FacetBucket[];
   languages: FacetBucket[];
+  grades: FacetBucket[];
   conditions: FacetBucket[];
   types: FacetBucket[];
   priceRange: { min: number; max: number };

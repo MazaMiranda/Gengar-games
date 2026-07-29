@@ -1,4 +1,5 @@
 import type {
+  CardGrade,
   CardRarity,
   GamingPlatform,
   ProductCondition,
@@ -95,6 +96,23 @@ export const CONDITIONS: Record<ProductCondition, { name: string; description: s
   seminovo: { name: 'Seminovo', description: 'Pouco uso, revisado e higienizado pela Gengar.' },
   usado: { name: 'Usado', description: 'Funcionamento testado, marcas de uso descritas no anúncio.' },
 };
+
+/**
+ * Conservação da carta. A sigla é o rótulo curto que o colecionador reconhece;
+ * o nome por extenso e a descrição existem para quem não conhece a escala.
+ */
+export const CARD_GRADES: Record<CardGrade, { name: string; description: string }> = {
+  NM: { name: 'Near Mint', description: 'Praticamente perfeita, sem marcas visíveis.' },
+  SP: { name: 'Slightly Played', description: 'Marcas mínimas de manuseio nas bordas.' },
+  MP: { name: 'Moderately Played', description: 'Desgaste visível em bordas ou superfície.' },
+  D: { name: 'Damaged', description: 'Dano estrutural: vinco, rasgo ou perda de camada.' },
+};
+
+/** Ordem da escala — do melhor estado ao pior, para listas e seletores. */
+export const cardGradeList = (Object.keys(CARD_GRADES) as CardGrade[]).map((code) => ({
+  code,
+  ...CARD_GRADES[code],
+}));
 
 export const RARITIES: Record<CardRarity, { name: string; token: string }> = {
   comum: { name: 'Comum', token: 'rarity-common' },

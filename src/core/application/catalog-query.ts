@@ -1,5 +1,12 @@
-import type { Product } from '../domain/entities';
-import { CONDITIONS, PLATFORMS, PRODUCT_TYPES, RARITIES, TCG_GAMES } from '../domain/taxonomy';
+import type { CardGrade, Product } from '../domain/entities';
+import {
+  CARD_GRADES,
+  CONDITIONS,
+  PLATFORMS,
+  PRODUCT_TYPES,
+  RARITIES,
+  TCG_GAMES,
+} from '../domain/taxonomy';
 import type { CatalogFacets, CatalogQuery, CatalogResult, FacetBucket } from '../ports/repositories';
 
 export const DEFAULT_PER_PAGE = 12;
@@ -47,6 +54,7 @@ export function buildPredicates(query: CatalogQuery): Record<string, Predicate> 
     sets: (p) => !query.sets?.length || (!!p.card && query.sets.includes(p.card.set)),
     rarities: (p) => !query.rarities?.length || (!!p.card && query.rarities.includes(p.card.rarity)),
     languages: (p) => !query.languages?.length || (!!p.card && query.languages.includes(p.card.language)),
+    grades: (p) => !query.grades?.length || (!!p.card && query.grades.includes(p.card.grade)),
     conditions: (p) => !query.conditions?.length || query.conditions.includes(p.condition),
     types: (p) => !query.types?.length || query.types.includes(p.type),
     tags: (p) => !query.tags?.length || query.tags.some((tag) => p.tags.includes(tag)),
@@ -81,6 +89,12 @@ function toBuckets(counter: Map<string, number>, label: (value: string) => strin
   return [...counter.entries()]
     .map(([value, count]) => ({ value, label: label(value), count }))
     .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+}
+
+const GRADE_SCALE = Object.keys(CARD_GRADES);
+
+function sortByScale(buckets: FacetBucket[], scale: string[]) {
+  return [...buckets].sort((a, b) => scale.indexOf(a.value) - scale.indexOf(b.value));
 }
 
 /** Só precisamos de slug e nome para rotular as facetas. */
@@ -125,6 +139,15 @@ export function buildFacets(
       (v) => RARITIES[v as keyof typeof RARITIES]?.name ?? v,
     ),
     languages: toBuckets(countBy(pool('languages'), (p) => p.card?.language), (v) => v),
+    // A escala de conservação vai do melhor ao pior estado — ordenar por
+    // contagem, como nas demais facetas, embaralharia a leitura.
+    grades: sortByScale(
+      toBuckets(
+        countBy(pool('grades'), (p) => p.card?.grade),
+        (v) => `${v} · ${CARD_GRADES[v as CardGrade]?.name ?? v}`,
+      ),
+      GRADE_SCALE,
+    ),
     conditions: toBuckets(
       countBy(pool('conditions'), (p) => p.condition),
       (v) => CONDITIONS[v as keyof typeof CONDITIONS]?.name ?? v,
