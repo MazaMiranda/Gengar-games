@@ -7,20 +7,18 @@ export type Money = number;
 
 export type ProductType = 'tcg-card' | 'tcg-sealed' | 'console' | 'game' | 'accessory' | 'collectible';
 
-export type TcgGame =
-  | 'pokemon'
-  | 'one-piece'
-  | 'magic'
-  | 'yugioh'
-  | 'lorcana'
-  | 'flesh-and-blood'
-  | 'digimon';
+// A loja vende só Pokémon TCG — é também o único jogo coberto pela TCGdex
+// (https://tcgdex.dev/pt-br), fonte da arte das cartas cadastradas.
+export type TcgGame = 'pokemon';
 
 export type GamingPlatform = 'playstation' | 'xbox' | 'nintendo' | 'pc' | 'retro';
 
 export type ProductCondition = 'lacrado' | 'novo' | 'seminovo' | 'usado';
 
 export type CardRarity = 'comum' | 'incomum' | 'rara' | 'ultra-rara' | 'secreta';
+
+/** Escala de conservação da carta, na sigla que o mercado de TCG usa. */
+export type CardGrade = 'NM' | 'SP' | 'MP' | 'D';
 
 export type CardLanguage = 'português' | 'inglês' | 'japonês';
 
@@ -68,7 +66,7 @@ export interface CardAttributes {
   hp?: number;
   illustrator: string;
   foil: boolean;
-  grade: string;
+  grade: CardGrade;
 }
 
 export interface ConsoleAttributes {

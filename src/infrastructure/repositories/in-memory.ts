@@ -32,26 +32,45 @@ import {
   reviewsForProduct,
   users as userSeed,
 } from '../data';
+import { addRuntimeProduct, runtimeProducts } from './runtime-store';
 
 export class InMemoryProductRepository implements ProductRepository {
   constructor(private readonly products: Product[] = allProducts) {}
 
+  /** Catálogo seed mais o que foi cadastrado depois que o servidor subiu. */
+  private all(): Product[] {
+    return runtimeProducts.length ? [...this.products, ...runtimeProducts] : this.products;
+  }
+
+  private bySlug(slug: string): Product | null {
+    return productsBySlug.get(slug) ?? runtimeProducts.find((p) => p.slug === slug) ?? null;
+  }
+
   async search(query: CatalogQuery): Promise<CatalogResult> {
-    return runCatalogQuery(this.products, query, { categories: categorySeed, brands: brandSeed });
+    return runCatalogQuery(this.all(), query, { categories: categorySeed, brands: brandSeed });
   }
 
   async findBySlug(slug: string): Promise<Product | null> {
-    return productsBySlug.get(slug) ?? null;
+    return this.bySlug(slug);
   }
 
   async findManyBySlugs(slugs: string[]): Promise<Product[]> {
-    return slugs.map((slug) => productsBySlug.get(slug)).filter((p): p is Product => Boolean(p));
+    return slugs.map((slug) => this.bySlug(slug)).filter((p): p is Product => Boolean(p));
+  }
+
+  /**
+   * Sem banco, o produto cadastrado vive no processo — some quando o servidor
+   * reinicia. Mesmo contrato do Prisma; só a durabilidade muda.
+   */
+  async create(product: Product): Promise<Product> {
+    return addRuntimeProduct(product);
   }
 
   async listCategories(): Promise<Category[]> {
+    const products = this.all();
     return categorySeed.map((category) => ({
       ...category,
-      productCount: this.products.filter((p) => p.categorySlug === category.slug).length,
+      productCount: products.filter((p) => p.categorySlug === category.slug).length,
     }));
   }
 
@@ -75,7 +94,7 @@ export class InMemoryProductRepository implements ProductRepository {
   }
 
   async countAll(): Promise<number> {
-    return this.products.length;
+    return this.all().length;
   }
 }
 

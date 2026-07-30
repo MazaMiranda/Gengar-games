@@ -139,7 +139,10 @@ export function Hero({ featured, totalProdutos }: HeroProps) {
           className="relative hidden h-[38rem] lg:col-span-6 lg:block"
           aria-hidden={!primary}
         >
-          {primary ? <FloatingCard product={primary} index={0} className="left-0 top-0 w-52 xl:w-56" /> : null}
+          {/* z-2: o card terciário cruza o rodapé deste e cobriria o preço. */}
+          {primary ? (
+            <FloatingCard product={primary} index={0} className="left-0 top-0 z-2 w-52 xl:w-56" />
+          ) : null}
           {secondary ? (
             <FloatingCard
               product={secondary}
@@ -206,20 +209,26 @@ function FloatingCard({
         <div className="holo relative aspect-4/5 overflow-hidden">
           <ProductVisual product={product} priority={index === 0} />
         </div>
-        <div className="flex items-center justify-between gap-3 p-4">
-          <div className="min-w-0">
-            <p className="truncate font-display text-xs font-semibold text-ink">{product.name}</p>
-            <p className="truncate font-tech text-2xs uppercase tracking-wider text-ink-faint">
+        {/* O nome ocupa a linha inteira; dividir a linha com o preço o cortava
+            no meio da palavra em cards estreitos. */}
+        <div className="flex flex-col gap-1.5 p-4">
+          <p className="line-clamp-2 font-display text-xs font-semibold leading-snug text-ink">
+            {product.name}
+          </p>
+          <div className="flex items-baseline justify-between gap-2">
+            {/* min-w-0: sem isso o nowrap do truncate impede o encolhimento e o
+                texto passa por baixo do preço. */}
+            <p className="min-w-0 truncate font-tech text-2xs uppercase tracking-wider text-ink-faint">
               {product.card?.set ?? product.subtitle}
             </p>
+            <span
+              className={`shrink-0 font-display text-sm font-bold ${
+                tone === 'primary' ? 'text-brand-200' : 'text-ink-muted'
+              }`}
+            >
+              {formatPrice(product.price)}
+            </span>
           </div>
-          <span
-            className={`shrink-0 font-display text-sm font-bold ${
-              tone === 'primary' ? 'text-brand-200' : 'text-ink-muted'
-            }`}
-          >
-            {formatPrice(product.price)}
-          </span>
         </div>
       </Link>
     </motion.article>

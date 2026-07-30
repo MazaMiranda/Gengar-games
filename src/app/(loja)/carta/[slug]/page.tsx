@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import { getProductDetail, searchCatalog } from '@/core/application/catalog-service';
 import { TCG_GAMES } from '@/core/domain/taxonomy';
-import { PageHeader } from '@/components/layout/page-header';
+import { BreadcrumbBar } from '@/components/layout/page-header';
 import { ProductGallery } from '@/components/product/product-gallery';
 import { BuyBox } from '@/components/product/buy-box';
 import { CardAttributes } from '@/components/product/card-attributes';
@@ -51,15 +51,13 @@ export default async function CardPage({ params }: PageProps) {
     <>
       <RecentlyViewedTracker slug={product.slug} />
 
-      <PageHeader
-        compact
+      <BreadcrumbBar
         accent={product.accent}
-        eyebrow={`${game.name} · ${card.set}`}
-        title={product.name}
         crumbs={[
           { label: 'Início', href: '/' },
           { label: 'TCG', href: '/tcg' },
           { label: game.short, href: `/tcg/${card.game}` },
+          { label: card.set },
           { label: product.name },
         ]}
       />

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { getAdminCatalog } from '@/core/application/admin-service';
 import { listCategories } from '@/core/application/catalog-service';
@@ -16,9 +17,11 @@ export default async function AdminProductsPage() {
       title="Produtos"
       description={`${catalog.total} itens cadastrados no catálogo.`}
       actions={
-        <Button size="sm">
-          <Plus className="size-4" />
-          Novo produto
+        <Button asChild size="sm">
+          <Link href="/admin/produtos/novo">
+            <Plus className="size-4" />
+            Novo produto
+          </Link>
         </Button>
       }
     >
