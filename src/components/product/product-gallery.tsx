@@ -57,7 +57,7 @@ export function ProductGallery({ product }: { product: Product }) {
 
           {current.kind === 'video' ? (
             <span className="absolute inset-0 z-3 grid place-items-center">
-              <span className="grid size-16 place-items-center rounded-full border border-white/25 bg-void/60 backdrop-blur-md">
+              <span className="grid size-16 place-items-center rounded-full border border-ink/25 bg-void/60 backdrop-blur-md">
                 <Play className="size-5 translate-x-0.5 fill-white text-white" />
               </span>
             </span>

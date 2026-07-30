@@ -122,7 +122,7 @@ export function LoginForm() {
         </Button>
       </form>
 
-      <div className="flex flex-col gap-3 rounded-lg border border-line bg-white/2 p-5">
+      <div className="flex flex-col gap-3 rounded-lg border border-line bg-ink/2 p-5">
         <p className="font-tech text-2xs uppercase tracking-[0.18em] text-ink-faint">
           Contas de demonstração · senha gengar123
         </p>

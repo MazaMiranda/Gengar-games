@@ -66,7 +66,7 @@ export function ProportionBar({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex h-2.5 overflow-hidden rounded-full bg-white/6">
+      <div className="flex h-2.5 overflow-hidden rounded-full bg-ink/6">
         {segments.map((segment) => (
           <div
             key={segment.label}

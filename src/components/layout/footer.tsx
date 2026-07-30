@@ -24,7 +24,7 @@ export function Footer() {
       <div className="container-page grid gap-6 border-b border-line py-12 md:grid-cols-3">
         {guarantees.map(({ icon: Icon, title, text }) => (
           <div key={title} className="flex items-start gap-4">
-            <span className="grid size-11 shrink-0 place-items-center rounded-md border border-line bg-white/3 text-brand-300">
+            <span className="grid size-11 shrink-0 place-items-center rounded-md border border-line bg-ink/3 text-brand-300">
               <Icon className="size-4.5" />
             </span>
             <div>
@@ -102,7 +102,7 @@ export function Footer() {
           {paymentMethods.map((method) => (
             <span
               key={method}
-              className="rounded-xs border border-line bg-white/3 px-2.5 py-1 font-tech text-[0.625rem] uppercase tracking-wider text-ink-faint"
+              className="rounded-xs border border-line bg-ink/3 px-2.5 py-1 font-tech text-[0.625rem] uppercase tracking-wider text-ink-faint"
             >
               {method}
             </span>
@@ -115,7 +115,7 @@ export function Footer() {
         className="pointer-events-none select-none overflow-hidden text-center leading-none"
         aria-hidden
       >
-        <span className="block translate-y-[22%] bg-linear-to-b from-white/6 to-transparent bg-clip-text font-display text-[18vw] font-extrabold tracking-tighter text-transparent">
+        <span className="block translate-y-[22%] bg-linear-to-b from-ink/6 to-transparent bg-clip-text font-display text-[18vw] font-extrabold tracking-tighter text-transparent">
           GENGAR
         </span>
       </div>

@@ -34,7 +34,7 @@ export const DrawerContent = React.forwardRef<
     <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-void/70 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0" />
     <DialogPrimitive.Content ref={ref} className={cn(drawerVariants({ side }), className)} {...props}>
       {side === 'bottom' ? (
-        <div className="mx-auto mt-3 h-1 w-10 shrink-0 rounded-full bg-white/15" aria-hidden />
+        <div className="mx-auto mt-3 h-1 w-10 shrink-0 rounded-full bg-ink/15" aria-hidden />
       ) : null}
       {children}
     </DialogPrimitive.Content>
@@ -88,7 +88,7 @@ export function DrawerCloseButton({ className }: { className?: string }) {
   return (
     <DialogPrimitive.Close
       className={cn(
-        'grid size-9 shrink-0 place-items-center rounded-md text-ink-faint transition-colors hover:bg-white/8 hover:text-ink',
+        'grid size-9 shrink-0 place-items-center rounded-md text-ink-faint transition-colors hover:bg-ink/8 hover:text-ink',
         className,
       )}
     >

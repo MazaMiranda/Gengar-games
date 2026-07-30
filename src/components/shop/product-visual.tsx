@@ -155,7 +155,7 @@ function CardFrame({
         }}
       >
         {/* Moldura interna */}
-        <div className="absolute inset-[6%] rounded-[4%/3%] border border-white/10" />
+        <div className="absolute inset-[6%] rounded-[4%/3%] border border-ink/10" />
 
         {/* Barra de nome */}
         <div className="absolute inset-x-[10%] top-[10%] flex items-center justify-between gap-2">
@@ -171,7 +171,7 @@ function CardFrame({
 
         {/* Janela de arte */}
         <div
-          className="absolute inset-x-[10%] top-[20%] h-[46%] overflow-hidden rounded-[3%] border border-white/10"
+          className="absolute inset-x-[10%] top-[20%] h-[46%] overflow-hidden rounded-[3%] border border-ink/10"
           style={{ background: `radial-gradient(circle at 50% 35%, ${beam}44, rgba(4,4,7,0.95) 72%)` }}
         >
           <div

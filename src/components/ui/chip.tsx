@@ -17,7 +17,7 @@ export function Chip({ className, children, onRemove, active, ...props }: ChipPr
         'group inline-flex h-8 items-center gap-2 rounded-sm border px-3 text-xs font-medium transition-all duration-200',
         active
           ? 'border-brand-400/45 bg-brand-500/15 text-brand-100'
-          : 'border-line bg-white/4 text-ink-muted hover:border-line-strong hover:text-ink',
+          : 'border-line bg-ink/4 text-ink-muted hover:border-line-strong hover:text-ink',
         className,
       )}
       {...props}
@@ -27,7 +27,7 @@ export function Chip({ className, children, onRemove, active, ...props }: ChipPr
         <button
           type="button"
           onClick={onRemove}
-          className="-mr-1 grid size-4 place-items-center rounded-xs text-ink-faint transition-colors hover:bg-white/10 hover:text-ink"
+          className="-mr-1 grid size-4 place-items-center rounded-xs text-ink-faint transition-colors hover:bg-ink/10 hover:text-ink"
           aria-label="Remover filtro"
         >
           <X className="size-3" />
@@ -52,7 +52,7 @@ export function ToggleChip({ className, children, selected, count, ...props }: T
         'inline-flex h-9 items-center gap-2 rounded-sm border px-3.5 text-xs font-semibold transition-all duration-300 ease-out-expo',
         selected
           ? 'border-brand-400/60 bg-brand-500/18 text-brand-100 shadow-glow-sm'
-          : 'border-line bg-white/3 text-ink-muted hover:border-brand-400/35 hover:bg-brand-500/8 hover:text-ink',
+          : 'border-line bg-ink/3 text-ink-muted hover:border-brand-400/35 hover:bg-brand-500/8 hover:text-ink',
         className,
       )}
       {...props}

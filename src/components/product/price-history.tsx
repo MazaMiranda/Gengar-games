@@ -56,7 +56,7 @@ export function PriceHistory({ points, current }: PriceHistoryProps) {
             tone: variation > 0 ? 'text-warning' : 'text-success',
           },
         ].map((stat) => (
-          <div key={stat.label} className="rounded-lg border border-line bg-white/2 p-4">
+          <div key={stat.label} className="rounded-lg border border-line bg-ink/2 p-4">
             <p className="font-tech text-2xs uppercase tracking-[0.16em] text-ink-faint">{stat.label}</p>
             <p className={`mt-1.5 font-display text-lg font-bold ${stat.tone}`}>{stat.value}</p>
           </div>

@@ -73,7 +73,7 @@ export function AdminNav() {
                         'flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-all duration-300',
                         active
                           ? 'bg-brand-500/14 text-ink shadow-[inset_2px_0_0_0_var(--color-brand-400)]'
-                          : 'text-ink-muted hover:bg-white/4 hover:text-ink',
+                          : 'text-ink-muted hover:bg-ink/4 hover:text-ink',
                       )}
                     >
                       <link.icon className={cn('size-4', active ? 'text-brand-300' : 'text-ink-faint')} />
@@ -90,7 +90,7 @@ export function AdminNav() {
       <div className="flex flex-col gap-1 border-t border-line pt-4">
         <Link
           href="/"
-          className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-ink-muted transition-colors hover:bg-white/4 hover:text-ink"
+          className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-ink-muted transition-colors hover:bg-ink/4 hover:text-ink"
         >
           <Store className="size-4 text-ink-faint" />
           Ver a loja

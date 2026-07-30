@@ -95,7 +95,7 @@ export function CategoryBento({ categories }: { categories: Category[] }) {
 
               <div className="relative flex items-start justify-between gap-4">
                 <span
-                  className="grid size-11 place-items-center rounded-md border border-line bg-white/4 transition-all duration-500 group-hover:scale-110"
+                  className="grid size-11 place-items-center rounded-md border border-line bg-ink/4 transition-all duration-500 group-hover:scale-110"
                   style={{ color: `hsl(${category.accent} 90% 72%)` }}
                 >
                   <Glyph className="size-5" strokeWidth={1.6} />
@@ -214,10 +214,10 @@ export function PromoBanner() {
               compras acima de R$ 500. Válido para singles e selados de Pokémon TCG.
             </p>
             <div className="flex flex-wrap gap-3 pt-1">
-              <Button asChild size="lg" variant="secondary" className="border-white/25 bg-white/12 text-white hover:bg-white/20">
+              <Button asChild size="lg" variant="secondary" className="border-ink/25 bg-ink/12 text-white hover:bg-ink/20">
                 <Link href="/catalogo?tipo=tcg-card&tipo=tcg-sealed">Aproveitar agora</Link>
               </Button>
-              <Button asChild size="lg" variant="ghost" className="text-white/80 hover:bg-white/10 hover:text-white">
+              <Button asChild size="lg" variant="ghost" className="text-white/80 hover:bg-ink/10 hover:text-white">
                 <Link href="/tcg">Ver regras da promoção</Link>
               </Button>
             </div>
@@ -228,15 +228,15 @@ export function PromoBanner() {
               {[0, 1, 2].map((index) => (
                 <div
                   key={index}
-                  className="h-52 w-36 rounded-lg border border-white/20 bg-white/8 backdrop-blur-md"
+                  className="h-52 w-36 rounded-lg border border-ink/20 bg-ink/8 backdrop-blur-md"
                   style={{
                     transform: `rotate(${(index - 1) * 7}deg) translateY(${index === 1 ? -14 : 0}px)`,
                     boxShadow: '0 30px 60px -25px rgba(0,0,0,0.7)',
                   }}
                 >
-                  <div className="m-3 h-24 rounded-sm bg-linear-to-br from-white/25 to-transparent" />
-                  <div className="mx-3 h-2 w-2/3 rounded-full bg-white/25" />
-                  <div className="mx-3 mt-2 h-2 w-1/2 rounded-full bg-white/15" />
+                  <div className="m-3 h-24 rounded-sm bg-linear-to-br from-ink/25 to-transparent" />
+                  <div className="mx-3 h-2 w-2/3 rounded-full bg-ink/25" />
+                  <div className="mx-3 mt-2 h-2 w-1/2 rounded-full bg-ink/15" />
                 </div>
               ))}
             </div>

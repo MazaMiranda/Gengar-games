@@ -3,7 +3,13 @@ import { cn } from '@/lib/utils';
 /** Camada de atmosfera: névoas roxas em movimento lento atrás do conteúdo. */
 export function Aurora({ className, intensity = 1 }: { className?: string; intensity?: number }) {
   return (
-    <div className={cn('pointer-events-none absolute inset-0 overflow-hidden', className)} aria-hidden>
+    <div
+      className={cn('pointer-events-none absolute inset-0 overflow-hidden', className)}
+      // --t-aurora-strength derruba a intensidade no tema claro, onde o roxo
+      // satura demais sobre branco.
+      style={{ opacity: 'var(--t-aurora-strength)' }}
+      aria-hidden
+    >
       {/*
         Sem filter: blur() de propósito.
 

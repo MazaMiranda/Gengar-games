@@ -28,7 +28,7 @@ export function CatalogResults({ items, facets, total, page, pageCount }: Catalo
 
       {items.length === 0 ? (
         <div className="plate flex flex-col items-center gap-5 rounded-xl px-6 py-20 text-center">
-          <span className="grid size-16 place-items-center rounded-full border border-line bg-white/3">
+          <span className="grid size-16 place-items-center rounded-full border border-line bg-ink/3">
             <PackageSearch className="size-6 text-ink-faint" />
           </span>
           <div className="max-w-sm">

@@ -14,10 +14,10 @@ const buttonVariants = cva(
         primary:
           'sweep bg-linear-to-b from-brand-400 to-brand-600 text-white shadow-[0_0_0_1px_rgba(168,85,247,0.5),var(--shadow-glow-sm),var(--shadow-inset-top)] hover:from-brand-300 hover:to-brand-500 hover:shadow-[0_0_0_1px_rgba(192,132,252,0.7),var(--shadow-glow),var(--shadow-inset-top)] active:scale-[0.98]',
         secondary:
-          'glass text-ink hover:border-line-brand hover:bg-white/8 hover:shadow-glow-sm active:scale-[0.98]',
+          'glass text-ink hover:border-line-brand hover:bg-ink/8 hover:shadow-glow-sm active:scale-[0.98]',
         outline:
           'border border-line-strong bg-transparent text-ink hover:border-brand-400/60 hover:bg-brand-500/10 hover:text-brand-200',
-        ghost: 'text-ink-muted hover:bg-white/6 hover:text-ink',
+        ghost: 'text-ink-muted hover:bg-ink/6 hover:text-ink',
         danger:
           'bg-linear-to-b from-danger/90 to-danger/70 text-white shadow-[0_0_0_1px_rgba(251,113,133,0.4)] hover:brightness-110',
         link: 'text-brand-300 underline-offset-4 hover:text-brand-200 hover:underline',

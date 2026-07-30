@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils';
 import { Logo } from './logo';
 import { SearchDialog } from './search-dialog';
 import { MobileNav } from './mobile-nav';
+import { ThemeToggle } from './theme-toggle';
 
 export function Header() {
   const pathname = usePathname();
@@ -142,7 +143,7 @@ export function Header() {
             <SearchDialog>
               <button
                 type="button"
-                className="group hidden h-10 items-center gap-3 rounded-md border border-line bg-white/3 pl-3.5 pr-2 text-sm text-ink-faint transition-all duration-300 hover:border-brand-400/40 hover:bg-brand-500/8 md:flex md:w-56 lg:w-64"
+                className="group hidden h-10 items-center gap-3 rounded-md border border-line bg-ink/3 pl-3.5 pr-2 text-sm text-ink-faint transition-all duration-300 hover:border-brand-400/40 hover:bg-brand-500/8 md:flex md:w-56 lg:w-64"
               >
                 <Search className="size-4" />
                 <span className="flex-1 text-left text-xs">Buscar produtos…</span>
@@ -156,16 +157,18 @@ export function Header() {
               <button
                 type="button"
                 aria-label="Buscar"
-                className="grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-white/6 hover:text-ink md:hidden"
+                className="grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink md:hidden"
               >
                 <Search className="size-4" />
               </button>
             </SearchDialog>
 
+            <ThemeToggle />
+
             <Link
               href="/conta/favoritos"
               aria-label="Favoritos"
-              className="relative hidden size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-white/6 hover:text-ink sm:grid"
+              className="relative hidden size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink sm:grid"
             >
               <Heart className="size-4" />
               {wishlistCount > 0 ? (
@@ -176,7 +179,7 @@ export function Header() {
             <Link
               href={session?.user ? '/conta' : '/login'}
               aria-label={session?.user ? 'Minha conta' : 'Entrar'}
-              className="grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-white/6 hover:text-ink"
+              className="grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink"
             >
               <User className="size-4" />
             </Link>
@@ -185,7 +188,7 @@ export function Header() {
               type="button"
               onClick={openCart}
               aria-label={`Abrir carrinho, ${itemCount} itens`}
-              className="relative ml-1 grid size-10 place-items-center rounded-md border border-line bg-white/4 text-ink transition-all duration-300 hover:border-brand-400/50 hover:bg-brand-500/12 hover:shadow-glow-sm"
+              className="relative ml-1 grid size-10 place-items-center rounded-md border border-line bg-ink/4 text-ink transition-all duration-300 hover:border-brand-400/50 hover:bg-brand-500/12 hover:shadow-glow-sm"
             >
               <ShoppingBag className="size-4" />
               <AnimatePresence>
@@ -227,7 +230,7 @@ export function Header() {
                         <li key={link.href + link.label}>
                           <Link
                             href={link.href}
-                            className="group flex flex-col gap-0.5 rounded-md px-3 py-2 transition-colors hover:bg-white/5"
+                            className="group flex flex-col gap-0.5 rounded-md px-3 py-2 transition-colors hover:bg-ink/5"
                           >
                             <span className="text-sm font-semibold text-ink-muted transition-colors group-hover:text-ink">
                               {link.label}

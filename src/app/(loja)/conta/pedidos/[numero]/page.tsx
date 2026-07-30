@@ -73,7 +73,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
                         className={`grid size-7 place-items-center rounded-full border ${
                           done
                             ? 'border-success/40 bg-success/15 text-success'
-                            : 'border-line bg-white/3 text-ink-ghost'
+                            : 'border-line bg-ink/3 text-ink-ghost'
                         }`}
                       >
                         {done ? (
@@ -97,7 +97,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
             </ol>
 
             {order.trackingCode ? (
-              <div className="flex items-center justify-between gap-3 rounded-md border border-line bg-white/2 px-4 py-3">
+              <div className="flex items-center justify-between gap-3 rounded-md border border-line bg-ink/2 px-4 py-3">
                 <div className="flex items-center gap-2.5">
                   <Package className="size-4 text-brand-300" />
                   <div>

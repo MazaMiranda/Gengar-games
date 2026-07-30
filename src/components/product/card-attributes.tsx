@@ -78,7 +78,7 @@ function Attribute({
   hint?: string;
 }) {
   return (
-    <div className="flex flex-col gap-1.5 rounded-md border border-line bg-white/2 p-3.5">
+    <div className="flex flex-col gap-1.5 rounded-md border border-line bg-ink/2 p-3.5">
       <span className="flex items-center gap-1.5 font-tech text-2xs uppercase tracking-[0.16em] text-ink-faint">
         <Icon className="size-3" />
         {label}

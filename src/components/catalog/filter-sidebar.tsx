@@ -91,7 +91,7 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
       </div>
 
       {/* Chaves rápidas */}
-      <div className="flex flex-col gap-3 rounded-lg border border-line bg-white/2 p-4">
+      <div className="flex flex-col gap-3 rounded-lg border border-line bg-ink/2 p-4">
         <label className="flex cursor-pointer items-center justify-between gap-3">
           <span className="text-xs font-medium text-ink-muted">Somente em estoque</span>
           <Switch
@@ -111,7 +111,7 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
 
       {/* Faixa de preço */}
       {max > min ? (
-        <div className="flex flex-col gap-4 rounded-lg border border-line bg-white/2 p-4">
+        <div className="flex flex-col gap-4 rounded-lg border border-line bg-ink/2 p-4">
           <div className="flex items-center justify-between">
             <span className="font-tech text-2xs font-semibold uppercase tracking-[0.18em] text-ink-muted">
               Faixa de preço
@@ -151,7 +151,7 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
                       <li key={bucket.value}>
                         <label
                           className={cn(
-                            'flex cursor-pointer items-center gap-3 rounded-sm px-2 py-2 transition-colors hover:bg-white/4',
+                            'flex cursor-pointer items-center gap-3 rounded-sm px-2 py-2 transition-colors hover:bg-ink/4',
                             checked && 'bg-brand-500/8',
                           )}
                         >

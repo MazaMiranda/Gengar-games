@@ -5,7 +5,7 @@ import * as LabelPrimitive from '@radix-ui/react-label';
 import { cn } from '@/lib/utils';
 
 const fieldBase =
-  'w-full rounded-md border border-line bg-white/3 px-4 text-sm text-ink placeholder:text-ink-ghost outline-none transition-all duration-300 ease-out-expo focus:border-brand-400/60 focus:bg-white/5 focus:shadow-[0_0_0_3px_rgba(147,51,234,0.14)] disabled:opacity-50';
+  'w-full rounded-md border border-line bg-ink/3 px-4 text-sm text-ink placeholder:text-ink-ghost outline-none transition-all duration-300 ease-out-expo focus:border-brand-400/60 focus:bg-ink/5 focus:shadow-[0_0_0_3px_rgba(147,51,234,0.14)] disabled:opacity-50';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   invalid?: boolean;

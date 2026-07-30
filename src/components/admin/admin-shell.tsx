@@ -100,7 +100,7 @@ export function DataTable<T>({
           {rows.map((row) => (
             <tr
               key={getKey(row)}
-              className="border-b border-line transition-colors last:border-b-0 hover:bg-white/3"
+              className="border-b border-line transition-colors last:border-b-0 hover:bg-ink/3"
             >
               {columns.map((column) => (
                 <td

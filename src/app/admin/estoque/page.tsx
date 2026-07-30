@@ -48,7 +48,7 @@ export default async function AdminStockPage() {
         {cards.map((card) => (
           <AdminCard key={card.label}>
             <div className="flex items-center gap-4">
-              <span className="grid size-11 place-items-center rounded-md border border-line bg-white/3">
+              <span className="grid size-11 place-items-center rounded-md border border-line bg-ink/3">
                 <card.icon className={`size-5 ${card.tone}`} />
               </span>
               <div>

@@ -39,7 +39,7 @@ export default async function CouponsPage() {
         </section>
       ) : (
         <div className="plate flex flex-col items-center gap-4 rounded-xl px-6 py-14 text-center">
-          <span className="grid size-14 place-items-center rounded-full border border-line bg-white/3">
+          <span className="grid size-14 place-items-center rounded-full border border-line bg-ink/3">
             <Ticket className="size-5 text-ink-faint" />
           </span>
           <div>

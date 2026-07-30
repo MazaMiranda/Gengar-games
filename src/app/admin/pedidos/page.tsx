@@ -52,7 +52,7 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
                 'inline-flex h-9 items-center gap-2 rounded-sm border px-3.5 text-xs font-semibold transition-all duration-300',
                 active
                   ? 'border-brand-400/60 bg-brand-500/15 text-brand-100'
-                  : 'border-line bg-white/3 text-ink-muted hover:border-line-strong hover:text-ink',
+                  : 'border-line bg-ink/3 text-ink-muted hover:border-line-strong hover:text-ink',
               )}
             >
               {filter.label}

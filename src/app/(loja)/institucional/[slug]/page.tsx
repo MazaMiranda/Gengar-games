@@ -70,7 +70,7 @@ export default async function InstitutionalPage({ params }: PageProps) {
               <Link
                 key={item.slug}
                 href={`/institucional/${item.slug}`}
-                className="group flex items-center justify-between gap-3 rounded-md px-3 py-2.5 text-sm text-ink-muted transition-colors hover:bg-white/4 hover:text-ink"
+                className="group flex items-center justify-between gap-3 rounded-md px-3 py-2.5 text-sm text-ink-muted transition-colors hover:bg-ink/4 hover:text-ink"
               >
                 {item.title}
                 <ArrowUpRight className="size-3.5 text-ink-ghost transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

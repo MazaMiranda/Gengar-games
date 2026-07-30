@@ -62,7 +62,7 @@ export default async function TcgGamePage({ params, searchParams }: PageProps) {
               <Link
                 key={set.value}
                 href={`/tcg/${game}?colecao=${encodeURIComponent(set.value)}`}
-                className="flex h-9 shrink-0 items-center gap-2 rounded-sm border border-line bg-white/3 px-3.5 text-xs font-medium text-ink-muted transition-all hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-ink"
+                className="flex h-9 shrink-0 items-center gap-2 rounded-sm border border-line bg-ink/3 px-3.5 text-xs font-medium text-ink-muted transition-all hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-ink"
               >
                 {set.value}
                 <span className="font-tech text-[0.625rem] text-ink-ghost">{set.count}</span>
