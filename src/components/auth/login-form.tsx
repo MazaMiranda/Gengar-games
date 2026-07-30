@@ -96,7 +96,7 @@ export function LoginForm() {
               type="button"
               onClick={() => setShowPassword((value) => !value)}
               aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-              className="absolute right-3 top-1/2 grid size-8 -translate-y-1/2 place-items-center rounded-sm text-ink-faint transition-colors hover:text-ink"
+              className="absolute right-2 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-sm text-ink-faint transition-colors hover:text-ink"
             >
               {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
             </button>
@@ -110,7 +110,7 @@ export function LoginForm() {
           </label>
           <Link
             href="/login/recuperar"
-            className="text-xs font-semibold text-brand-300 transition-colors hover:text-brand-200"
+            className="-my-2.5 py-2.5 text-xs font-semibold text-brand-300 transition-colors hover:text-brand-200"
           >
             Esqueci minha senha
           </Link>
@@ -145,7 +145,10 @@ export function LoginForm() {
 
       <p className="text-center text-sm text-ink-muted">
         Ainda não tem conta?{' '}
-        <Link href="/cadastro" className="font-semibold text-brand-300 transition-colors hover:text-brand-200">
+        <Link
+          href="/cadastro"
+          className="-my-2.5 inline-block py-2.5 font-semibold text-brand-300 transition-colors hover:text-brand-200"
+        >
           Criar cadastro
         </Link>
       </p>

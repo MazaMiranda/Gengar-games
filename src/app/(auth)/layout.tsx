@@ -50,7 +50,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </div>
           <Link
             href="/"
-            className="ml-auto inline-flex items-center gap-2 text-xs font-semibold text-ink-faint transition-colors hover:text-ink"
+            className="-my-2.5 ml-auto inline-flex items-center gap-2 py-2.5 text-xs font-semibold text-ink-faint transition-colors hover:text-ink"
           >
             <ArrowLeft className="size-3.5" />
             Voltar para a loja

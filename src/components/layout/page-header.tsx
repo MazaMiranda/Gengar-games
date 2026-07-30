@@ -28,9 +28,14 @@ export function Breadcrumbs({ crumbs, className }: { crumbs: Crumb[]; className?
       <ol className="flex flex-wrap items-center gap-1.5 text-2xs text-ink-faint">
         {crumbs.map((crumb, index) => (
           <li key={crumb.label} className="flex items-center gap-1.5">
-            {index > 0 ? <ChevronRight className="size-3 text-ink-ghost" /> : null}
+            {index > 0 ? <ChevronRight className="size-3 shrink-0 text-ink-ghost" /> : null}
             {crumb.href ? (
-              <Link href={crumb.href} className="transition-colors hover:text-brand-300">
+              // py-2.5 -my-2.5: alvo de toque de ~36px sem empurrar o layout —
+              // o texto continua do tamanho visual de sempre.
+              <Link
+                href={crumb.href}
+                className="-my-2.5 py-2.5 transition-colors hover:text-brand-300"
+              >
                 {crumb.label}
               </Link>
             ) : (

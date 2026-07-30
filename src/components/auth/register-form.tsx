@@ -182,7 +182,10 @@ export function RegisterForm() {
 
       <p className="text-center text-sm text-ink-muted">
         Já tem cadastro?{' '}
-        <Link href="/login" className="font-semibold text-brand-300 transition-colors hover:text-brand-200">
+        <Link
+          href="/login"
+          className="-my-2.5 inline-block py-2.5 font-semibold text-brand-300 transition-colors hover:text-brand-200"
+        >
           Entrar
         </Link>
       </p>
