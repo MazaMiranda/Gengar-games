@@ -101,19 +101,21 @@ export function ProductVisual({
       style={{ background: `linear-gradient(155deg, ${mid} 0%, ${base} 46%, #0a0a0d 100%)` }}
       aria-hidden
     >
-      {/* Halo principal */}
+      {/* Halo principal — gradiente já é suave, não precisa de blur() (ver Aurora).
+          Isto se repete uma vez por card; numa vitrine cheia, o filtro somava
+          megapixels de trabalho por quadro sem mudar o que se vê. */}
       <div
-        className="absolute -left-1/4 -top-1/3 size-[130%] opacity-70 blur-2xl"
+        className="absolute -left-1/4 -top-1/3 size-[130%] opacity-70"
         style={{
-          background: `radial-gradient(circle at 34% 30%, ${beam}55 0%, transparent 62%)`,
+          background: `radial-gradient(circle at 34% 30%, ${beam}55 0%, ${beam}22 34%, transparent 66%)`,
         }}
       />
       {/* Malha técnica */}
       <div className="grid-tech absolute inset-0 opacity-[0.35] [background-size:32px_32px]" />
       {/* Faixa diagonal de luz */}
       <div
-        className="absolute inset-y-0 -left-1/3 w-2/3 rotate-12 opacity-25 blur-xl"
-        style={{ background: `linear-gradient(90deg, transparent, ${beam}66, transparent)` }}
+        className="absolute inset-y-0 -left-1/3 w-2/3 rotate-12 opacity-25"
+        style={{ background: `linear-gradient(90deg, transparent, ${beam}44 45%, ${beam}66 50%, ${beam}44 55%, transparent)` }}
       />
 
       {isCard ? (
