@@ -32,7 +32,18 @@ export function Header() {
   React.useEffect(() => setMounted(true), []);
   React.useEffect(() => setActiveMenu(null), [pathname]);
 
-  useMotionValueEvent(scrollY, 'change', (value) => setScrolled(value > 24));
+  /**
+   * Histerese: colapsa aos 72px, só reabre abaixo de 12px.
+   *
+   * A folga entre os dois limiares precisa ser maior que a altura do ticker
+   * (36px). Com um limiar único, colapsar encolhia o documento, o ancoramento
+   * de rolagem do navegador compensava o scrollY para baixo, isso cruzava o
+   * limiar de volta e reabria o ticker — um ciclo que se repetia sozinho, com
+   * a página parada.
+   */
+  useMotionValueEvent(scrollY, 'change', (value) => {
+    setScrolled((current) => (current ? value > 12 : value > 72));
+  });
 
   const itemCount = mounted ? lines.reduce((sum, line) => sum + line.quantity, 0) : 0;
   const wishlistCount = mounted ? wishlist.length : 0;
@@ -54,7 +65,9 @@ export function Header() {
       {/* Ticker de avisos */}
       <div
         className={cn(
-          'overflow-hidden border-b border-line bg-void/80 backdrop-blur-xl transition-all duration-500 ease-out-expo',
+          // overflow-anchor:none — este bloco muda de altura de propósito; sem
+          // isso o navegador tenta "corrigir" o scrollY e briga com a animação.
+          'overflow-hidden border-b border-line bg-void/80 backdrop-blur-xl transition-all duration-500 ease-out-expo [overflow-anchor:none]',
           scrolled ? 'h-0 opacity-0' : 'h-9 opacity-100',
         )}
       >

@@ -155,12 +155,20 @@
   }
 }
 
+/*
+ * Só translação — sem scale.
+ *
+ * A Aurora são camadas de ~60vw com blur de 120–140px. Escalar uma camada
+ * borrada obriga o navegador a re-rasterizar o blur a cada quadro, e isso
+ * segurava a home em 30fps (mediana de 33ms por quadro). Translação pura é
+ * composta na GPU: mesma sensação de movimento, 60fps.
+ */
 @keyframes drift {
   from {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(6%, -4%, 0) scale(1.12);
+    transform: translate3d(8%, -6%, 0);
   }
 }
 
