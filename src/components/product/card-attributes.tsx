@@ -1,6 +1,6 @@
 import { Languages, Layers, ShieldCheck, Sparkles } from 'lucide-react';
 import type { CardAttributes as CardAttrs, Product } from '@/core/domain/entities';
-import { RARITIES, TCG_GAMES } from '@/core/domain/taxonomy';
+import { CARD_GRADES, RARITIES, TCG_GAMES } from '@/core/domain/taxonomy';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
@@ -10,13 +10,6 @@ const RARITY_TONE: Record<string, string> = {
   rara: 'text-rarity-rare',
   'ultra-rara': 'text-rarity-ultra',
   secreta: 'text-rarity-secret',
-};
-
-const GRADES: Record<string, string> = {
-  M: 'Mint — perfeita',
-  NM: 'Near Mint — praticamente perfeita',
-  SP: 'Slightly Played — marcas mínimas',
-  MP: 'Moderately Played — desgaste visível',
 };
 
 /** Ficha técnica da carta — o painel que o colecionador procura primeiro. */
@@ -46,7 +39,12 @@ export function CardAttributes({ card, product }: { card: CardAttrs; product: Pr
 
       <div className="grid gap-3 sm:grid-cols-3">
         <Attribute icon={Languages} label="Idioma" value={card.language} />
-        <Attribute icon={ShieldCheck} label="Estado" value={card.grade} hint={GRADES[card.grade]} />
+        <Attribute
+          icon={ShieldCheck}
+          label="Estado"
+          value={card.grade}
+          hint={`${CARD_GRADES[card.grade].name} — ${CARD_GRADES[card.grade].description}`}
+        />
         <Attribute icon={Sparkles} label="Estoque" value={`${product.stock} un.`} />
       </div>
 

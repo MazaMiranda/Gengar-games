@@ -5,6 +5,11 @@ interface PriceProps {
   compareAt?: number | null;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   installments?: boolean;
+  /**
+   * Mantém a altura da linha do preço antigo mesmo sem desconto. Numa grade,
+   * é o que faz o preço de todos os cards cair na mesma linha de base.
+   */
+  reserveCompare?: boolean;
   className?: string;
 }
 
@@ -16,7 +21,14 @@ const SIZE_MAP = {
 } as const;
 
 /** Composição tipográfica do preço: símbolo e centavos em escala menor. */
-export function Price({ value, compareAt, size = 'md', installments, className }: PriceProps) {
+export function Price({
+  value,
+  compareAt,
+  size = 'md',
+  installments,
+  reserveCompare,
+  className,
+}: PriceProps) {
   const { symbol, amount, fraction } = splitPrice(value);
   const scale = SIZE_MAP[size];
   const off = discountPercent(value, compareAt);
@@ -27,6 +39,10 @@ export function Price({ value, compareAt, size = 'md', installments, className }
       {compareAt && off > 0 ? (
         <span className={cn('text-ink-ghost line-through', size === 'xl' ? 'text-sm' : 'text-xs')}>
           {formatPrice(compareAt)}
+        </span>
+      ) : reserveCompare ? (
+        <span aria-hidden className={cn('invisible', size === 'xl' ? 'text-sm' : 'text-xs')}>
+          &nbsp;
         </span>
       ) : null}
       <div className="flex items-baseline gap-1 font-display font-bold tracking-tight text-ink">

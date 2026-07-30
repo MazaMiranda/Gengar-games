@@ -27,6 +27,7 @@ const GROUPS: { key: string; title: string; facet: keyof CatalogFacets }[] = [
   { key: PARAM.tcg, title: 'Card game', facet: 'tcgs' },
   { key: PARAM.set, title: 'Coleção / Expansão', facet: 'sets' },
   { key: PARAM.rarity, title: 'Raridade', facet: 'rarities' },
+  { key: PARAM.grade, title: 'Estado da carta', facet: 'grades' },
   { key: PARAM.language, title: 'Idioma', facet: 'languages' },
   { key: PARAM.platform, title: 'Plataforma', facet: 'platforms' },
   { key: PARAM.brand, title: 'Marca', facet: 'brands' },

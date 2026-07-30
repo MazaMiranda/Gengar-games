@@ -25,6 +25,7 @@ import type {
   Repositories,
   UserRepository,
 } from '@/core/ports/repositories';
+import { Prisma } from '@prisma/client';
 import { prisma } from '../db/prisma';
 
 type ProductRow = Awaited<ReturnType<typeof prisma.product.findMany>>[number];
@@ -95,6 +96,21 @@ export class PrismaProductRepository implements ProductRepository {
     const rows = await prisma.product.findMany({ where: { slug: { in: slugs } } });
     const bySlug = new Map(rows.map((row) => [row.slug, toProduct(row)]));
     return slugs.map((slug) => bySlug.get(slug)).filter((p): p is Product => Boolean(p));
+  }
+
+  async create(product: Product): Promise<Product> {
+    const { card, console: consoleInfo, releasedAt, specs, media, ...rest } = product;
+    const row = await prisma.product.create({
+      data: {
+        ...rest,
+        releasedAt: new Date(releasedAt),
+        specs: specs as unknown as Prisma.InputJsonValue,
+        media: media as unknown as Prisma.InputJsonValue,
+        card: (card ?? Prisma.JsonNull) as unknown as Prisma.InputJsonValue,
+        consoleInfo: (consoleInfo ?? Prisma.JsonNull) as unknown as Prisma.InputJsonValue,
+      },
+    });
+    return toProduct(row);
   }
 
   async listCategories(): Promise<Category[]> {

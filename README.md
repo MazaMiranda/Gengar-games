@@ -1,6 +1,6 @@
 # Gengar Games
 
-E-commerce premium de **Trading Card Games**, consoles, jogos, acessórios e colecionáveis.
+E-commerce premium de **Pokémon TCG**, consoles, jogos, acessórios e colecionáveis.
 Identidade visual própria — preto absoluto, roxo neon, vidro e iluminação — construída sobre
 Next.js 15, React 19 e TypeScript.
 
@@ -110,7 +110,8 @@ Drawer, Accordion, Tabs, Tooltip, Skeleton, Rating, Price, Section, Reveal/Stagg
 - Busca instantânea com atalho `⌘K` / `Ctrl+K`
 - Página de produto: galeria com zoom, buy box, cálculo de frete, abas de descrição/especificações/avaliações/perguntas e histórico de preço em SVG
 - Página de carta com ficha completa: coleção, número, raridade, idioma, tipo, HP, ilustrador e estado
-- Áreas dedicadas de TCG (7 jogos) e Gamer (5 plataformas)
+- Áreas dedicadas de TCG (Pokémon) e Gamer (5 plataformas)
+- Cadastro de cartas busca a arte real na [TCGdex](https://tcgdex.dev/pt-br) por nome e número — sem correspondência, a arte procedural da loja assume
 - Carrinho em drawer com cupom, frete, recomendações e "salvar para depois"
 - Checkout em 4 etapas com máscaras, validação Zod e revisão
 

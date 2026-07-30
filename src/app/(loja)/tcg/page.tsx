@@ -1,18 +1,18 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowUpRight, Layers, ScanLine, ShieldCheck } from 'lucide-react';
+import { Layers, ScanLine, ShieldCheck } from 'lucide-react';
 import { searchCatalog } from '@/core/application/catalog-service';
-import { tcgGameList } from '@/core/domain/taxonomy';
 import { PageHeader } from '@/components/layout/page-header';
 import { ProductRail } from '@/components/shop/product-rail';
 import { ProductCard } from '@/components/shop/product-card';
 import { SectionHeading, Section } from '@/components/ui/section';
 import { Reveal } from '@/components/ui/motion';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
   title: 'Área TCG',
   description:
-    'Pokémon, One Piece, Magic, Yu-Gi-Oh!, Lorcana, Flesh and Blood e Digimon. Singles conferidos carta a carta e produtos selados com lacre original.',
+    'Pokémon TCG: singles conferidos carta a carta e produtos selados com lacre original.',
 };
 
 export const revalidate = 600;
@@ -46,47 +46,16 @@ export default async function TcgPage() {
     <>
       <PageHeader
         eyebrow="Área TCG"
-        title="Sete card games, uma curadoria obsessiva"
+        title="Pokémon TCG, uma curadoria obsessiva"
         description="Do single de R$ 12 à alt art de R$ 3.500 — tudo conferido à mão, classificado e enviado com proteção de nível grading."
         crumbs={[{ label: 'Início', href: '/' }, { label: 'TCG' }]}
         accent={265}
+        actions={
+          <Button asChild variant="secondary">
+            <Link href="/tcg/pokemon">Ver por coleção</Link>
+          </Button>
+        }
       />
-
-      <Section>
-        <SectionHeading eyebrow="Escolha seu jogo" title="Card games atendidos" className="mb-10" />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {tcgGameList.map((game, index) => (
-            <Reveal key={game.slug} delay={index * 0.05}>
-              <Link
-                href={`/tcg/${game.slug}`}
-                className="plate grain group relative flex h-full flex-col justify-between gap-8 overflow-hidden rounded-xl p-6 transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:border-line-brand hover:shadow-lift"
-              >
-                <div
-                  className="absolute -right-12 -top-12 size-40 rounded-full opacity-40 blur-3xl transition-opacity duration-700 group-hover:opacity-75"
-                  style={{ background: `radial-gradient(circle, hsl(${game.accent} 88% 58% / 0.6), transparent 70%)` }}
-                  aria-hidden
-                />
-                <div className="relative flex items-center justify-between">
-                  <span
-                    className="font-tech text-2xs font-bold uppercase tracking-[0.26em]"
-                    style={{ color: `hsl(${game.accent} 90% 72%)` }}
-                  >
-                    {game.short}
-                  </span>
-                  <ArrowUpRight className="size-4 text-ink-ghost transition-all duration-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand-300" />
-                </div>
-                <div className="relative flex flex-col gap-2">
-                  <h3 className="font-display text-lg font-bold leading-tight text-ink">{game.name}</h3>
-                  <p className="text-xs leading-relaxed text-ink-muted">{game.tagline}</p>
-                  <span className="mt-2 font-tech text-2xs uppercase tracking-[0.18em] text-ink-ghost">
-                    {game.publisher}
-                  </span>
-                </div>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
 
       <Section className="perf-contain">
         <SectionHeading

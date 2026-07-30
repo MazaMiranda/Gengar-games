@@ -9,7 +9,6 @@ import {
   CategoryBento,
   PlatformStrip,
   PromoBanner,
-  TcgShowcase,
 } from '@/components/home/sections';
 import { Testimonials } from '@/components/home/testimonials';
 import { ProductRail } from '@/components/shop/product-rail';
@@ -71,7 +70,7 @@ export default async function HomePage() {
         />
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
           {data.ofertas.slice(0, 8).map((product) => (
-            <Reveal key={product.slug} delay={0.03}>
+            <Reveal key={product.slug} delay={0.03} className="h-full">
               <ProductCard product={product} />
             </Reveal>
           ))}
@@ -83,17 +82,13 @@ export default async function HomePage() {
       <Section className="perf-contain" aria-labelledby="tcg">
         <SectionHeading
           eyebrow="Área TCG"
-          title={<span id="tcg">Sete jogos, uma curadoria só</span>}
+          title={<span id="tcg">Pokémon TCG, uma curadoria só</span>}
           description="Cada single é avaliado sob luz UV, classificado por estado e enviado protegido."
           href="/tcg"
           linkLabel="Entrar na área TCG"
           className="mb-10"
         />
-        <TcgShowcase />
-
-        <div className="mt-12">
-          <ProductRail products={data.destaquesTcg} />
-        </div>
+        <ProductRail products={data.destaquesTcg} />
       </Section>
 
       <Section className="perf-contain" aria-labelledby="consoles">
@@ -109,7 +104,7 @@ export default async function HomePage() {
 
         <div className="mt-12 grid gap-4 md:grid-cols-3">
           {data.consoles.slice(0, 3).map((product, index) => (
-            <Reveal key={product.slug} delay={index * 0.06}>
+            <Reveal key={product.slug} delay={index * 0.06} className="h-full">
               <ProductCard product={product} />
             </Reveal>
           ))}
@@ -159,7 +154,7 @@ export default async function HomePage() {
         />
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
           {data.maisVendidos.slice(0, 8).map((product) => (
-            <Reveal key={product.slug} delay={0.03}>
+            <Reveal key={product.slug} delay={0.03} className="h-full">
               <ProductCard product={product} />
             </Reveal>
           ))}

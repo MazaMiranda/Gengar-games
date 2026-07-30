@@ -186,7 +186,7 @@ export const orders: Order[] = [
     customerEmail: 'cliente@gengargames.com.br',
     status: 'separando',
     items: [
-      { productSlug: 'booster-box-op09', name: 'Booster Box · OP-09 Emperors in the New World', unitPrice: 54990, quantity: 1, accent: 350, type: 'tcg-sealed' },
+      { productSlug: 'booster-box-surging-sparks', name: 'Booster Box · Surging Sparks', unitPrice: 54990, quantity: 1, accent: 190, type: 'tcg-sealed' },
       { productSlug: 'deck-box-gengar-edition', name: 'Deck Box Gengar Edition', unitPrice: 12990, quantity: 1, accent: 285, type: 'accessory' },
     ],
     subtotal: 67980,
@@ -294,7 +294,7 @@ export const orders: Order[] = [
     customerEmail: 'admin@gengargames.com.br',
     status: 'entregue',
     items: [
-      { productSlug: 'collector-booster-foundations', name: 'Collector Booster Box · Foundations', unitPrice: 189990, quantity: 1, accent: 265, type: 'tcg-sealed' },
+      { productSlug: 'etb-pokemon-151', name: 'Elite Trainer Box · Pokémon 151', unitPrice: 189990, quantity: 1, accent: 42, type: 'tcg-sealed' },
     ],
     subtotal: 189990,
     discount: 28499,

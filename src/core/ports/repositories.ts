@@ -1,5 +1,6 @@
 import type {
   Brand,
+  CardGrade,
   CardLanguage,
   CardRarity,
   Category,
@@ -34,6 +35,7 @@ export interface CatalogQuery {
   sets?: string[];
   rarities?: CardRarity[];
   languages?: CardLanguage[];
+  grades?: CardGrade[];
   conditions?: ProductCondition[];
   types?: ProductType[];
   tags?: string[];
@@ -61,6 +63,7 @@ export interface CatalogFacets {
   sets: FacetBucket[];
   rarities: FacetBucket[];
   languages: FacetBucket[];
+  grades: FacetBucket[];
   conditions: FacetBucket[];
   types: FacetBucket[];
   priceRange: { min: number; max: number };
@@ -78,6 +81,7 @@ export interface CatalogResult {
 export interface ProductRepository {
   search(query: CatalogQuery): Promise<CatalogResult>;
   findBySlug(slug: string): Promise<Product | null>;
+  create(product: Product): Promise<Product>;
   findManyBySlugs(slugs: string[]): Promise<Product[]>;
   listCategories(): Promise<Category[]>;
   listBrands(): Promise<Brand[]>;

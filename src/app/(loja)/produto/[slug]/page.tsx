@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getProductDetail, searchCatalog } from '@/core/application/catalog-service';
 import { PRODUCT_TYPES } from '@/core/domain/taxonomy';
-import { PageHeader } from '@/components/layout/page-header';
+import { BreadcrumbBar } from '@/components/layout/page-header';
 import { ProductGallery } from '@/components/product/product-gallery';
 import { BuyBox } from '@/components/product/buy-box';
 import { ProductTabs } from '@/components/product/product-tabs';
@@ -76,14 +76,12 @@ export default async function ProductPage({ params }: PageProps) {
       />
       <RecentlyViewedTracker slug={product.slug} />
 
-      <PageHeader
-        compact
+      <BreadcrumbBar
         accent={product.accent}
-        eyebrow={PRODUCT_TYPES[product.type]}
-        title={product.name}
         crumbs={[
           { label: 'Início', href: '/' },
           { label: 'Catálogo', href: '/catalogo' },
+          { label: PRODUCT_TYPES[product.type], href: `/catalogo?tipo=${product.type}` },
           { label: product.categorySlug, href: `/catalogo?categoria=${product.categorySlug}` },
           { label: product.name },
         ]}

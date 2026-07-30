@@ -19,6 +19,51 @@ interface PageHeaderProps {
   compact?: boolean;
 }
 
+/** Trilha de navegação. Isolada para poder existir sem o cabeçalho inteiro. */
+export function Breadcrumbs({ crumbs, className }: { crumbs: Crumb[]; className?: string }) {
+  if (!crumbs.length) return null;
+
+  return (
+    <nav aria-label="Você está aqui" className={className}>
+      <ol className="flex flex-wrap items-center gap-1.5 text-2xs text-ink-faint">
+        {crumbs.map((crumb, index) => (
+          <li key={crumb.label} className="flex items-center gap-1.5">
+            {index > 0 ? <ChevronRight className="size-3 text-ink-ghost" /> : null}
+            {crumb.href ? (
+              <Link href={crumb.href} className="transition-colors hover:text-brand-300">
+                {crumb.label}
+              </Link>
+            ) : (
+              <span className="text-ink-muted">{crumb.label}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+  );
+}
+
+/**
+ * Faixa fina só com a trilha — para páginas cujo título já é o h1 de outro
+ * bloco, como o da buy box. Evita repetir o nome do produto em display.
+ */
+export function BreadcrumbBar({ crumbs, accent }: { crumbs: Crumb[]; accent?: number }) {
+  return (
+    <div className="relative overflow-hidden border-b border-line">
+      {accent !== undefined ? (
+        <div
+          className="absolute -right-24 -top-28 size-72 rounded-full opacity-35 blur-[100px]"
+          style={{ background: `radial-gradient(circle, hsl(${accent} 85% 55% / 0.5), transparent 70%)` }}
+          aria-hidden
+        />
+      ) : null}
+      <div className="container-page relative py-4">
+        <Breadcrumbs crumbs={crumbs} />
+      </div>
+    </div>
+  );
+}
+
 /** Cabeçalho de página interna: breadcrumb, título e atmosfera de marca. */
 export function PageHeader({
   eyebrow,
@@ -49,24 +94,7 @@ export function PageHeader({
       ) : null}
 
       <div className="container-page relative flex flex-col gap-6">
-        {crumbs?.length ? (
-          <nav aria-label="Você está aqui">
-            <ol className="flex flex-wrap items-center gap-1.5 text-2xs text-ink-faint">
-              {crumbs.map((crumb, index) => (
-                <li key={crumb.label} className="flex items-center gap-1.5">
-                  {index > 0 ? <ChevronRight className="size-3 text-ink-ghost" /> : null}
-                  {crumb.href ? (
-                    <Link href={crumb.href} className="transition-colors hover:text-brand-300">
-                      {crumb.label}
-                    </Link>
-                  ) : (
-                    <span className="text-ink-muted">{crumb.label}</span>
-                  )}
-                </li>
-              ))}
-            </ol>
-          </nav>
-        ) : null}
+        {crumbs?.length ? <Breadcrumbs crumbs={crumbs} /> : null}
 
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="flex max-w-2xl flex-col gap-3">

@@ -21,7 +21,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import type { Brand, Category } from '@/core/domain/entities';
-import { platformList, tcgGameList } from '@/core/domain/taxonomy';
+import { platformList } from '@/core/domain/taxonomy';
 import { Reveal } from '@/components/ui/motion';
 import { Marquee } from '@/components/ui/motion';
 import { Button } from '@/components/ui/button';
@@ -50,9 +50,16 @@ const GLYPHS: Record<string, LucideIcon> = {
 /** Bento de categorias — o primeiro bloco tem peso visual maior. */
 export function CategoryBento({ categories }: { categories: Category[] }) {
   const featured = categories.filter((category) =>
-    ['pokemon-tcg', 'consoles', 'one-piece-tcg', 'jogos', 'colecionaveis', 'headsets', 'magic', 'controles'].includes(
-      category.slug,
-    ),
+    [
+      'pokemon-tcg',
+      'consoles',
+      'jogos',
+      'controles',
+      'headsets',
+      'protecao-tcg',
+      'colecionaveis',
+      'edicoes-colecionador',
+    ].includes(category.slug),
   );
 
   const spans = [
@@ -116,54 +123,6 @@ export function CategoryBento({ categories }: { categories: Category[] }) {
           </Reveal>
         );
       })}
-    </div>
-  );
-}
-
-/** Painéis dos sete TCGs atendidos pela loja. */
-export function TcgShowcase() {
-  return (
-    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      {tcgGameList.map((game, index) => (
-        <Reveal key={game.slug} delay={index * 0.04}>
-          <Link
-            href={`/tcg/${game.slug}`}
-            className="group relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-lg border border-line bg-surface/60 p-5 transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:border-line-brand"
-          >
-            <div
-              className="absolute inset-x-0 bottom-0 h-px opacity-60 transition-opacity duration-500 group-hover:opacity-100"
-              style={{ background: `linear-gradient(90deg, transparent, hsl(${game.accent} 90% 62%), transparent)` }}
-              aria-hidden
-            />
-            <div className="flex items-start justify-between gap-3">
-              <span
-                className="font-tech text-2xs font-bold uppercase tracking-[0.24em]"
-                style={{ color: `hsl(${game.accent} 90% 70%)` }}
-              >
-                {game.short}
-              </span>
-              <ArrowUpRight className="size-3.5 text-ink-ghost transition-all duration-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink-muted" />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <h3 className="font-display text-sm font-bold text-ink">{game.name}</h3>
-              <p className="text-xs leading-relaxed text-ink-faint">{game.tagline}</p>
-            </div>
-          </Link>
-        </Reveal>
-      ))}
-
-      <Reveal delay={0.3}>
-        <Link
-          href="/tcg"
-          className="group flex h-full min-h-32 flex-col justify-between gap-6 rounded-lg border border-dashed border-line-strong p-5 transition-all duration-500 hover:border-brand-400/50 hover:bg-brand-500/6"
-        >
-          <span className="eyebrow">Tudo</span>
-          <span className="flex items-center gap-2 font-display text-sm font-bold text-ink-muted transition-colors group-hover:text-brand-100">
-            Ver a área TCG completa
-            <ArrowUpRight className="size-3.5" />
-          </span>
-        </Link>
-      </Reveal>
     </div>
   );
 }
@@ -252,8 +211,7 @@ export function PromoBanner() {
             </h2>
             <p className="max-w-md text-sm leading-relaxed text-white/75">
               Use o cupom <strong className="font-tech tracking-wider text-white">TCG15</strong> em
-              compras acima de R$ 500. Válido para Pokémon, One Piece, Magic, Yu-Gi-Oh!, Lorcana,
-              Flesh and Blood e Digimon.
+              compras acima de R$ 500. Válido para singles e selados de Pokémon TCG.
             </p>
             <div className="flex flex-wrap gap-3 pt-1">
               <Button asChild size="lg" variant="secondary" className="border-white/25 bg-white/12 text-white hover:bg-white/20">
