@@ -109,7 +109,7 @@ export function Header() {
               </button>
             </MobileNav>
 
-            <Logo markOnlyOnMobile />
+            <Logo />
 
             <nav className="hidden items-center gap-1 lg:flex" aria-label="Navegação principal">
               {primaryNav.map((entry) => {

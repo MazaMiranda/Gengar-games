@@ -25,6 +25,7 @@ interface TcgdexCardFull {
   hp?: number;
   illustrator?: string;
   category?: string;
+  types?: string[];
   set?: { id: string; name: string };
 }
 
@@ -33,10 +34,21 @@ export interface TcgdexMatch {
   name: string;
   localId: string;
   setName: string | null;
+  setCode: string | null;
   rarity: string | null;
   hp: number | null;
   illustrator: string | null;
+  /** Categoria + tipos ("Pokémon · Fogo"), pronto para o campo "tipo da carta". */
+  cardType: string | null;
   /** Já resolvida para alta resolução — pronta para remotePatterns do next/image. */
+  imageUrl: string | null;
+}
+
+/** O suficiente para desenhar a grade de escolha: arte, nome e número. */
+export interface TcgdexSuggestion {
+  id: string;
+  name: string;
+  localId: string;
   imageUrl: string | null;
 }
 
@@ -46,14 +58,18 @@ function resolveImageUrl(base?: string): string | null {
 }
 
 function toMatch(card: TcgdexCardFull): TcgdexMatch {
+  const cardType = [card.category, card.types?.join(' / ')].filter(Boolean).join(' · ');
+
   return {
     id: card.id,
     name: card.name,
     localId: card.localId,
     setName: card.set?.name ?? null,
+    setCode: card.set?.id?.toUpperCase() ?? null,
     rarity: card.rarity ?? null,
     hp: card.hp ?? null,
     illustrator: card.illustrator ?? null,
+    cardType: cardType || null,
     imageUrl: resolveImageUrl(card.image),
   };
 }
@@ -123,4 +139,31 @@ export async function lookupTcgdexCard(params: {
   const target = normalize(params.setName);
   const bySet = candidates.find((card) => card.set?.name && normalize(card.set.name).includes(target));
   return toMatch(bySet ?? candidates[0]!);
+}
+
+/**
+ * Lista cartas por nome para o operador escolher visualmente no cadastro.
+ *
+ * Devolve só o resumo (arte, nome, número) de propósito: a grade mostra
+ * dezenas de cartas e buscar o detalhe de cada uma seriam dezenas de
+ * requisições para dados que só interessam depois da escolha. O detalhe
+ * completo vem em `getTcgdexCard`, uma requisição só, ao selecionar.
+ */
+export async function searchTcgdexCards(name: string, limit = 36): Promise<TcgdexSuggestion[]> {
+  const query = new URLSearchParams({ name });
+  const briefs = await getJson<TcgdexCardBrief[]>(`/cards?${query.toString()}`);
+  if (!briefs?.length) return [];
+
+  return briefs.slice(0, limit).map((brief) => ({
+    id: brief.id,
+    name: brief.name,
+    localId: brief.localId,
+    imageUrl: resolveImageUrl(brief.image),
+  }));
+}
+
+/** Detalhe completo da carta escolhida na grade. */
+export async function getTcgdexCard(id: string): Promise<TcgdexMatch | null> {
+  const full = await getJson<TcgdexCardFull>(`/cards/${encodeURIComponent(id)}`);
+  return full ? toMatch(full) : null;
 }
