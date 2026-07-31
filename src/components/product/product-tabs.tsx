@@ -114,7 +114,7 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
                     {row.stars}
                     <Star className="size-2.5 fill-current" />
                   </span>
-                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/8">
+                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink/8">
                     <div
                       className="h-full rounded-full bg-linear-to-r from-brand-500 to-brand-300"
                       style={{ width: `${(row.count / total) * 100}%` }}

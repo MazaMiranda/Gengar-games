@@ -47,7 +47,7 @@ export const DialogContent = React.forwardRef<
       />
       {children}
       {!hideClose ? (
-        <DialogPrimitive.Close className="absolute right-5 top-5 grid size-9 place-items-center rounded-md text-ink-faint transition-colors hover:bg-white/8 hover:text-ink">
+        <DialogPrimitive.Close className="absolute right-5 top-5 grid size-9 place-items-center rounded-md text-ink-faint transition-colors hover:bg-ink/8 hover:text-ink">
           <X className="size-4" />
           <span className="sr-only">Fechar</span>
         </DialogPrimitive.Close>

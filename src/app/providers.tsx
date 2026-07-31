@@ -35,7 +35,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 title: '!font-display !font-semibold !text-ink !text-sm',
                 description: '!text-ink-muted !text-xs',
                 actionButton: '!bg-brand-500 !text-white !rounded-sm !text-xs',
-                cancelButton: '!bg-white/8 !text-ink-muted !rounded-sm !text-xs',
+                cancelButton: '!bg-ink/8 !text-ink-muted !rounded-sm !text-xs',
                 success: '[&_[data-icon]]:!text-success',
                 error: '[&_[data-icon]]:!text-danger',
               },

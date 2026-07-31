@@ -7,17 +7,14 @@ import { cn } from '@/lib/utils';
 export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 16 },
   visible: (index: number = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, delay: index * 0.06, ease: EASE_OUT_EXPO },
+    // Curto de propósito: isto roda a cada troca de filtro, e resultado de
+    // busca precisa parecer imediato, não coreografado.
+    transition: { duration: 0.42, delay: index * 0.035, ease: EASE_OUT_EXPO },
   }),
-};
-
-export const staggerParent: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
 };
 
 type MotionSafeProps = Omit<
@@ -60,24 +57,23 @@ export function Reveal({
   );
 }
 
-/** Lista com entrada escalonada dos filhos. */
+/**
+ * Contêiner da lista. Não orquestra a animação de propósito.
+ *
+ * Quando o pai orquestrava (variants + whileInView + once), ele disparava uma
+ * vez e parava de observar; numa lista que muda — o catálogo ao trocar filtro —
+ * os itens montados depois nunca recebiam a ordem de aparecer e ficavam presos
+ * em opacity 0. Cada item agora se anima sozinho (ver StaggerItem).
+ */
 export function StaggerList({ children, className, ...props }: MotionSafeProps) {
-  const reduced = useReducedMotion();
-
   return (
-    <motion.div
-      initial={reduced ? undefined : 'hidden'}
-      whileInView={reduced ? undefined : 'visible'}
-      viewport={{ once: true, margin: '-60px' }}
-      variants={staggerParent}
-      className={className}
-      {...props}
-    >
+    <div className={className} {...props}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
+/** Item que revela a si mesmo ao entrar na viewport, independente do pai. */
 export function StaggerItem({
   children,
   className,
@@ -87,8 +83,17 @@ export function StaggerItem({
   className?: string;
   index?: number;
 }) {
+  const reduced = useReducedMotion();
+
   return (
-    <motion.div variants={fadeUp} custom={index} className={className}>
+    <motion.div
+      initial={reduced ? undefined : 'hidden'}
+      whileInView={reduced ? undefined : 'visible'}
+      viewport={{ once: true, margin: '-40px' }}
+      variants={fadeUp}
+      custom={index}
+      className={className}
+    >
       {children}
     </motion.div>
   );

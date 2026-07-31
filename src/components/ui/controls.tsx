@@ -16,7 +16,7 @@ export const Checkbox = React.forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(
-      'peer grid size-[18px] shrink-0 place-items-center rounded-xs border border-line-strong bg-white/4 transition-all duration-200 ease-out-expo hover:border-brand-400/60 data-[state=checked]:border-brand-400 data-[state=checked]:bg-brand-500 data-[state=checked]:shadow-glow-sm',
+      'peer grid size-[18px] shrink-0 place-items-center rounded-xs border border-line-strong bg-ink/4 transition-all duration-200 ease-out-expo hover:border-brand-400/60 data-[state=checked]:border-brand-400 data-[state=checked]:bg-brand-500 data-[state=checked]:shadow-glow-sm',
       className,
     )}
     {...props}
@@ -43,7 +43,7 @@ export const RadioGroupItem = React.forwardRef<
   <RadioGroupPrimitive.Item
     ref={ref}
     className={cn(
-      'grid size-[18px] shrink-0 place-items-center rounded-full border border-line-strong bg-white/4 transition-all duration-200 hover:border-brand-400/60 data-[state=checked]:border-brand-400 data-[state=checked]:shadow-glow-sm',
+      'grid size-[18px] shrink-0 place-items-center rounded-full border border-line-strong bg-ink/4 transition-all duration-200 hover:border-brand-400/60 data-[state=checked]:border-brand-400 data-[state=checked]:shadow-glow-sm',
       className,
     )}
     {...props}
@@ -60,7 +60,7 @@ export const Switch = React.forwardRef<
   <SwitchPrimitive.Root
     ref={ref}
     className={cn(
-      'peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border border-line-strong bg-white/6 p-0.5 transition-all duration-300 ease-out-expo data-[state=checked]:border-brand-400/60 data-[state=checked]:bg-brand-500/80 data-[state=checked]:shadow-glow-sm',
+      'peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border border-line-strong bg-ink/6 p-0.5 transition-all duration-300 ease-out-expo data-[state=checked]:border-brand-400/60 data-[state=checked]:bg-brand-500/80 data-[state=checked]:shadow-glow-sm',
       className,
     )}
     {...props}
@@ -79,7 +79,7 @@ export const Slider = React.forwardRef<
     className={cn('relative flex w-full touch-none select-none items-center py-2', className)}
     {...props}
   >
-    <SliderPrimitive.Track className="relative h-1 w-full grow overflow-hidden rounded-full bg-white/8">
+    <SliderPrimitive.Track className="relative h-1 w-full grow overflow-hidden rounded-full bg-ink/8">
       <SliderPrimitive.Range className="absolute h-full bg-linear-to-r from-brand-600 to-brand-400" />
     </SliderPrimitive.Track>
     {(props.value ?? props.defaultValue ?? [0]).map((_, index) => (
@@ -134,7 +134,7 @@ export function QuantityStepper({
   return (
     <div
       className={cn(
-        'inline-flex items-center overflow-hidden rounded-md border border-line bg-white/3',
+        'inline-flex items-center overflow-hidden rounded-md border border-line bg-ink/3',
         dimension,
         className,
       )}
@@ -145,7 +145,7 @@ export function QuantityStepper({
         disabled={value <= min}
         aria-label="Diminuir quantidade"
         className={cn(
-          'grid place-items-center text-ink-muted transition-colors hover:bg-white/8 hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent',
+          'grid place-items-center text-ink-muted transition-colors hover:bg-ink/8 hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent',
           button,
         )}
       >
@@ -166,7 +166,7 @@ export function QuantityStepper({
         disabled={value >= max}
         aria-label="Aumentar quantidade"
         className={cn(
-          'grid place-items-center text-ink-muted transition-colors hover:bg-white/8 hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent',
+          'grid place-items-center text-ink-muted transition-colors hover:bg-ink/8 hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent',
           button,
         )}
       >

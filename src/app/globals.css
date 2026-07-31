@@ -7,17 +7,26 @@
    ========================================================================== */
 
 @theme {
+  /*
+   * Cores tematizáveis apontam para variáveis de runtime (--t-*), definidas
+   * mais abaixo em :root (escuro) e [data-theme='light'] (claro). É o que
+   * permite trocar o tema inteiro sem tocar em nenhum componente — todo o site
+   * consome estes tokens, nunca hex solto.
+   */
+
   /* ── Cores: superfícies ─────────────────────────────────────────────── */
-  --color-void: #09090b;
-  --color-surface: #111114;
-  --color-elevated: #18181b;
-  --color-overlay: #202024;
+  --color-void: var(--t-void);
+  --color-surface: var(--t-surface);
+  --color-elevated: var(--t-elevated);
+  --color-overlay: var(--t-overlay);
 
   /* ── Cores: marca ───────────────────────────────────────────────────── */
-  --color-brand-50: #f5f0ff;
-  --color-brand-100: #ede4ff;
-  --color-brand-200: #ddccff;
-  --color-brand-300: #c084fc;
+  /* 50–300 são usados quase só como texto: no tema claro eles escurecem para
+     manter contraste sobre fundo branco. 400+ são superfície/glow e não mudam. */
+  --color-brand-50: var(--t-brand-50);
+  --color-brand-100: var(--t-brand-100);
+  --color-brand-200: var(--t-brand-200);
+  --color-brand-300: var(--t-brand-300);
   --color-brand-400: #a855f7;
   --color-brand-500: #9333ea;
   --color-brand-600: #6d28d9;
@@ -27,15 +36,15 @@
   --color-brand-950: #14062a;
 
   /* ── Cores: texto ───────────────────────────────────────────────────── */
-  --color-ink: #ffffff;
-  --color-ink-muted: #a1a1aa;
-  --color-ink-faint: #71717a;
-  --color-ink-ghost: #3f3f46;
+  --color-ink: var(--t-ink);
+  --color-ink-muted: var(--t-ink-muted);
+  --color-ink-faint: var(--t-ink-faint);
+  --color-ink-ghost: var(--t-ink-ghost);
 
   /* ── Cores: traços ──────────────────────────────────────────────────── */
-  --color-line: rgba(255, 255, 255, 0.07);
-  --color-line-strong: rgba(255, 255, 255, 0.13);
-  --color-line-brand: rgba(168, 85, 247, 0.32);
+  --color-line: var(--t-line);
+  --color-line-strong: var(--t-line-strong);
+  --color-line-brand: var(--t-line-brand);
 
   /* ── Cores: semântica ───────────────────────────────────────────────── */
   --color-success: #34d399;
@@ -77,12 +86,12 @@
   --radius-3xl: 2.25rem;
 
   /* ── Sombra e glow ──────────────────────────────────────────────────── */
-  --shadow-plate: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 20px 50px -24px rgba(0, 0, 0, 0.9);
-  --shadow-lift: 0 32px 64px -32px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --shadow-plate: var(--t-shadow-plate);
+  --shadow-lift: var(--t-shadow-lift);
   --shadow-glow-sm: 0 0 18px -4px rgba(147, 51, 234, 0.5);
   --shadow-glow: 0 0 40px -8px rgba(147, 51, 234, 0.55);
   --shadow-glow-lg: 0 0 80px -12px rgba(147, 51, 234, 0.6);
-  --shadow-inset-top: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  --shadow-inset-top: inset 0 1px 0 0 var(--t-specular);
 
   /* ── Movimento ──────────────────────────────────────────────────────── */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -103,6 +112,107 @@
 
   /* ── Larguras de conteúdo ───────────────────────────────────────────── */
   --spacing-gutter: 1.25rem;
+}
+
+/* ==========================================================================
+   TEMAS
+   O tema é escolhido por data-theme no <html>, gravado antes da primeira
+   pintura (ver o script inline em app/layout.tsx) para não haver piscada.
+   ========================================================================== */
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --t-void: #09090b;
+  --t-surface: #111114;
+  --t-elevated: #18181b;
+  --t-overlay: #202024;
+
+  --t-brand-50: #f5f0ff;
+  --t-brand-100: #ede4ff;
+  --t-brand-200: #ddccff;
+  --t-brand-300: #c084fc;
+
+  --t-ink: #ffffff;
+  --t-ink-muted: #a1a1aa;
+  --t-ink-faint: #71717a;
+  --t-ink-ghost: #3f3f46;
+
+  --t-line: rgba(255, 255, 255, 0.07);
+  --t-line-strong: rgba(255, 255, 255, 0.13);
+  --t-line-brand: rgba(168, 85, 247, 0.32);
+
+  /* Vidro: no escuro a luz vem de cima, então o tint é branco translúcido. */
+  --t-glass-tint-a: rgba(255, 255, 255, 0.07);
+  --t-glass-tint-b: rgba(255, 255, 255, 0.02);
+  --t-glass-base: rgba(9, 9, 11, 0.72);
+  --t-specular: rgba(255, 255, 255, 0.14);
+  --t-glass-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.95);
+
+  --t-plate-grad: linear-gradient(168deg, #16161a 0%, #101013 55%, #0d0d10 100%);
+  --t-shadow-plate: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
+    0 20px 50px -24px rgba(0, 0, 0, 0.9);
+  --t-shadow-lift: 0 32px 64px -32px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+  /* Texturas: no escuro, riscos claros sobre fundo escuro. */
+  --t-texture-line: rgba(255, 255, 255, 0.035);
+  --t-scanline: rgba(255, 255, 255, 0.045);
+  --t-grain-opacity: 0.035;
+  --t-grain-blend: overlay;
+  --t-aurora-strength: 1;
+
+  --t-text-gradient: linear-gradient(120deg, #ffffff 10%, #e9d5ff 45%, #a855f7 92%);
+  --t-text-gradient-brand: linear-gradient(105deg, #c084fc 0%, #a855f7 40%, #6d28d9 100%);
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  /* Fundo com um leve viés lilás — branco puro deixaria a marca sem chão. */
+  --t-void: #f4f3f7;
+  --t-surface: #ffffff;
+  --t-elevated: #fbfbfd;
+  --t-overlay: #eeedf3;
+
+  /* Ramp invertida na ponta clara: estes tons são texto e precisam de contraste. */
+  --t-brand-50: #3f1178;
+  --t-brand-100: #4c1d95;
+  --t-brand-200: #5b21b6;
+  --t-brand-300: #6d28d9;
+
+  --t-ink: #131316;
+  --t-ink-muted: #52525b;
+  --t-ink-faint: #6b6b76;
+  --t-ink-ghost: #a1a1aa;
+
+  --t-line: rgba(19, 19, 22, 0.1);
+  --t-line-strong: rgba(19, 19, 22, 0.17);
+  --t-line-brand: rgba(109, 40, 217, 0.3);
+
+  /* No claro o vidro é branco gelado: o tint clareia e a base fica opaca o
+     bastante para o texto escuro continuar legível sobre qualquer fundo. */
+  --t-glass-tint-a: rgba(255, 255, 255, 0.75);
+  --t-glass-tint-b: rgba(255, 255, 255, 0.45);
+  --t-glass-base: rgba(255, 255, 255, 0.72);
+  --t-specular: rgba(255, 255, 255, 0.9);
+  --t-glass-shadow: 0 24px 60px -30px rgba(19, 19, 22, 0.28);
+
+  --t-plate-grad: linear-gradient(168deg, #ffffff 0%, #fcfcfe 55%, #f7f6fb 100%);
+  --t-shadow-plate: 0 1px 0 0 rgba(255, 255, 255, 0.9) inset,
+    0 14px 32px -22px rgba(19, 19, 22, 0.3);
+  --t-shadow-lift: 0 28px 56px -34px rgba(19, 19, 22, 0.32), 0 0 0 1px rgba(19, 19, 22, 0.07);
+
+  /* Texturas invertem: riscos escuros sobre fundo claro. */
+  --t-texture-line: rgba(19, 19, 22, 0.05);
+  --t-scanline: rgba(19, 19, 22, 0.04);
+  --t-grain-opacity: 0.02;
+  --t-grain-blend: multiply;
+  /* A aurora roxa satura demais sobre branco. */
+  --t-aurora-strength: 0.42;
+
+  --t-text-gradient: linear-gradient(120deg, #1c1b22 10%, #5b21b6 50%, #7c3aed 92%);
+  --t-text-gradient-brand: linear-gradient(105deg, #7c3aed 0%, #6d28d9 45%, #4c1d95 100%);
 }
 
 @keyframes shimmer {
@@ -155,12 +265,20 @@
   }
 }
 
+/*
+ * Só translação — sem scale.
+ *
+ * A Aurora são camadas de ~60vw com blur de 120–140px. Escalar uma camada
+ * borrada obriga o navegador a re-rasterizar o blur a cada quadro, e isso
+ * segurava a home em 30fps (mediana de 33ms por quadro). Translação pura é
+ * composta na GPU: mesma sensação de movimento, 60fps.
+ */
 @keyframes drift {
   from {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(6%, -4%, 0) scale(1.12);
+    transform: translate3d(8%, -6%, 0);
   }
 }
 
@@ -307,30 +425,41 @@
   }
 }
 
-/* Vidro — camada base de todos os painéis flutuantes */
+/*
+ * Vidro — camada base de todos os painéis flutuantes.
+ *
+ * O acabamento "liquid glass" vem de três coisas empilhadas: refração
+ * (blur + saturação no que está atrás), um tint em degradê, e um brilho
+ * especular de 1px na borda de cima, que é o que dá a leitura de "peça de
+ * vidro" em vez de "retângulo translúcido". Tudo parametrizado por tema.
+ */
 @utility glass {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.045) 0%,
-    rgba(255, 255, 255, 0.015) 100%
-  );
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  position: relative;
+  background: linear-gradient(180deg, var(--t-glass-tint-a) 0%, var(--t-glass-tint-b) 100%);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
   border: 1px solid var(--color-line);
+  box-shadow:
+    inset 0 1px 0 0 var(--t-specular),
+    var(--t-glass-shadow);
 }
 
 @utility glass-solid {
+  position: relative;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012)),
-    rgba(9, 9, 11, 0.86);
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
+    linear-gradient(180deg, var(--t-glass-tint-a), var(--t-glass-tint-b)),
+    var(--t-glass-base);
+  backdrop-filter: blur(26px) saturate(160%);
+  -webkit-backdrop-filter: blur(26px) saturate(160%);
   border: 1px solid var(--color-line);
+  box-shadow:
+    inset 0 1px 0 0 var(--t-specular),
+    var(--t-glass-shadow);
 }
 
-/* Placa — superfície sólida de card, com luz superior */
+/* Placa — superfície de card, com luz superior */
 @utility plate {
-  background: linear-gradient(168deg, #16161a 0%, #101013 55%, #0d0d10 100%);
+  background: var(--t-plate-grad);
   border: 1px solid var(--color-line);
   box-shadow: var(--shadow-plate);
 }
@@ -340,14 +469,14 @@
 }
 
 @utility text-gradient {
-  background: linear-gradient(120deg, #ffffff 10%, #e9d5ff 45%, #a855f7 92%);
+  background: var(--t-text-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility text-gradient-brand {
-  background: linear-gradient(105deg, #c084fc 0%, #a855f7 40%, #6d28d9 100%);
+  background: var(--t-text-gradient-brand);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -383,8 +512,8 @@
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.035;
-    mix-blend-mode: overlay;
+    opacity: var(--t-grain-opacity);
+    mix-blend-mode: var(--t-grain-blend);
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
@@ -454,16 +583,16 @@
 /* Malha técnica de fundo */
 @utility grid-tech {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(var(--t-texture-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--t-texture-line) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
 @utility scanlines {
   background-image: repeating-linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.045) 0px,
-    rgba(255, 255, 255, 0.045) 1px,
+    var(--t-scanline) 0px,
+    var(--t-scanline) 1px,
     transparent 1px,
     transparent 4px
   );

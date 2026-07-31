@@ -144,7 +144,7 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
   if (mounted && lines.length === 0) {
     return (
       <div className="plate flex flex-col items-center gap-5 rounded-xl px-6 py-20 text-center">
-        <span className="grid size-16 place-items-center rounded-full border border-line bg-white/3">
+        <span className="grid size-16 place-items-center rounded-full border border-line bg-ink/3">
           <ShoppingBag className="size-6 text-ink-faint" />
         </span>
         <div>
@@ -331,7 +331,7 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                             'flex items-center justify-between gap-3 rounded-md border px-4 py-3.5 text-left transition-all duration-300',
                             active
                               ? 'border-brand-400/50 bg-brand-500/10 shadow-glow-sm'
-                              : 'border-line bg-white/2 hover:border-line-strong',
+                              : 'border-line bg-ink/2 hover:border-line-strong',
                           )}
                         >
                           <div>
@@ -392,7 +392,7 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                         'flex cursor-pointer flex-col gap-2 rounded-md border p-4 transition-all duration-300',
                         method === option.value
                           ? 'border-brand-400/50 bg-brand-500/10 shadow-glow-sm'
-                          : 'border-line bg-white/2 hover:border-line-strong',
+                          : 'border-line bg-ink/2 hover:border-line-strong',
                       )}
                     >
                       <div className="flex items-center justify-between">
@@ -437,7 +437,7 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                     </Field>
                     <Field label="Parcelas" className="sm:col-span-2">
                       <select
-                        className="h-12 w-full rounded-md border border-line bg-white/3 px-4 text-sm text-ink outline-none transition-all focus:border-brand-400/60"
+                        className="h-12 w-full rounded-md border border-line bg-ink/3 px-4 text-sm text-ink outline-none transition-all focus:border-brand-400/60"
                         {...paymentForm.register('installments', { valueAsNumber: true })}
                       >
                         {Array.from({ length: installmentPlan.count }, (_, index) => index + 1).map((count) => (
@@ -466,7 +466,7 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                 ) : null}
 
                 {method === 'boleto' ? (
-                  <div className="flex items-start gap-4 rounded-md border border-line bg-white/2 p-5">
+                  <div className="flex items-start gap-4 rounded-md border border-line bg-ink/2 p-5">
                     <Barcode className="size-5 shrink-0 text-ink-muted" />
                     <div className="flex flex-col gap-1">
                       <p className="text-sm font-semibold text-ink">Boleto bancário</p>
@@ -535,7 +535,7 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                           : ['Boleto bancário', 'Vencimento em 3 dias úteis']
                     }
                   />
-                  <div className="flex flex-col gap-2 rounded-lg border border-line bg-white/2 p-5">
+                  <div className="flex flex-col gap-2 rounded-lg border border-line bg-ink/2 p-5">
                     <span className="eyebrow">Total a pagar</span>
                     <span className="font-display text-3xl font-bold text-ink">
                       {formatPrice(method === 'pix' ? Math.round(totals.total * 0.95) : totals.total)}
@@ -586,7 +586,7 @@ function ReviewBlock({
   onEdit: () => void;
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-lg border border-line bg-white/2 p-5">
+    <div className="flex flex-col gap-2 rounded-lg border border-line bg-ink/2 p-5">
       <div className="flex items-center justify-between">
         <span className="eyebrow">{title}</span>
         <button

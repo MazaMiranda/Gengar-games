@@ -28,7 +28,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           <ul className="flex flex-col gap-4">
             {PROOF.map(({ icon: Icon, text }) => (
               <li key={text} className="flex items-center gap-3 text-sm text-ink-muted">
-                <span className="grid size-9 shrink-0 place-items-center rounded-md border border-line bg-white/3 text-brand-300">
+                <span className="grid size-9 shrink-0 place-items-center rounded-md border border-line bg-ink/3 text-brand-300">
                   <Icon className="size-4" />
                 </span>
                 {text}
@@ -50,7 +50,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </div>
           <Link
             href="/"
-            className="ml-auto inline-flex items-center gap-2 text-xs font-semibold text-ink-faint transition-colors hover:text-ink"
+            className="-my-2.5 ml-auto inline-flex items-center gap-2 py-2.5 text-xs font-semibold text-ink-faint transition-colors hover:text-ink"
           >
             <ArrowLeft className="size-3.5" />
             Voltar para a loja

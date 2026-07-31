@@ -197,7 +197,7 @@ export function BuyBox({ product }: { product: Product }) {
         </form>
 
         {quote ? (
-          <div className="flex items-center justify-between rounded-md border border-line bg-white/2 px-4 py-3">
+          <div className="flex items-center justify-between rounded-md border border-line bg-ink/2 px-4 py-3">
             <div className="flex items-center gap-2.5">
               <Check className="size-4 text-success" />
               <div>

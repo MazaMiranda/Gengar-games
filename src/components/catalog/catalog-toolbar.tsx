@@ -120,7 +120,7 @@ export function CatalogToolbar({ facets, total, density, onDensityChange }: Tool
               aria-pressed={density === 'comfortable'}
               className={cn(
                 'grid size-8 place-items-center rounded-sm transition-colors',
-                density === 'comfortable' ? 'bg-white/8 text-ink' : 'text-ink-faint hover:text-ink-muted',
+                density === 'comfortable' ? 'bg-ink/8 text-ink' : 'text-ink-faint hover:text-ink-muted',
               )}
             >
               <LayoutGrid className="size-3.5" />
@@ -132,7 +132,7 @@ export function CatalogToolbar({ facets, total, density, onDensityChange }: Tool
               aria-pressed={density === 'compact'}
               className={cn(
                 'grid size-8 place-items-center rounded-sm transition-colors',
-                density === 'compact' ? 'bg-white/8 text-ink' : 'text-ink-faint hover:text-ink-muted',
+                density === 'compact' ? 'bg-ink/8 text-ink' : 'text-ink-faint hover:text-ink-muted',
               )}
             >
               <Rows3 className="size-3.5" />

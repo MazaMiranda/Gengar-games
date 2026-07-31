@@ -40,7 +40,7 @@ export function OrderCard({ order }: { order: Order }) {
           </li>
         ))}
         {order.items.length > 4 ? (
-          <li className="grid size-12 place-items-center rounded-md border border-line bg-white/3 font-tech text-2xs text-ink-muted">
+          <li className="grid size-12 place-items-center rounded-md border border-line bg-ink/3 font-tech text-2xs text-ink-muted">
             +{order.items.length - 4}
           </li>
         ) : null}

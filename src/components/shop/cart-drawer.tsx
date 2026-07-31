@@ -110,7 +110,7 @@ export function CartDrawer() {
             </span>
             <span className="font-tech text-2xs text-ink-faint">{totals.freeShippingProgress}%</span>
           </div>
-          <div className="h-1.5 overflow-hidden rounded-full bg-white/8">
+          <div className="h-1.5 overflow-hidden rounded-full bg-ink/8">
             <motion.div
               className="h-full rounded-full bg-linear-to-r from-brand-600 via-brand-400 to-brand-300"
               initial={{ width: 0 }}
@@ -123,7 +123,7 @@ export function CartDrawer() {
         <DrawerBody className="flex flex-col gap-6">
           {lines.length === 0 ? (
             <div className="flex flex-1 flex-col items-center justify-center gap-4 py-16 text-center">
-              <span className="grid size-16 place-items-center rounded-full border border-line bg-white/3">
+              <span className="grid size-16 place-items-center rounded-full border border-line bg-ink/3">
                 <ShoppingBag className="size-6 text-ink-faint" />
               </span>
               <div>
@@ -172,7 +172,7 @@ export function CartDrawer() {
                           type="button"
                           onClick={() => remove(line.slug)}
                           aria-label={`Remover ${line.name}`}
-                          className="grid size-7 shrink-0 place-items-center rounded-sm text-ink-ghost transition-colors hover:bg-white/8 hover:text-danger"
+                          className="grid size-7 shrink-0 place-items-center rounded-sm text-ink-ghost transition-colors hover:bg-ink/8 hover:text-danger"
                         >
                           <X className="size-3.5" />
                         </button>
@@ -213,7 +213,7 @@ export function CartDrawer() {
                 {saved.map((line) => (
                   <li
                     key={line.slug}
-                    className="flex items-center gap-3 rounded-md border border-line bg-white/2 p-3"
+                    className="flex items-center gap-3 rounded-md border border-line bg-ink/2 p-3"
                   >
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-xs font-semibold text-ink">{line.name}</p>
@@ -295,7 +295,7 @@ export function CartDrawer() {
                         'flex items-center justify-between gap-3 rounded-md border px-4 py-3 text-left transition-all duration-300',
                         active
                           ? 'border-brand-400/50 bg-brand-500/10'
-                          : 'border-line bg-white/2 hover:border-line-strong',
+                          : 'border-line bg-ink/2 hover:border-line-strong',
                       )}
                     >
                       <div>
@@ -331,7 +331,7 @@ export function CartDrawer() {
                     key={item.slug}
                     href={item.type === 'tcg-card' ? `/carta/${item.slug}` : `/produto/${item.slug}`}
                     onClick={() => setOpen(false)}
-                    className="group flex flex-col gap-2 rounded-md border border-line bg-white/2 p-3 transition-all hover:border-brand-400/40 hover:bg-brand-500/6"
+                    className="group flex flex-col gap-2 rounded-md border border-line bg-ink/2 p-3 transition-all hover:border-brand-400/40 hover:bg-brand-500/6"
                   >
                     <span
                       className="grid h-14 place-items-center rounded-sm"

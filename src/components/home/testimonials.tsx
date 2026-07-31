@@ -54,7 +54,7 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
                     {current.handle} · {current.city}
                   </span>
                 </div>
-                <span className="ml-auto rounded-sm border border-line bg-white/3 px-3 py-1.5 text-2xs text-ink-muted">
+                <span className="ml-auto rounded-sm border border-line bg-ink/3 px-3 py-1.5 text-2xs text-ink-muted">
                   Comprou: {current.purchase}
                 </span>
               </footer>
@@ -73,7 +73,7 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
               onClick={() => setActive(index)}
               className={cn(
                 'h-1 rounded-full transition-all duration-500 ease-out-expo',
-                index === active ? 'w-10 bg-brand-400 shadow-glow-sm' : 'w-5 bg-white/12 hover:bg-white/25',
+                index === active ? 'w-10 bg-brand-400 shadow-glow-sm' : 'w-5 bg-ink/12 hover:bg-ink/25',
               )}
             />
           ))}

@@ -385,7 +385,7 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
 
       {isCard ? (
         <AdminCard title="Ficha da carta">
-          <div className="mb-6 flex flex-col gap-4 rounded-lg border border-line bg-white/2 p-4 sm:flex-row sm:items-center">
+          <div className="mb-6 flex flex-col gap-4 rounded-lg border border-line bg-ink/2 p-4 sm:flex-row sm:items-center">
             <div className="flex flex-1 items-center gap-4">
               {tcgdex.status === 'found' && tcgdex.match.imageUrl ? (
                 <div className="relative aspect-4/5 w-16 shrink-0 overflow-hidden rounded-md border border-line">

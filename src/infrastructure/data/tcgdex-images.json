@@ -1,0 +1,4 @@
+{
+  "_comment": "Mapa slug -> URL da arte na TCGdex, preenchido por `npm run tcgdex:backfill`. O script só grava URLs que responderam 200, então o que estiver aqui é seguro de renderizar. Cartas ausentes deste mapa caem na arte procedural do ProductVisual.",
+  "cards": {}
+}

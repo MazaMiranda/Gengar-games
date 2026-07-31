@@ -119,7 +119,7 @@ export function SearchDialog({ children }: { children: React.ReactNode }) {
                     key={suggestion}
                     type="button"
                     onClick={() => setTerm(suggestion)}
-                    className="h-9 rounded-sm border border-line bg-white/3 px-3.5 text-xs font-medium text-ink-muted transition-all hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-ink"
+                    className="h-9 rounded-sm border border-line bg-ink/3 px-3.5 text-xs font-medium text-ink-muted transition-all hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-ink"
                   >
                     {suggestion}
                   </button>
@@ -145,7 +145,7 @@ export function SearchDialog({ children }: { children: React.ReactNode }) {
                   <Link
                     href={hrefFor(hit)}
                     onClick={() => setOpen(false)}
-                    className="group flex items-center gap-3 rounded-md p-3 transition-colors hover:bg-white/5"
+                    className="group flex items-center gap-3 rounded-md p-3 transition-colors hover:bg-ink/5"
                   >
                     <span
                       className="grid size-11 shrink-0 place-items-center rounded-md border border-line"
@@ -193,7 +193,7 @@ export function SearchDialog({ children }: { children: React.ReactNode }) {
             type="button"
             onClick={submit}
             className={cn(
-              'flex items-center justify-between border-t border-line px-5 py-4 text-xs font-semibold text-ink-muted transition-colors hover:bg-white/4 hover:text-ink',
+              'flex items-center justify-between border-t border-line px-5 py-4 text-xs font-semibold text-ink-muted transition-colors hover:bg-ink/4 hover:text-ink',
             )}
           >
             Ver todos os resultados para “{debounced}”

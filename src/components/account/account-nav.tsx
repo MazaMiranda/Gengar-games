@@ -61,7 +61,7 @@ export function AccountNav({ user }: AccountNavProps) {
                 'group flex items-center gap-3 rounded-md px-4 py-3 text-sm font-medium transition-all duration-300',
                 active
                   ? 'border border-brand-400/35 bg-brand-500/12 text-ink shadow-glow-sm'
-                  : 'border border-transparent text-ink-muted hover:bg-white/4 hover:text-ink',
+                  : 'border border-transparent text-ink-muted hover:bg-ink/4 hover:text-ink',
               )}
             >
               <link.icon className={cn('size-4', active ? 'text-brand-300' : 'text-ink-faint')} />

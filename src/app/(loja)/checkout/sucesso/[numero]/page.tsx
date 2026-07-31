@@ -74,7 +74,7 @@ export default async function CheckoutSuccessPage({ params }: PageProps) {
                       className={`grid size-7 place-items-center rounded-full border ${
                         step.done
                           ? 'border-success/40 bg-success/15 text-success'
-                          : 'border-line bg-white/3 text-ink-ghost'
+                          : 'border-line bg-ink/3 text-ink-ghost'
                       }`}
                     >
                       {step.done ? <CheckCircle2 className="size-3.5" /> : <span className="size-1.5 rounded-full bg-current" />}
@@ -147,7 +147,7 @@ export default async function CheckoutSuccessPage({ params }: PageProps) {
                 CEP {order.address.zip}
               </address>
               {order.trackingCode ? (
-                <div className="flex items-center justify-between gap-2 rounded-md border border-line bg-white/2 px-3 py-2.5">
+                <div className="flex items-center justify-between gap-2 rounded-md border border-line bg-ink/2 px-3 py-2.5">
                   <span className="font-tech text-2xs text-ink-muted">{order.trackingCode}</span>
                   <Copy className="size-3.5 text-ink-ghost" />
                 </div>

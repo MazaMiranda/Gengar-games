@@ -85,7 +85,7 @@ export default async function AdminCouponsPage() {
                     {coupon.usageCount}/{coupon.usageLimit || '∞'}
                   </span>
                   {coupon.usageLimit > 0 ? (
-                    <span className="h-1 w-16 overflow-hidden rounded-full bg-white/8">
+                    <span className="h-1 w-16 overflow-hidden rounded-full bg-ink/8">
                       <span
                         className="block h-full rounded-full bg-linear-to-r from-brand-500 to-brand-300"
                         style={{

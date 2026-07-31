@@ -49,10 +49,10 @@ export function SectionHeading({
       {href ? (
         <Link
           href={href}
-          className="group inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-ink-muted transition-colors hover:text-brand-200"
+          className="group inline-flex shrink-0 items-center gap-2 py-1 text-sm font-semibold text-ink-muted transition-colors hover:text-brand-200"
         >
           {linkLabel}
-          <span className="grid size-8 place-items-center rounded-full border border-line transition-all duration-400 ease-out-expo group-hover:border-brand-400/50 group-hover:bg-brand-500/12 group-hover:shadow-glow-sm">
+          <span className="grid size-9 place-items-center rounded-full border border-line transition-all duration-400 ease-out-expo group-hover:border-brand-400/50 group-hover:bg-brand-500/12 group-hover:shadow-glow-sm">
             <ArrowUpRight className="size-3.5 transition-transform duration-400 ease-out-expo group-hover:-translate-y-px group-hover:translate-x-px" />
           </span>
         </Link>

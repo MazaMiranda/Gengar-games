@@ -63,6 +63,22 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
 
   const visibleGroups = GROUPS.filter((group) => (facets[group.facet] as FacetBucket[]).length > 1);
 
+  // Abre os 3 primeiros grupos por padrão, mais qualquer grupo que já chegue
+  // com filtro ativo — de um link direto, por exemplo. Sem isso, um filtro
+  // aplicado num grupo fora do topo ficava marcado mas escondido: dava para
+  // ver o chip na barra de cima, mas não o checkbox correspondente sem abrir
+  // cada acordeão manualmente. useState com inicializador: precisa rodar uma
+  // única vez, na montagem — defaultValue do Accordion é não controlado, e
+  // reabrir sozinho a cada navegação atropelaria um grupo que o visitante
+  // tenha fechado de propósito.
+  const [defaultOpenGroups] = React.useState(() => {
+    const top3 = visibleGroups.slice(0, 3).map((group) => group.key);
+    const withActive = visibleGroups
+      .filter((group) => searchParams.getAll(group.key).length > 0)
+      .map((group) => group.key);
+    return [...new Set([...top3, ...withActive])];
+  });
+
   return (
     <aside className={cn('flex flex-col gap-6', className)} aria-label="Filtros do catálogo">
       <div className="flex items-center justify-between gap-3">
@@ -91,7 +107,7 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
       </div>
 
       {/* Chaves rápidas */}
-      <div className="flex flex-col gap-3 rounded-lg border border-line bg-white/2 p-4">
+      <div className="flex flex-col gap-3 rounded-lg border border-line bg-ink/2 p-4">
         <label className="flex cursor-pointer items-center justify-between gap-3">
           <span className="text-xs font-medium text-ink-muted">Somente em estoque</span>
           <Switch
@@ -111,7 +127,7 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
 
       {/* Faixa de preço */}
       {max > min ? (
-        <div className="flex flex-col gap-4 rounded-lg border border-line bg-white/2 p-4">
+        <div className="flex flex-col gap-4 rounded-lg border border-line bg-ink/2 p-4">
           <div className="flex items-center justify-between">
             <span className="font-tech text-2xs font-semibold uppercase tracking-[0.18em] text-ink-muted">
               Faixa de preço
@@ -133,11 +149,7 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
         </div>
       ) : null}
 
-      <Accordion
-        type="multiple"
-        defaultValue={visibleGroups.slice(0, 3).map((group) => group.key)}
-        className="flex flex-col"
-      >
+      <Accordion type="multiple" defaultValue={defaultOpenGroups} className="flex flex-col">
         {visibleGroups.map((group) => {
           const buckets = facets[group.facet] as FacetBucket[];
           return (
@@ -151,7 +163,7 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
                       <li key={bucket.value}>
                         <label
                           className={cn(
-                            'flex cursor-pointer items-center gap-3 rounded-sm px-2 py-2 transition-colors hover:bg-white/4',
+                            'flex cursor-pointer items-center gap-3 rounded-sm px-2 py-2 transition-colors hover:bg-ink/4',
                             checked && 'bg-brand-500/8',
                           )}
                         >
