@@ -6,6 +6,7 @@ import type {
   Category,
   Coupon,
   GamingPlatform,
+  MediaItem,
   Order,
   OrderStatus,
   PricePoint,
@@ -82,6 +83,8 @@ export interface ProductRepository {
   search(query: CatalogQuery): Promise<CatalogResult>;
   findBySlug(slug: string): Promise<Product | null>;
   create(product: Product): Promise<Product>;
+  /** Substitui a galeria de mídia do produto — usado pelo backfill de arte da TCGdex. */
+  updateMedia(slug: string, media: MediaItem[]): Promise<Product | null>;
   findManyBySlugs(slugs: string[]): Promise<Product[]>;
   listCategories(): Promise<Category[]>;
   listBrands(): Promise<Brand[]>;

@@ -113,6 +113,18 @@ export class PrismaProductRepository implements ProductRepository {
     return toProduct(row);
   }
 
+  async updateMedia(slug: string, media: MediaItem[]): Promise<Product | null> {
+    try {
+      const row = await prisma.product.update({
+        where: { slug },
+        data: { media: media as unknown as Prisma.InputJsonValue },
+      });
+      return toProduct(row);
+    } catch {
+      return null;
+    }
+  }
+
   async listCategories(): Promise<Category[]> {
     const rows = await prisma.category.findMany({
       include: { _count: { select: { products: true } } },

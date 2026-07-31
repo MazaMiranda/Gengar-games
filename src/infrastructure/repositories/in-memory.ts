@@ -3,6 +3,7 @@ import type {
   Brand,
   Category,
   Coupon,
+  MediaItem,
   Order,
   OrderStatus,
   PricePoint,
@@ -64,6 +65,18 @@ export class InMemoryProductRepository implements ProductRepository {
    */
   async create(product: Product): Promise<Product> {
     return addRuntimeProduct(product);
+  }
+
+  /**
+   * `bySlug` devolve a mesma referência guardada no array/Map — mutar `.media`
+   * nela já basta para o resto do processo enxergar a troca, sem precisar
+   * reescrever a lista.
+   */
+  async updateMedia(slug: string, media: MediaItem[]): Promise<Product | null> {
+    const product = this.bySlug(slug);
+    if (!product) return null;
+    product.media = media;
+    return product;
   }
 
   async listCategories(): Promise<Category[]> {
