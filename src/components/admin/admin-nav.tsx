@@ -54,11 +54,14 @@ const SECTIONS: { title: string; links: { href: string; label: string; icon: Rea
 export function AdminNav() {
   const pathname = usePathname();
 
+  // Esta barra só existe a partir de lg, ou seja, onde há ponteiro de mouse —
+  // por isso pode ser mais compacta que o mínimo de toque. A navegação do
+  // celular é outra, em admin-mobile-nav, e mantém os alvos de 44px.
   return (
-    <nav className="flex h-full flex-col gap-8 p-6" aria-label="Navegação do painel">
+    <nav className="flex h-full flex-col gap-4 p-3" aria-label="Navegação do painel">
       <Logo href="/admin" />
 
-      <div className="flex flex-1 flex-col gap-7 overflow-y-auto">
+      <div className="flex flex-1 flex-col gap-4 overflow-y-auto">
         {SECTIONS.map((section) => (
           <div key={section.title} className="flex flex-col gap-2">
             <span className="eyebrow px-3">{section.title}</span>
@@ -70,7 +73,7 @@ export function AdminNav() {
                     <Link
                       href={link.href}
                       className={cn(
-                        'flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-all duration-300',
+                        'flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-all duration-300',
                         active
                           ? 'bg-brand-500/14 text-ink shadow-[inset_2px_0_0_0_var(--color-brand-400)]'
                           : 'text-ink-muted hover:bg-ink/4 hover:text-ink',
@@ -87,10 +90,10 @@ export function AdminNav() {
         ))}
       </div>
 
-      <div className="flex flex-col gap-1 border-t border-line pt-4">
+      <div className="flex flex-col gap-0.5 border-t border-line pt-3">
         <Link
           href="/"
-          className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-ink-muted transition-colors hover:bg-ink/4 hover:text-ink"
+          className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium text-ink-muted transition-colors hover:bg-ink/4 hover:text-ink"
         >
           <Store className="size-4 text-ink-faint" />
           Ver a loja
@@ -98,7 +101,7 @@ export function AdminNav() {
         <button
           type="button"
           onClick={() => signOut({ callbackUrl: '/' })}
-          className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-ink-faint transition-colors hover:bg-danger/8 hover:text-danger"
+          className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium text-ink-faint transition-colors hover:bg-danger/8 hover:text-danger"
         >
           <LogOut className="size-4" />
           Sair

@@ -38,8 +38,8 @@ export function ProductTable({ products, categories, mode = 'catalog' }: Product
   const categoryName = new Map(categories.map((item) => [item.slug, item.name]));
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <Input
           value={term}
           onChange={(event) => setTerm(event.target.value)}
@@ -76,9 +76,9 @@ export function ProductTable({ products, categories, mode = 'catalog' }: Product
               key: 'product',
               header: 'Produto',
               render: (product) => (
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5">
                   <span
-                    className="grid size-10 shrink-0 place-items-center rounded-md border border-line"
+                    className="grid size-8 shrink-0 place-items-center rounded-md border border-line"
                     style={{
                       background: `linear-gradient(150deg, hsl(${product.accent} 68% 22%), rgba(9,9,12,0.95))`,
                     }}
@@ -164,7 +164,7 @@ export function ProductTable({ products, categories, mode = 'catalog' }: Product
               render: (product: Product) => (
                 <Link
                   href={product.type === 'tcg-card' ? `/carta/${product.slug}` : `/produto/${product.slug}`}
-                  className="inline-flex items-center gap-1.5 text-2xs font-semibold text-ink-faint transition-colors hover:text-brand-200"
+                  className="tap-44 inline-flex items-center gap-1.5 text-2xs font-semibold text-ink-faint transition-colors hover:text-brand-200"
                 >
                   Ver
                   <ExternalLink className="size-3" />

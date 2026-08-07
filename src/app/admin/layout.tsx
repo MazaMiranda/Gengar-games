@@ -25,7 +25,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-line bg-void/85 px-5 py-4 backdrop-blur-2xl lg:px-10">
+        <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-line bg-void/85 px-4 py-2.5 backdrop-blur-2xl lg:px-6">
           <AdminMobileNav />
           <div className="flex items-center gap-3">
             <div className="hidden flex-col items-end sm:flex">
@@ -43,7 +43,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <main
           id="painel"
           tabIndex={-1}
-          className="min-w-0 flex-1 px-5 py-8 focus-visible:outline-none lg:px-10 lg:py-10"
+          className="min-w-0 flex-1 px-4 py-5 focus-visible:outline-none lg:px-6 lg:py-6"
         >
           {children}
         </main>

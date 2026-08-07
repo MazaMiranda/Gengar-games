@@ -12,11 +12,11 @@ export function AdminPage({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-8">
-      <header className="flex flex-wrap items-end justify-between gap-4">
-        <div className="flex flex-col gap-1.5">
-          <h1 className="font-display text-xl font-bold text-ink">{title}</h1>
-          {description ? <p className="text-sm text-ink-muted">{description}</p> : null}
+    <div className="flex flex-col gap-5">
+      <header className="flex flex-wrap items-end justify-between gap-3">
+        <div className="flex flex-col gap-0.5">
+          <h1 className="font-display text-lg font-bold text-ink">{title}</h1>
+          {description ? <p className="text-xs text-ink-muted">{description}</p> : null}
         </div>
         {actions ? <div className="flex flex-wrap gap-2">{actions}</div> : null}
       </header>
@@ -51,12 +51,12 @@ export function AdminCard({
      */
     <section className={cn('plate flex min-w-0 flex-col rounded-xl', className)}>
       {title ? (
-        <header className="flex items-center justify-between gap-4 border-b border-line px-6 py-4">
+        <header className="flex items-center justify-between gap-3 border-b border-line px-4 py-2.5">
           <h2 className="font-display text-sm font-bold text-ink">{title}</h2>
           {action}
         </header>
       ) : null}
-      <div className={cn('p-6', bodyClassName)}>{children}</div>
+      <div className={cn('p-4', bodyClassName)}>{children}</div>
     </section>
   );
 }
@@ -69,7 +69,14 @@ export interface Column<T> {
   render: (row: T) => React.ReactNode;
 }
 
-/** Tabela padrão do admin — responsiva por rolagem horizontal contida. */
+/**
+ * Tabela padrão do admin — responsiva por rolagem horizontal contida.
+ *
+ * O ritmo aqui é de painel de operação, não de página de marketing: a linha
+ * existe para ser varrida aos montes. Com py-4 ela media 73px para um texto de
+ * 12px, e cabiam 6 produtos na tela; o respiro custava mais rolagem do que
+ * entregava em conforto.
+ */
 export function DataTable<T>({
   columns,
   rows,
@@ -82,7 +89,7 @@ export function DataTable<T>({
   empty?: string;
 }) {
   if (!rows.length) {
-    return <p className="px-6 py-12 text-center text-sm text-ink-faint">{empty}</p>;
+    return <p className="px-4 py-10 text-center text-sm text-ink-faint">{empty}</p>;
   }
 
   return (
@@ -96,7 +103,7 @@ export function DataTable<T>({
                 scope="col"
                 style={{ width: column.width }}
                 className={cn(
-                  'px-6 py-3.5 font-tech text-2xs font-semibold uppercase tracking-[0.16em] text-ink-faint',
+                  'px-4 py-2 font-tech text-2xs font-semibold uppercase tracking-[0.16em] text-ink-faint',
                   column.align === 'right' && 'text-right',
                   column.align === 'center' && 'text-center',
                 )}
@@ -116,7 +123,7 @@ export function DataTable<T>({
                 <td
                   key={column.key}
                   className={cn(
-                    'px-6 py-4 align-middle text-sm text-ink-muted',
+                    'px-4 py-2 align-middle text-sm text-ink-muted',
                     column.align === 'right' && 'text-right',
                     column.align === 'center' && 'text-center',
                   )}
