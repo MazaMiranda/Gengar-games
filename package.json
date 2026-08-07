@@ -18,7 +18,8 @@
     "db:studio": "prisma studio",
     "tcgdex:backfill": "tsx scripts/tcgdex-backfill.mts",
     "logo:prepare": "tsx scripts/logo-prepare.mts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "icons:generate": "tsx scripts/icons-generate.mts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

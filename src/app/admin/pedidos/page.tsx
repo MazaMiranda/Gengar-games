@@ -49,7 +49,7 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
               key={filter.value}
               href={filter.value === 'todos' ? '/admin/pedidos' : `/admin/pedidos?status=${filter.value}`}
               className={cn(
-                'inline-flex h-9 items-center gap-2 rounded-sm border px-3.5 text-xs font-semibold transition-all duration-300',
+                'inline-flex h-11 items-center gap-2 rounded-sm border px-3.5 text-xs font-semibold transition-all duration-300 md:h-9',
                 active
                   ? 'border-brand-400/60 bg-brand-500/15 text-brand-100'
                   : 'border-line bg-ink/3 text-ink-muted hover:border-line-strong hover:text-ink',
@@ -74,7 +74,7 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
               render: (order) => (
                 <Link
                   href={`/admin/pedidos/${order.number}`}
-                  className="font-tech text-xs font-semibold text-ink transition-colors hover:text-brand-200"
+                  className="tap-44 font-tech text-xs font-semibold text-ink transition-colors hover:text-brand-200"
                 >
                   {order.number}
                 </Link>

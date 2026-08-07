@@ -182,7 +182,7 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                 >
                   <span
                     className={cn(
-                      'grid size-8 shrink-0 place-items-center rounded-full border font-tech text-2xs font-bold transition-all duration-400',
+                      'tap-44 grid size-8 shrink-0 place-items-center rounded-full border font-tech text-2xs font-bold transition-all duration-400',
                       done
                         ? 'border-success/40 bg-success/15 text-success'
                         : active

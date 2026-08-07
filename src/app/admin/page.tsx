@@ -104,7 +104,7 @@ export default async function AdminDashboardPage() {
                 render: (order) => (
                   <Link
                     href={`/admin/pedidos/${order.number}`}
-                    className="font-tech text-xs font-semibold text-ink transition-colors hover:text-brand-200"
+                    className="tap-44 font-tech text-xs font-semibold text-ink transition-colors hover:text-brand-200"
                   >
                     {order.number}
                   </Link>

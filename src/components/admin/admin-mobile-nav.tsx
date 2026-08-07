@@ -16,7 +16,7 @@ export function AdminMobileNav() {
           <button
             type="button"
             aria-label="Abrir menu do painel"
-            className="grid size-9 place-items-center rounded-md border border-line text-ink-muted transition-colors hover:text-ink lg:hidden"
+            className="tap-44 grid size-9 place-items-center rounded-md border border-line text-ink-muted transition-colors hover:text-ink lg:hidden"
           >
             <Menu className="size-4" />
           </button>

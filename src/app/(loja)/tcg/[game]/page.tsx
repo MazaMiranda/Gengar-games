@@ -79,7 +79,7 @@ export default async function TcgGamePage({ params, searchParams }: PageProps) {
                   href={href}
                   aria-pressed={active}
                   className={cn(
-                    'flex h-9 shrink-0 items-center gap-2 rounded-sm border px-3.5 text-xs font-medium transition-all',
+                    'flex h-11 shrink-0 items-center gap-2 rounded-sm border px-3.5 text-xs font-medium transition-all md:h-9',
                     active
                       ? 'border-brand-400/60 bg-brand-500/12 text-ink'
                       : 'border-line bg-ink/3 text-ink-muted hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-ink',
