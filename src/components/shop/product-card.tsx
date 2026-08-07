@@ -101,7 +101,10 @@ export function ProductCard({ product, className, layout = 'grid', priority }: P
           {/* Ações rápidas */}
           <div className="absolute right-3 top-3 z-3 flex flex-col gap-2 opacity-0 transition-all duration-400 ease-out-expo group-hover:opacity-100 max-md:opacity-100">
             <WishlistButton slug={product.slug} name={product.name} />
-            <span className="grid size-9 place-items-center rounded-md border border-line bg-void/50 text-ink-muted backdrop-blur-md transition-colors group-hover:text-brand-200">
+            {/* Selo decorativo de "ver": no celular ele ficava ao lado do
+                favoritar com a mesma cara de botão, mas não é clicável —
+                dois ícones iguais, um funciona e o outro não. */}
+            <span className="hidden size-9 place-items-center rounded-md border border-line bg-void/50 text-ink-muted backdrop-blur-md transition-colors group-hover:text-brand-200 md:grid">
               <Eye className="size-4" />
             </span>
           </div>
@@ -115,12 +118,18 @@ export function ProductCard({ product, className, layout = 'grid', priority }: P
             </div>
           ) : null}
 
-          {/* Adicionar rápido */}
+          {/*
+            Adicionar rápido — afordância de mouse, escondida onde não há hover.
+            Sem o `hidden md:flex` ela continuava no celular: invisível
+            (opacity-0), mas ainda clicável, uma faixa de 141x44 sobre a parte
+            de baixo da capa. O toque ali não abria o produto; jogava o item no
+            carrinho sem nada aparecer onde o dedo encostou.
+          */}
           {!soldOut ? (
             <button
               type="button"
               onClick={quickAdd}
-              className="absolute inset-x-3 bottom-3 z-3 flex h-11 translate-y-3 items-center justify-center gap-2 rounded-md border border-brand-400/40 bg-void/75 text-xs font-semibold text-ink opacity-0 backdrop-blur-lg transition-all duration-400 ease-out-expo hover:bg-brand-500/25 group-hover:translate-y-0 group-hover:opacity-100"
+              className="absolute inset-x-3 bottom-3 z-3 hidden h-11 translate-y-3 items-center justify-center gap-2 rounded-md border border-brand-400/40 bg-void/75 text-xs font-semibold text-ink opacity-0 backdrop-blur-lg transition-all duration-400 ease-out-expo hover:bg-brand-500/25 group-hover:translate-y-0 group-hover:opacity-100 md:flex"
             >
               <ShoppingBag className="size-3.5" />
               Adicionar rápido

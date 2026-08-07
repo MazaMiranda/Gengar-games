@@ -53,7 +53,12 @@ export function OrderStatusSelect({
 
   return (
     <Select value={value} onValueChange={update} disabled={pending}>
-      <SelectTrigger className={compact ? 'h-9 w-44 text-xs' : 'w-56'} aria-label="Alterar status do pedido">
+      {/* No compacto o gatilho encolhe só a partir de md: mudar o status de um
+          pedido é ação de verdade e no celular precisa dos 44px. */}
+      <SelectTrigger
+        className={compact ? 'w-44 text-xs md:h-9' : 'w-56'}
+        aria-label="Alterar status do pedido"
+      >
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

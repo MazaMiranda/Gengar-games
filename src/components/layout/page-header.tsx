@@ -34,7 +34,7 @@ export function Breadcrumbs({ crumbs, className }: { crumbs: Crumb[]; className?
               // o texto continua do tamanho visual de sempre.
               <Link
                 href={crumb.href}
-                className="-my-2.5 py-2.5 transition-colors hover:text-brand-300"
+                className="tap-44 -my-2.5 py-2.5 transition-colors hover:text-brand-300"
               >
                 {crumb.label}
               </Link>

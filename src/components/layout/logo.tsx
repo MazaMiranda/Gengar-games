@@ -34,7 +34,7 @@ export function Logo({ className, compact, href = '/' }: LogoProps) {
           'relative grid place-items-center overflow-hidden rounded-lg bg-[#12101a]',
           'ring-1 ring-inset ring-white/8 transition-all duration-500 ease-out-expo',
           'group-hover:ring-brand-400/40 group-hover:shadow-glow',
-          compact ? 'size-10' : 'px-2.5 py-1.5',
+          compact ? 'size-11' : 'px-2.5 py-1.5',
         )}
       >
         <Image
@@ -42,7 +42,7 @@ export function Logo({ className, compact, href = '/' }: LogoProps) {
           alt=""
           priority
           sizes="180px"
-          className={cn('w-auto object-contain', compact ? 'h-7' : 'h-9 sm:h-10')}
+          className={cn('w-auto object-contain', compact ? 'h-8' : 'h-9 sm:h-10')}
         />
       </span>
     </Link>

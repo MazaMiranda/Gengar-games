@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import { AlertCircle, Eye, EyeOff, LogIn } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -24,7 +24,12 @@ export function LoginForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
 
-  const callbackUrl = searchParams.get('callbackUrl') ?? '/conta';
+  /*
+   * Quando a pessoa foi mandada para cá por uma página protegida, o destino é
+   * essa página — respeitar isso vem antes de qualquer preferência por perfil.
+   * Sem callbackUrl, o destino depende de quem entrou: ver `destinoPadrao`.
+   */
+  const callbackUrl = searchParams.get('callbackUrl');
 
   const {
     register,
@@ -42,8 +47,17 @@ export function LoginForm() {
       return;
     }
 
+    /*
+     * O papel só existe na sessão, que o signIn com redirect:false não devolve
+     * — daí o getSession logo depois. Administrador entra para trabalhar no
+     * catálogo, então cai no painel; a área de cliente continua acessível por
+     * /conta para quem quiser.
+     */
+    const session = await getSession();
+    const destinoPadrao = session?.user?.role === 'admin' ? '/admin' : '/conta';
+
     toast.success('Bem-vindo de volta!');
-    router.push(callbackUrl);
+    router.push(callbackUrl ?? destinoPadrao);
     router.refresh();
   };
 
@@ -69,7 +83,20 @@ export function LoginForm() {
         </div>
       ) : null}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5" noValidate>
+      {/*
+        method="post" mesmo o envio sendo por JS.
+        Formulário sem método faz GET, e GET põe cada campo na barra de
+        endereço. Se o JS ainda não hidratou quando a pessoa aperta enter — ou
+        se falhou de vez —, o navegador envia sozinho e a senha vai parar na
+        URL, no histórico e no log do servidor. Com post, o pior caso é um
+        erro de método; nada vaza.
+      */}
+      <form
+        method="post"
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-5"
+        noValidate
+      >
         <Field label="E-mail" required error={errors.email?.message} htmlFor="email">
           <Input
             id="email"

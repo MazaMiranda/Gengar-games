@@ -61,14 +61,27 @@ export function Header() {
 
   const active = primaryNav.find((entry) => entry.id === activeMenu);
 
+  const isAdmin = session?.user?.role === 'admin';
+  const destinoDaConta = !session?.user ? '/login' : isAdmin ? '/admin' : '/conta';
+  const rotuloDaConta = !session?.user ? 'Entrar' : isAdmin ? 'Painel' : 'Minha conta';
+
   return (
     <header className="sticky top-0 z-40">
-      {/* Ticker de avisos */}
+      {/*
+        Ticker de avisos — só a partir de md.
+        Ele encolhe de 36px para 0 ao rolar, e como está dentro do cabeçalho
+        grudento isso arrasta a barra inteira: medido, os ícones sobem 35px ao
+        longo de ~400ms. No celular, onde rolar-e-tocar é o gesto normal, o
+        dedo chegava onde o botão estava e não onde ele foi parar — o carrinho
+        abria ou não conforme o tempo da batida. Fora do celular o ponteiro
+        acompanha, e a faixa continua como era. De quebra, devolve 36px de
+        altura útil na tela pequena.
+      */}
       <div
         className={cn(
           // overflow-anchor:none — este bloco muda de altura de propósito; sem
           // isso o navegador tenta "corrigir" o scrollY e briga com a animação.
-          'overflow-hidden border-b border-line bg-void/80 backdrop-blur-xl transition-all duration-500 ease-out-expo [overflow-anchor:none]',
+          'hidden overflow-hidden border-b border-line bg-void/80 backdrop-blur-xl transition-all duration-500 ease-out-expo [overflow-anchor:none] md:block',
           scrolled ? 'h-0 opacity-0' : 'h-9 opacity-100',
         )}
       >
@@ -179,9 +192,12 @@ export function Header() {
               ) : null}
             </Link>
 
+            {/* Administrador vai para o painel: mandá-lo para /conta seria
+                devolvê-lo à área de cliente logo depois de o login ter
+                justamente evitado isso. */}
             <Link
-              href={session?.user ? '/conta' : '/login'}
-              aria-label={session?.user ? 'Minha conta' : 'Entrar'}
+              href={destinoDaConta}
+              aria-label={rotuloDaConta}
               className="tap-44 grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink"
             >
               <User className="size-4" />

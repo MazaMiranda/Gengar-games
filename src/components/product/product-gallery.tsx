@@ -72,7 +72,7 @@ export function ProductGallery({ product }: { product: Product }) {
             type="button"
             onClick={() => setExpanded(true)}
             aria-label="Ampliar imagem"
-            className="absolute right-4 top-4 z-3 grid size-9 place-items-center rounded-md border border-line bg-void/60 text-ink-muted backdrop-blur-md transition-all hover:border-brand-400/50 hover:text-ink"
+            className="absolute right-4 top-4 z-3 grid size-11 place-items-center rounded-md border border-line bg-void/60 text-ink-muted backdrop-blur-md transition-all hover:border-brand-400/50 hover:text-ink"
           >
             <Maximize2 className="size-4" />
           </button>
