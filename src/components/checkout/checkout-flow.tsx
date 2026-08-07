@@ -236,7 +236,7 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                   </Field>
                   <Field label="Telefone" required error={identificationForm.formState.errors.phone?.message}>
                     <Input
-                      placeholder="(11) 90000-0000"
+                      placeholder="(31) 90000-0000"
                       inputMode="numeric"
                       {...identificationForm.register('phone', {
                         onChange: (event) => {

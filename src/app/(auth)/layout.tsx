@@ -38,7 +38,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         <p className="relative font-tech text-2xs uppercase tracking-[0.28em] text-ink-ghost">
-          Gengar Games · São Paulo, Brasil
+          Gengar Games · Belo Horizonte, Brasil
         </p>
       </aside>
 
