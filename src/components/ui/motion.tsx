@@ -6,10 +6,21 @@ import { cn } from '@/lib/utils';
 
 export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 
+/*
+ * A revelação move, mas nunca apaga.
+ *
+ * O estado inicial destas animações é renderizado no servidor e vai no HTML.
+ * Enquanto ele incluía `opacity: 0`, a página saía do servidor com o conteúdo
+ * invisível — 56 blocos só na home — e só aparecia quando o JavaScript
+ * assumia. Bastava a rede engasgar, um script falhar, ou o visitante pedir
+ * menos movimento, para a loja ficar em branco.
+ *
+ * Animando só o deslocamento, o pior caso é o texto nascer 16px abaixo do
+ * lugar: legível desde o primeiro byte, com ou sem JavaScript.
+ */
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { y: 16 },
   visible: (index: number = 0) => ({
-    opacity: 1,
     y: 0,
     // Curto de propósito: isto roda a cada troca de filtro, e resultado de
     // busca precisa parecer imediato, não coreografado.
@@ -29,7 +40,21 @@ interface RevealProps extends MotionSafeProps {
   once?: boolean;
 }
 
-/** Revelação em scroll — respeita prefers-reduced-motion automaticamente. */
+/**
+ * Revelação em scroll — respeita prefers-reduced-motion.
+ *
+ * Quem pede menos movimento recebe o elemento cru, sem componente de animação
+ * nenhum. A versão anterior passava `initial`/`whileInView` como `undefined`
+ * nesse caso, e isso escondia a página inteira: useReducedMotion devolve false
+ * no servidor e só vira true depois da hidratação, então o HTML já chegava com
+ * opacity:0 gravado pelo `initial`; quando o valor virava, sumiam junto o
+ * `initial` e o alvo do `whileInView`, e não sobrava nada para trazer o
+ * conteúdo de volta. Ficava invisível para sempre — em iOS, onde "reduzir
+ * movimento" é comum, a página institucional aparecia em branco.
+ *
+ * Devolver o elemento simples corta o problema pela raiz: sem observador, sem
+ * estado inicial, sem depender de a preferência chegar antes ou depois.
+ */
 export function Reveal({
   children,
   className,
@@ -43,10 +68,22 @@ export function Reveal({
   // A tag varia, mas o contrato de props permanece o de uma div.
   const Component = motion[as] as typeof motion.div;
 
+  if (reduced) {
+    // A tag varia em runtime; o contrato de props é o de uma div (ver acima).
+    const Tag = as as 'div';
+    // O style explícito não é decoração: o servidor já gravou o deslocamento
+    // no atributo, e um elemento sem prop `style` não faz o React limpá-lo.
+    return (
+      <Tag className={className} {...props} style={{ transform: 'none' }}>
+        {children}
+      </Tag>
+    );
+  }
+
   return (
     <Component
-      initial={reduced ? undefined : { opacity: 0, y }}
-      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+      initial={{ y }}
+      whileInView={{ y: 0 }}
       viewport={{ once, margin: '-80px' }}
       transition={{ duration: 0.75, delay, ease: EASE_OUT_EXPO }}
       className={className}
@@ -85,10 +122,14 @@ export function StaggerItem({
 }) {
   const reduced = useReducedMotion();
 
+  // Mesmo motivo do Reveal: com menos movimento, elemento cru. Aqui o risco era
+  // maior — é o card do catálogo, ou seja, a loja inteira sumiria.
+  if (reduced) return <div className={className} style={{ transform: 'none' }}>{children}</div>;
+
   return (
     <motion.div
-      initial={reduced ? undefined : 'hidden'}
-      whileInView={reduced ? undefined : 'visible'}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, margin: '-40px' }}
       variants={fadeUp}
       custom={index}

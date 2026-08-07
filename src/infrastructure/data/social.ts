@@ -1,5 +1,6 @@
 import type { PricePoint, Product, Question, Review } from '@/core/domain/entities';
 import { hashString } from '@/lib/utils';
+import { BAIRRO_CIDADE } from '@/lib/loja';
 
 const AUTHORS = [
   'Rafael N.', 'Marina D.', 'Diego S.', 'Carol P.', 'Thiago B.', 'Juliana R.',
@@ -43,7 +44,7 @@ const QUESTIONS_POOL: { q: string; a: string }[] = [
   },
   {
     q: 'Consigo retirar na loja física?',
-    a: 'Sim, a retirada em Pinheiros (São Paulo) é gratuita e fica disponível em até 4 horas úteis após a confirmação do pagamento.',
+    a: `Sim, a retirada no ${BAIRRO_CIDADE} é gratuita e fica disponível em até 4 horas úteis após a confirmação do pagamento.`,
   },
   {
     q: 'Qual é a política de troca?',

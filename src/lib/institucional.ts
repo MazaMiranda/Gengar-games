@@ -1,3 +1,5 @@
+import { BAIRRO_CIDADE, ENDERECO_COMPLETO, LOJA } from '@/lib/loja';
+
 export interface InstitutionalSection {
   heading: string;
   body: string[];
@@ -28,12 +30,12 @@ export const institutionalPages: InstitutionalPage[] = [
       },
       {
         heading: 'Modalidades de envio',
-        body: ['Trabalhamos com Correios e transportadora própria na região metropolitana de São Paulo.'],
+        body: [`Trabalhamos com Correios e transportadora própria na região metropolitana de ${LOJA.endereco.cidade}.`],
         list: [
           'Gengar Express (Loggi): 1 a 2 dias úteis — capitais atendidas',
           'SEDEX: 2 a 4 dias úteis para a maior parte do país',
           'PAC: 6 a 11 dias úteis, opção mais econômica',
-          'Retirada na loja de Pinheiros: gratuita, liberada em até 4 horas úteis',
+          `Retirada na loja do ${BAIRRO_CIDADE}: gratuita, liberada em até 4 horas úteis`,
         ],
       },
       {
@@ -155,9 +157,9 @@ export const institutionalPages: InstitutionalPage[] = [
         heading: 'Canais',
         body: ['Atendemos de segunda a sexta das 9h às 19h e aos sábados das 10h às 16h.'],
         list: [
-          'WhatsApp: (11) 4000-9090 — resposta em até 15 minutos no horário comercial',
-          'E-mail: contato@gengargames.com.br — resposta em até 1 dia útil',
-          'Loja física: Rua dos Pinheiros, 1044 — São Paulo/SP',
+          `WhatsApp: ${LOJA.telefone} — resposta em até 15 minutos no horário comercial`,
+          `E-mail: ${LOJA.email} — resposta em até 1 dia útil`,
+          `Loja física: ${ENDERECO_COMPLETO}`,
         ],
       },
       {
@@ -177,7 +179,7 @@ export const institutionalPages: InstitutionalPage[] = [
       {
         heading: 'Aceite',
         body: [
-          'Ao criar uma conta ou finalizar uma compra, você concorda com estes termos e com a política de privacidade da Gengar Games LTDA, CNPJ 48.221.905/0001-32.',
+          `Ao criar uma conta ou finalizar uma compra, você concorda com estes termos e com a política de privacidade da ${LOJA.nome} LTDA, CNPJ ${LOJA.cnpj}.`,
         ],
       },
       {

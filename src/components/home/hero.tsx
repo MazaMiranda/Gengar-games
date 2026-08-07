@@ -49,8 +49,8 @@ export function Hero({ featured, totalProdutos }: HeroProps) {
         {/* Copy */}
         <motion.div style={{ y: copyY, opacity: fade }} className="flex flex-col gap-8 lg:col-span-6">
           <motion.div
-            initial={reduced ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={reduced ? false : { y: 20 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.7, ease: EASE_OUT_EXPO }}
             className="flex flex-wrap items-center gap-3"
           >
@@ -64,8 +64,8 @@ export function Hero({ featured, totalProdutos }: HeroProps) {
           </motion.div>
 
           <motion.h1
-            initial={reduced ? false : { opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={reduced ? false : { y: 28 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.85, delay: 0.06, ease: EASE_OUT_EXPO }}
             className="max-w-xl text-hero font-extrabold text-balance"
           >
@@ -80,8 +80,8 @@ export function Hero({ featured, totalProdutos }: HeroProps) {
           </motion.h1>
 
           <motion.p
-            initial={reduced ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={reduced ? false : { y: 24 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.8, delay: 0.14, ease: EASE_OUT_EXPO }}
             className="max-w-lg text-base leading-relaxed text-ink-muted"
           >
@@ -90,8 +90,8 @@ export function Hero({ featured, totalProdutos }: HeroProps) {
           </motion.p>
 
           <motion.div
-            initial={reduced ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={reduced ? false : { y: 24 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: EASE_OUT_EXPO }}
             className="flex flex-wrap items-center gap-3"
           >
@@ -107,8 +107,8 @@ export function Hero({ featured, totalProdutos }: HeroProps) {
           </motion.div>
 
           <motion.dl
-            initial={reduced ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={reduced ? false : { y: 14 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.9, delay: 0.3 }}
             className="grid max-w-lg grid-cols-3 gap-6 border-t border-line pt-7"
           >
@@ -196,8 +196,8 @@ function FloatingCard({
 
   return (
     <motion.article
-      initial={reduced ? false : { opacity: 0, y: 40, rotate: index % 2 ? 4 : -4 }}
-      animate={{ opacity: 1, y: 0, rotate: index % 2 ? 3 : -3 }}
+      initial={reduced ? false : { y: 40, rotate: index % 2 ? 4 : -4 }}
+      animate={{ y: 0, rotate: index % 2 ? 3 : -3 }}
       transition={{ duration: 1, delay: 0.2 + index * 0.12, ease: EASE_OUT_EXPO }}
       whileHover={{ y: -12, rotate: 0, scale: 1.03 }}
       className={`absolute ${className}`}

@@ -3,6 +3,7 @@ import { Instagram, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Truck, Yout
 import { footerNav } from '@/lib/navigation';
 import { NewsletterForm } from './newsletter-form';
 import { Logo } from './logo';
+import { BAIRRO_CIDADE, ENDERECO_CURTO, LOJA, TELEFONE_LINK } from '@/lib/loja';
 
 const guarantees = [
   { icon: ShieldCheck, title: 'Compra protegida', text: 'Pagamento criptografado e nota fiscal em todo pedido.' },
@@ -40,21 +41,34 @@ export function Footer() {
           <Logo />
           <p className="max-w-sm text-sm leading-relaxed text-ink-muted">
             Curadoria de Trading Card Games, consoles e cultura gamer. Cada carta é conferida à mão e
-            cada console sai testado da nossa bancada em Pinheiros.
+            cada console sai testado da nossa bancada no {BAIRRO_CIDADE}.
           </p>
 
           <ul className="flex flex-col gap-3 text-xs text-ink-muted">
             <li className="flex items-center gap-2.5">
               <MapPin className="size-3.5 text-brand-400" />
-              Rua dos Pinheiros, 1044 — São Paulo, SP
+              {ENDERECO_CURTO}
             </li>
-            <li className="flex items-center gap-2.5">
-              <Phone className="size-3.5 text-brand-400" />
-              (11) 4000-9090
+            {/* Telefone e e-mail viram link: num rodapé, ao lado do ícone, é o
+                que o visitante espera poder tocar — e no celular resolve a
+                ligação num toque em vez de copiar à mão. */}
+            <li>
+              <a
+                href={`tel:+${TELEFONE_LINK}`}
+                className="tap-44 flex items-center gap-2.5 transition-colors hover:text-ink"
+              >
+                <Phone className="size-3.5 shrink-0 text-brand-400" />
+                {LOJA.telefone}
+              </a>
             </li>
-            <li className="flex items-center gap-2.5">
-              <Mail className="size-3.5 text-brand-400" />
-              contato@gengargames.com.br
+            <li>
+              <a
+                href={`mailto:${LOJA.email}`}
+                className="tap-44 flex items-center gap-2.5 transition-colors hover:text-ink"
+              >
+                <Mail className="size-3.5 shrink-0 text-brand-400" />
+                {LOJA.email}
+              </a>
             </li>
           </ul>
 
@@ -95,7 +109,7 @@ export function Footer() {
 
       <div className="container-page flex flex-col gap-5 border-t border-line py-7 md:flex-row md:items-center md:justify-between">
         <p className="text-2xs text-ink-faint">
-          © {new Date().getFullYear()} Gengar Games · CNPJ 48.221.905/0001-32 · Todos os direitos
+          © {new Date().getFullYear()} {LOJA.nome} · CNPJ {LOJA.cnpj} · Todos os direitos
           reservados.
         </p>
         <div className="flex flex-wrap items-center gap-2">

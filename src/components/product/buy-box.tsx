@@ -15,6 +15,7 @@ import { AddToCartButton } from '@/components/shop/add-to-cart-button';
 import { WishlistButton } from '@/components/shop/wishlist-button';
 import { useCartStore } from '@/stores/cart-store';
 import { cn, formatPrice, installmentsFor } from '@/lib/utils';
+import { BAIRRO_CIDADE } from '@/lib/loja';
 
 const PAYMENT_ROWS = [
   { icon: CreditCard, label: 'Cartão em até 12x sem juros' },
@@ -211,8 +212,8 @@ export function BuyBox({ product }: { product: Product }) {
           </div>
         ) : (
           <p className="text-2xs leading-relaxed text-ink-faint">
-            Frete grátis para todo o Brasil em compras acima de R$ 299. Retirada gratuita na loja de
-            Pinheiros, São Paulo.
+            Frete grátis para todo o Brasil em compras acima de R$ 299. Retirada gratuita na loja
+            do {BAIRRO_CIDADE}.
           </p>
         )}
       </div>

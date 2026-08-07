@@ -31,7 +31,9 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
           <AnimatePresence mode="wait">
             <motion.blockquote
               key={current.id}
-              initial={{ opacity: 0, y: 18 }}
+              // Sem opacity no estado inicial: este bloco é renderizado no
+              // servidor, e a citação sumiria até o JavaScript assumir.
+              initial={{ y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}

@@ -1,4 +1,5 @@
 import { platformList, tcgGameList } from '@/core/domain/taxonomy';
+import { BAIRRO_CIDADE } from '@/lib/loja';
 
 export interface NavColumn {
   title: string;
@@ -172,6 +173,6 @@ export const announcements = [
   'Frete grátis acima de R$ 299 para todo o Brasil',
   'Singles conferidos carta a carta antes do envio',
   'Até 12x sem juros nos consoles',
-  'Retirada gratuita na loja de Pinheiros — São Paulo',
+  `Retirada gratuita na loja do ${BAIRRO_CIDADE}`,
   'Usados com 90 dias de garantia Gengar',
 ];

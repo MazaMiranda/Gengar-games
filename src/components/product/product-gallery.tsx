@@ -40,7 +40,9 @@ export function ProductGallery({ product }: { product: Product }) {
           <AnimatePresence mode="wait">
             <motion.div
               key={current.id}
-              initial={{ opacity: 0, scale: 1.02 }}
+              // Sem opacity no inicial: a foto do produto é servida pelo
+              // servidor e ficaria invisível até o JavaScript assumir.
+              initial={{ scale: 1.02 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
