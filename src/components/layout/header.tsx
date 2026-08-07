@@ -103,7 +103,7 @@ export function Header() {
               <button
                 type="button"
                 aria-label="Abrir menu"
-                className="grid size-10 place-items-center rounded-md border border-line text-ink-muted transition-colors hover:border-line-strong hover:text-ink lg:hidden"
+                className="tap-44 grid size-10 place-items-center rounded-md border border-line text-ink-muted transition-colors hover:border-line-strong hover:text-ink lg:hidden"
               >
                 <Menu className="size-4" />
               </button>
@@ -147,7 +147,10 @@ export function Header() {
               >
                 <Search className="size-4" />
                 <span className="flex-1 text-left text-xs">Buscar produtos…</span>
-                <kbd className="rounded-xs border border-line px-1.5 py-0.5 font-tech text-[0.625rem] text-ink-ghost">
+                {/* Fundo próprio: encostado no botão translúcido o contraste
+                    da tecla dependia do que passasse atrás. Sobre --surface é
+                    determinístico nos dois temas. */}
+                <kbd className="rounded-xs border border-line bg-surface px-1.5 py-0.5 font-tech text-[0.625rem] text-ink-faint">
                   ⌘K
                 </kbd>
               </button>
@@ -157,7 +160,7 @@ export function Header() {
               <button
                 type="button"
                 aria-label="Buscar"
-                className="grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink md:hidden"
+                className="tap-44 grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink md:hidden"
               >
                 <Search className="size-4" />
               </button>
@@ -168,7 +171,7 @@ export function Header() {
             <Link
               href="/conta/favoritos"
               aria-label="Favoritos"
-              className="relative hidden size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink sm:grid"
+              className="tap-44 relative hidden size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink sm:grid"
             >
               <Heart className="size-4" />
               {wishlistCount > 0 ? (
@@ -179,7 +182,7 @@ export function Header() {
             <Link
               href={session?.user ? '/conta' : '/login'}
               aria-label={session?.user ? 'Minha conta' : 'Entrar'}
-              className="grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink"
+              className="tap-44 grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink"
             >
               <User className="size-4" />
             </Link>
@@ -188,7 +191,7 @@ export function Header() {
               type="button"
               onClick={openCart}
               aria-label={`Abrir carrinho, ${itemCount} itens`}
-              className="relative ml-1 grid size-10 place-items-center rounded-md border border-line bg-ink/4 text-ink transition-all duration-300 hover:border-brand-400/50 hover:bg-brand-500/12 hover:shadow-glow-sm"
+              className="tap-44 relative ml-1 grid size-10 place-items-center rounded-md border border-line bg-ink/4 text-ink transition-all duration-300 hover:border-brand-400/50 hover:bg-brand-500/12 hover:shadow-glow-sm"
             >
               <ShoppingBag className="size-4" />
               <AnimatePresence>

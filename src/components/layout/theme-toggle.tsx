@@ -49,7 +49,9 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label={`Mudar para o tema ${goingTo}`}
       title={`Tema ${goingTo}`}
       className={cn(
-        'relative grid size-10 place-items-center overflow-hidden rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink',
+        // Sem overflow-hidden: ele recortaria a área de toque do tap-44. Os
+        // ícones giram dentro de 16px numa caixa de 40, não vazam.
+        'tap-44 grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink',
         className,
       )}
     >

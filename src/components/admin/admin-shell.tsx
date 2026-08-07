@@ -39,7 +39,17 @@ export function AdminCard({
   children: React.ReactNode;
 }) {
   return (
-    <section className={cn('plate flex flex-col rounded-xl', className)}>
+    /*
+     * min-w-0 é o que faz a DataTable caber.
+     *
+     * O card quase sempre é item de grid, e item de grid nasce com
+     * min-width:auto — ou seja, se recusa a encolher abaixo do conteúdo. Com a
+     * tabela pedindo 46rem, o card inteiro esticava para 738px e arrastava o
+     * painel junto: numa tela de 375px o /admin rolava para o lado. O
+     * overflow-x-auto da tabela já existia, mas não tinha como agir enquanto o
+     * pai crescia atrás dele.
+     */
+    <section className={cn('plate flex min-w-0 flex-col rounded-xl', className)}>
       {title ? (
         <header className="flex items-center justify-between gap-4 border-b border-line px-6 py-4">
           <h2 className="font-display text-sm font-bold text-ink">{title}</h2>

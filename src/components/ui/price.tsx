@@ -70,7 +70,9 @@ export function DiscountTag({ value, compareAt, className }: { value: number; co
   return (
     <span
       className={cn(
-        'inline-flex h-6 items-center rounded-xs bg-linear-to-r from-brand-500 to-brand-400 px-2 font-tech text-2xs font-bold uppercase tracking-wider text-white shadow-glow-sm',
+        // 600->500 e não 500->400: com texto de 11px o mínimo é 4,5:1, e o
+        // branco sobre brand-400 media 3,96 na ponta clara do degradê.
+        'inline-flex h-6 items-center rounded-xs bg-linear-to-r from-brand-600 to-brand-500 px-2 font-tech text-2xs font-bold uppercase tracking-wider text-white shadow-glow-sm',
         className,
       )}
     >

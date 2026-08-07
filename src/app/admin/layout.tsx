@@ -17,6 +17,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <div className="flex min-h-dvh bg-void">
+      <a href="#painel" className="skip-link">
+        Pular para o conteúdo
+      </a>
       <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 border-r border-line bg-surface/40 lg:block">
         <AdminNav />
       </aside>
@@ -37,7 +40,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </div>
         </header>
 
-        <main className="flex-1 px-5 py-8 lg:px-10 lg:py-10">{children}</main>
+        <main
+          id="painel"
+          tabIndex={-1}
+          className="min-w-0 flex-1 px-5 py-8 focus-visible:outline-none lg:px-10 lg:py-10"
+        >
+          {children}
+        </main>
       </div>
     </div>
   );

@@ -56,7 +56,9 @@ export function WishlistButton({ slug, name, className, variant = 'icon' }: Wish
       aria-label={active ? `Remover ${name} dos favoritos` : `Adicionar ${name} aos favoritos`}
       aria-pressed={active}
       className={cn(
-        'grid size-9 place-items-center rounded-md border backdrop-blur-md transition-all duration-300 ease-out-expo',
+        // tap-44: o selo continua com 36px para não pesar na capa do produto,
+        // mas o alvo do dedo vai a 44 — é o controle mais repetido do site.
+        'tap-44 grid size-9 place-items-center rounded-md border backdrop-blur-md transition-all duration-300 ease-out-expo',
         active
           ? 'border-brand-400/60 bg-brand-500/25 text-brand-200 shadow-glow-sm'
           : 'border-line bg-void/50 text-ink-muted hover:border-brand-400/40 hover:text-brand-200',

@@ -163,7 +163,9 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
                       <li key={bucket.value}>
                         <label
                           className={cn(
-                            'flex cursor-pointer items-center gap-3 rounded-sm px-2 py-2 transition-colors hover:bg-ink/4',
+                            // min-h-11: a linha inteira é o alvo do toque, e com
+                            // py-2 ela media 34px — abaixo do mínimo de 44.
+                            'flex min-h-11 cursor-pointer items-center gap-3 rounded-sm px-2 py-2 transition-colors hover:bg-ink/4',
                             checked && 'bg-brand-500/8',
                           )}
                         >
