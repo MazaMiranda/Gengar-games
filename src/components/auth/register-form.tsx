@@ -81,7 +81,14 @@ export function RegisterForm() {
         </div>
       ) : null}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5" noValidate>
+      {/* method="post" pelo mesmo motivo do login: sem ele, um envio antes da
+          hidratação mandaria a senha na barra de endereço. */}
+      <form
+        method="post"
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-5"
+        noValidate
+      >
         <Field label="Nome completo" required error={errors.name?.message} htmlFor="name">
           <Input id="name" autoComplete="name" placeholder="Ana Beatriz Lopes" invalid={Boolean(errors.name)} {...register('name')} />
         </Field>

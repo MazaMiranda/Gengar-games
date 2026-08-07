@@ -61,6 +61,10 @@ export function Header() {
 
   const active = primaryNav.find((entry) => entry.id === activeMenu);
 
+  const isAdmin = session?.user?.role === 'admin';
+  const destinoDaConta = !session?.user ? '/login' : isAdmin ? '/admin' : '/conta';
+  const rotuloDaConta = !session?.user ? 'Entrar' : isAdmin ? 'Painel' : 'Minha conta';
+
   return (
     <header className="sticky top-0 z-40">
       {/*
@@ -188,9 +192,12 @@ export function Header() {
               ) : null}
             </Link>
 
+            {/* Administrador vai para o painel: mandá-lo para /conta seria
+                devolvê-lo à área de cliente logo depois de o login ter
+                justamente evitado isso. */}
             <Link
-              href={session?.user ? '/conta' : '/login'}
-              aria-label={session?.user ? 'Minha conta' : 'Entrar'}
+              href={destinoDaConta}
+              aria-label={rotuloDaConta}
               className="tap-44 grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink"
             >
               <User className="size-4" />

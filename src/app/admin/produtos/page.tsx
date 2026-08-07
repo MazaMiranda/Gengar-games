@@ -5,7 +5,6 @@ import { getAdminCatalog } from '@/core/application/admin-service';
 import { listCategories } from '@/core/application/catalog-service';
 import { AdminPage } from '@/components/admin/admin-shell';
 import { ProductTable } from '@/components/admin/product-table';
-import { TcgdexSyncButton } from '@/components/admin/tcgdex-sync-button';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = { title: 'Produtos' };
@@ -18,15 +17,12 @@ export default async function AdminProductsPage() {
       title="Produtos"
       description={`${catalog.total} itens cadastrados no catálogo.`}
       actions={
-        <>
-          <TcgdexSyncButton />
-          <Button asChild size="sm">
-            <Link href="/admin/produtos/novo">
-              <Plus className="size-4" />
-              Novo produto
-            </Link>
-          </Button>
-        </>
+        <Button asChild size="sm">
+          <Link href="/admin/produtos/novo">
+            <Plus className="size-4" />
+            Novo produto
+          </Link>
+        </Button>
       }
     >
       <ProductTable products={catalog.items} categories={categories} />
