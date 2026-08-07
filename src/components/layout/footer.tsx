@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { Instagram, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Truck, Youtube } from 'lucide-react';
+import { Instagram, Mail, MapPin, MessageCircle, ShieldCheck, Truck, Youtube } from 'lucide-react';
 import { footerNav } from '@/lib/navigation';
 import { NewsletterForm } from './newsletter-form';
 import { Logo } from './logo';
-import { BAIRRO_CIDADE, ENDERECO_CURTO, LOJA, TELEFONE_LINK } from '@/lib/loja';
+import { BAIRRO_CIDADE, ENDERECO_CURTO, LOJA, whatsappUrl } from '@/lib/loja';
 
 const guarantees = [
   { icon: ShieldCheck, title: 'Compra protegida', text: 'Pagamento criptografado e nota fiscal em todo pedido.' },
@@ -49,16 +49,19 @@ export function Footer() {
               <MapPin className="size-3.5 text-brand-400" />
               {ENDERECO_CURTO}
             </li>
-            {/* Telefone e e-mail viram link: num rodapé, ao lado do ícone, é o
-                que o visitante espera poder tocar — e no celular resolve a
-                ligação num toque em vez de copiar à mão. */}
+            {/* O telefone abre a conversa no WhatsApp com a mensagem pronta —
+                é por lá que a loja atende. O e-mail abre o cliente de correio.
+                Ambos ao lado do ícone, que é onde o visitante tenta tocar. */}
             <li>
               <a
-                href={`tel:+${TELEFONE_LINK}`}
+                href={whatsappUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="tap-44 flex items-center gap-2.5 transition-colors hover:text-ink"
               >
-                <Phone className="size-3.5 shrink-0 text-brand-400" />
+                <MessageCircle className="size-3.5 shrink-0 text-brand-400" />
                 {LOJA.telefone}
+                <span className="sr-only">— abrir conversa no WhatsApp</span>
               </a>
             </li>
             <li>
@@ -72,11 +75,24 @@ export function Footer() {
             </li>
           </ul>
 
+          {/* O selo do WhatsApp é o único que leva a algum lugar hoje, então é
+              o único que virou link — ícone com cara de botão que não faz nada
+              é o tipo de coisa que o visitante testa primeiro. */}
           <div className="flex gap-2">
-            {[Instagram, Youtube, MessageCircle].map((Icon, index) => (
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Falar com a loja no WhatsApp"
+              className="tap-44 grid size-10 place-items-center rounded-md border border-line text-ink-muted transition-all duration-300 hover:border-brand-400/50 hover:text-brand-200"
+            >
+              <MessageCircle className="size-4" />
+            </a>
+            {[Instagram, Youtube].map((Icon, index) => (
               <span
                 key={index}
-                className="grid size-10 place-items-center rounded-md border border-line text-ink-muted transition-all duration-300 hover:border-brand-400/50 hover:text-brand-200"
+                aria-hidden
+                className="grid size-10 place-items-center rounded-md border border-line text-ink-ghost"
               >
                 <Icon className="size-4" />
               </span>

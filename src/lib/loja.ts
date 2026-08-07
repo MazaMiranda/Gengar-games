@@ -28,6 +28,23 @@ export const LOJA = {
 /** Só os dígitos, com país — formato que `tel:` e o WhatsApp esperam. */
 export const TELEFONE_LINK = LOJA.telefone.replace(/\D/g, '');
 
+/** Primeira frase da conversa, quando quem clica não veio de um produto. */
+export const MENSAGEM_PADRAO = 'Olá! Vim pelo site da Gengar Games e queria tirar uma dúvida.';
+
+/**
+ * Link de conversa no WhatsApp, já com a mensagem digitada.
+ *
+ * O wa.me é o endereço oficial e resolve sozinho para onde o cliente tem o
+ * WhatsApp: aplicativo no celular, versão de desktop, ou WhatsApp Web no
+ * navegador. Por isso não vale a pena detectar dispositivo aqui.
+ *
+ * O número entra só com dígitos e código do país, sem +, sem espaço e sem
+ * traço — é o único formato que o wa.me aceita.
+ */
+export function whatsappUrl(mensagem: string = MENSAGEM_PADRAO) {
+  return `https://wa.me/${TELEFONE_LINK}?text=${encodeURIComponent(mensagem)}`;
+}
+
 const { logradouro, complemento, bairro, cidade, cidadeCurta, uf } = LOJA.endereco;
 
 /** Endereço por extenso — páginas institucionais, rodapé. */
