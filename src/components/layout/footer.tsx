@@ -3,7 +3,7 @@ import { Instagram, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Truck, Yout
 import { footerNav } from '@/lib/navigation';
 import { NewsletterForm } from './newsletter-form';
 import { Logo } from './logo';
-import { BAIRRO_CIDADE, ENDERECO_CURTO, LOJA } from '@/lib/loja';
+import { BAIRRO_CIDADE, ENDERECO_CURTO, LOJA, TELEFONE_LINK } from '@/lib/loja';
 
 const guarantees = [
   { icon: ShieldCheck, title: 'Compra protegida', text: 'Pagamento criptografado e nota fiscal em todo pedido.' },
@@ -49,13 +49,26 @@ export function Footer() {
               <MapPin className="size-3.5 text-brand-400" />
               {ENDERECO_CURTO}
             </li>
-            <li className="flex items-center gap-2.5">
-              <Phone className="size-3.5 text-brand-400" />
-              {LOJA.telefone}
+            {/* Telefone e e-mail viram link: num rodapé, ao lado do ícone, é o
+                que o visitante espera poder tocar — e no celular resolve a
+                ligação num toque em vez de copiar à mão. */}
+            <li>
+              <a
+                href={`tel:+${TELEFONE_LINK}`}
+                className="tap-44 flex items-center gap-2.5 transition-colors hover:text-ink"
+              >
+                <Phone className="size-3.5 shrink-0 text-brand-400" />
+                {LOJA.telefone}
+              </a>
             </li>
-            <li className="flex items-center gap-2.5">
-              <Mail className="size-3.5 text-brand-400" />
-              {LOJA.email}
+            <li>
+              <a
+                href={`mailto:${LOJA.email}`}
+                className="tap-44 flex items-center gap-2.5 transition-colors hover:text-ink"
+              >
+                <Mail className="size-3.5 shrink-0 text-brand-400" />
+                {LOJA.email}
+              </a>
             </li>
           </ul>
 

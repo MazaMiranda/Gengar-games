@@ -20,10 +20,13 @@ export const LOJA = {
     uf: 'MG',
   },
 
-  telefone: '(31) 4000-9090',
+  telefone: '+55 31 8514-4153',
   email: 'contato@gengargames.com.br',
   emailTrocas: 'trocas@gengargames.com.br',
 } as const;
+
+/** Só os dígitos, com país — formato que `tel:` e o WhatsApp esperam. */
+export const TELEFONE_LINK = LOJA.telefone.replace(/\D/g, '');
 
 const { logradouro, complemento, bairro, cidade, cidadeCurta, uf } = LOJA.endereco;
 
