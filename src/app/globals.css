@@ -47,17 +47,26 @@
   --color-line-brand: var(--t-line-brand);
 
   /* ── Cores: semântica ───────────────────────────────────────────────── */
-  --color-success: #34d399;
-  --color-warning: #fbbf24;
-  --color-danger: #fb7185;
-  --color-info: #38bdf8;
+  /* Também tematizadas: são quase sempre texto (status de pedido, alerta de
+     estoque), e o tom vibrante que funciona sobre preto some sobre branco. */
+  --color-success: var(--t-success);
+  --color-warning: var(--t-warning);
+  --color-danger: var(--t-danger);
+  --color-info: var(--t-info);
+
+  /* Preenchimento do botão destrutivo. Não acompanha o tema de propósito: o
+     rótulo é branco fixo, então a chapa precisa ficar escura nos dois lados.
+     Antes eram --danger a 90%/70% sobre o fundo, e no claro a base diluída
+     chegava a 3,9:1. Aqui: 4,7:1 no topo, 8,0:1 na base. */
+  --color-danger-surface: #e11d48;
+  --color-danger-surface-deep: #9f1239;
 
   /* ── Cores: raridades TCG ───────────────────────────────────────────── */
-  --color-rarity-common: #a1a1aa;
-  --color-rarity-uncommon: #34d399;
-  --color-rarity-rare: #38bdf8;
-  --color-rarity-ultra: #c084fc;
-  --color-rarity-secret: #fbbf24;
+  --color-rarity-common: var(--t-rarity-common);
+  --color-rarity-uncommon: var(--t-rarity-uncommon);
+  --color-rarity-rare: var(--t-rarity-rare);
+  --color-rarity-ultra: var(--t-rarity-ultra);
+  --color-rarity-secret: var(--t-rarity-secret);
 
   /* ── Tipografia ─────────────────────────────────────────────────────── */
   --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
@@ -134,10 +143,32 @@
   --t-brand-200: #ddccff;
   --t-brand-300: #c084fc;
 
-  --t-ink: #ffffff;
-  --t-ink-muted: #a1a1aa;
-  --t-ink-faint: #71717a;
-  --t-ink-ghost: #3f3f46;
+  /*
+   * Rampa de texto.
+   *
+   * Os quatro degraus são medidos contra --t-overlay (#202024), a mais clara
+   * das superfícies escuras, e não contra --t-void. É o que importa na
+   * prática: preço riscado, contagem de facetas e rótulo de gráfico quase
+   * sempre caem sobre plate ou card, não sobre o fundo da página. Aferir pelo
+   * fundo mais escuro dá uma folga que não existe onde o texto realmente está.
+   *
+   * Antes: faint 4,12:1 e ghost 1,91:1 — o preço antigo era quase invisível.
+   */
+  --t-ink: #ffffff; /* 15,3:1 no overlay */
+  --t-ink-muted: #b1b1b9; /*  7,6:1 */
+  --t-ink-faint: #9a9aa1; /*  5,8:1 */
+  --t-ink-ghost: #888894; /*  4,6:1 */
+
+  --t-success: #34d399;
+  --t-warning: #fbbf24;
+  --t-danger: #fb7185;
+  --t-info: #38bdf8;
+
+  --t-rarity-common: #a1a1aa;
+  --t-rarity-uncommon: #34d399;
+  --t-rarity-rare: #38bdf8;
+  --t-rarity-ultra: #c084fc;
+  --t-rarity-secret: #fbbf24;
 
   --t-line: rgba(255, 255, 255, 0.07);
   --t-line-strong: rgba(255, 255, 255, 0.13);
@@ -181,10 +212,33 @@
   --t-brand-200: #5b21b6;
   --t-brand-300: #6d28d9;
 
-  --t-ink: #131316;
-  --t-ink-muted: #52525b;
-  --t-ink-faint: #6b6b76;
-  --t-ink-ghost: #a1a1aa;
+  /* Mesma régua do escuro, aferida contra --t-overlay (#eeedf3). */
+  --t-ink: #131316; /* 15,5:1 no overlay */
+  --t-ink-muted: #52525b; /*  6,6:1 */
+  --t-ink-faint: #60606a; /*  5,3:1 */
+  --t-ink-ghost: #666671; /*  4,9:1 */
+
+  /*
+   * Semânticas e raridades escurecem no claro. Os tons do escuro são vivos
+   * para brilhar sobre preto e chegavam a 1,5:1 sobre este fundo — o alerta de
+   * estoque em âmbar era o pior caso. O matiz é o mesmo, só a luminosidade
+   * muda, então o código de cor continua sendo lido como "a mesma cor".
+   *
+   * Cada valor é resolvido contra o fundo em que a cor realmente aparece: o
+   * badge pinta `bg-<cor>/12`, ou seja, o texto cai sobre um tint de 12% de si
+   * mesmo. Aferir contra a superfície limpa dava 4,8:1 no papel e 4,2–4,4 na
+   * tela. Aqui a conta já inclui o tint, e o pior caso medido fica em 4,7:1.
+   */
+  --t-success: #197251;
+  --t-warning: #825e03;
+  --t-danger: #c50621;
+  --t-info: #066b98;
+
+  --t-rarity-common: #656570;
+  --t-rarity-uncommon: #197251;
+  --t-rarity-rare: #066b98;
+  --t-rarity-ultra: #8612f9;
+  --t-rarity-secret: #825e03;
 
   --t-line: rgba(19, 19, 22, 0.1);
   --t-line-strong: rgba(19, 19, 22, 0.17);
@@ -410,6 +464,86 @@
 /* ==========================================================================
    UTILITÁRIOS DE MARCA
    ========================================================================== */
+
+/*
+ * Realce de campo em foco.
+ *
+ * São duas leituras diferentes de propósito. O halo suave aparece para todo
+ * mundo, inclusive no clique do mouse, e serve só para dizer "é aqui que você
+ * está digitando". O anel forte do :focus-visible global entra por cima quando
+ * a navegação é por teclado, que é quem realmente depende de enxergar o foco.
+ *
+ * A cor sai do token da marca em vez de hex solto — antes era um
+ * rgba(147,51,234,0.14) escrito à mão no componente, opaco demais para ser
+ * percebido e invisível para o tema claro.
+ */
+@utility focus-halo {
+  &:focus {
+    border-color: color-mix(in srgb, var(--color-brand-400) 60%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-400) 22%, transparent);
+  }
+}
+
+/*
+ * Área de toque mínima de 44x44 sem mexer no desenho.
+ *
+ * Vários controles do site são quadrados de 36 ou 40px — favoritar na capa do
+ * produto, os ícones do cabeçalho. Aumentar a caixa visual engordaria a
+ * interface inteira e, no cabeçalho do celular, não caberia na linha. Então o
+ * alvo cresce por um pseudo-elemento invisível, centrado no botão: o dedo
+ * acerta 44px, o olho continua vendo 36.
+ *
+ * Só serve para elemento de posição estática — o utilitário aplica
+ * position:relative, e em algo já absoluto isso desmontaria o posicionamento.
+ * Nesses casos, aumente a caixa mesmo (size-11).
+ */
+@utility tap-44 {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+  }
+}
+
+/*
+ * Atalho para saltar o cabeçalho.
+ *
+ * Fica fora da tela até receber foco: o header tem menu, busca, tema, conta e
+ * carrinho, então sem isso o teclado gasta mais de uma dezena de tabulações
+ * antes de chegar no conteúdo, em toda página.
+ */
+@utility skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 0.5rem;
+  z-index: 100;
+  transform: translateY(-160%);
+  border-radius: var(--radius-sm);
+  background: var(--color-brand-500);
+  padding: 0.625rem 1rem;
+  font-family: var(--font-tech);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  box-shadow: var(--shadow-glow);
+  transition: transform 0.25s var(--ease-out-expo);
+
+  &:focus-visible {
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
 
 @utility container-page {
   width: 100%;

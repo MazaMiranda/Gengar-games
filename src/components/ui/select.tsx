@@ -3,6 +3,7 @@
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { Check, ChevronDown } from 'lucide-react';
+import { useFieldProps } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
 export const Select = SelectPrimitive.Root;
@@ -12,11 +13,22 @@ export const SelectGroup = SelectPrimitive.Group;
 export const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => {
+  // Herda id/erro/descrição do Field que envolve o campo, igual ao Input.
+  const a11y = useFieldProps({
+    id: props.id,
+    'aria-describedby': props['aria-describedby'],
+  });
+
+  return (
   <SelectPrimitive.Trigger
     ref={ref}
+    id={a11y.id}
+    aria-invalid={a11y.invalid || undefined}
+    aria-describedby={a11y.describedBy}
     className={cn(
-      'group flex h-11 w-full items-center justify-between gap-3 rounded-md border border-line bg-ink/3 px-4 text-sm text-ink outline-none transition-all duration-300 ease-out-expo hover:border-line-strong focus:border-brand-400/60 focus:shadow-[0_0_0_3px_rgba(147,51,234,0.14)] data-[placeholder]:text-ink-faint',
+      'focus-halo group flex h-11 w-full items-center justify-between gap-3 rounded-md border border-line bg-ink/3 px-4 text-sm text-ink transition-all duration-300 ease-out-expo hover:border-line-strong data-[placeholder]:text-ink-faint',
+      a11y.invalid && 'border-danger/60',
       className,
     )}
     {...props}
@@ -26,7 +38,8 @@ export const SelectTrigger = React.forwardRef<
       <ChevronDown className="size-4 text-ink-faint transition-transform duration-300 group-data-[state=open]:rotate-180" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
-));
+  );
+});
 SelectTrigger.displayName = 'SelectTrigger';
 
 export const SelectContent = React.forwardRef<

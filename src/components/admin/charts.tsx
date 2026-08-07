@@ -11,8 +11,11 @@ export function RevenueChart({ data }: { data: RevenuePoint[] }) {
   const max = Math.max(...data.map((point) => point.revenue), 1);
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex h-56 items-stretch gap-2 sm:gap-3">
+    <div className="flex flex-col gap-3">
+      {/* h-44: as colunas continuam legíveis e a linha inteira encurta ~50px,
+          o que também reduz o vazio do card de status ao lado, que estica
+          para acompanhar a altura da linha do grid. */}
+      <div className="flex h-44 items-stretch gap-2 sm:gap-3">
         {data.map((point, index) => {
           const height = Math.max(2, (point.revenue / max) * 100);
           const active = hover === index;
@@ -65,7 +68,7 @@ export function ProportionBar({
   const total = segments.reduce((sum, segment) => sum + segment.value, 0) || 1;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <div className="flex h-2.5 overflow-hidden rounded-full bg-ink/6">
         {segments.map((segment) => (
           <div

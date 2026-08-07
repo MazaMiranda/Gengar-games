@@ -186,7 +186,10 @@ function CardFrame({
         </div>
 
         {/* Rodapé técnico */}
-        <div className="absolute inset-x-[10%] bottom-[9%] flex items-end justify-between font-tech text-[0.45rem] uppercase tracking-widest text-white/45 sm:text-[0.5rem]">
+        {/* /75 e não /45: a 8px sobre a arte escura da carta o rodapé media
+            2,85:1 — o código da coleção e a numeração são informação, não
+            textura, e é por eles que o colecionador identifica a carta. */}
+        <div className="absolute inset-x-[10%] bottom-[9%] flex items-end justify-between font-tech text-[0.45rem] uppercase tracking-widest text-white/75 sm:text-[0.5rem]">
           <span className="truncate">{card?.setCode ?? product.categorySlug}</span>
           <span>{card?.number ?? product.sku.slice(-4)}</span>
         </div>

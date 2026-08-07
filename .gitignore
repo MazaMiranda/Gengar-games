@@ -13,3 +13,7 @@ npm-debug.log*
 next-env.d.ts
 tsconfig.tsbuildinfo
 coverage
+
+# Cache dos scripts Python da skill ui-ux-pro-max
+__pycache__
+*.pyc

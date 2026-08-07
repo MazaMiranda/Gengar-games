@@ -39,9 +39,9 @@ export default async function AdminDashboardPage() {
         </Button>
       }
     >
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {overview.metrics.map((metric) => (
-          <div key={metric.id} className="plate flex flex-col gap-3 rounded-xl p-5">
+          <div key={metric.id} className="plate flex flex-col gap-1.5 rounded-xl p-4">
             <span className="font-tech text-2xs uppercase tracking-[0.16em] text-ink-faint">
               {metric.label}
             </span>
@@ -66,7 +66,7 @@ export default async function AdminDashboardPage() {
         ))}
       </section>
 
-      <div className="grid gap-4 xl:grid-cols-[1.6fr_1fr]">
+      <div className="grid gap-3 xl:grid-cols-[1.6fr_1fr]">
         <AdminCard title="Faturamento nos últimos 8 meses">
           <RevenueChart data={overview.revenue} />
         </AdminCard>
@@ -84,7 +84,7 @@ export default async function AdminDashboardPage() {
         </AdminCard>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-2">
+      <div className="grid gap-3 xl:grid-cols-2">
         <AdminCard
           title="Pedidos recentes"
           bodyClassName="p-0"
@@ -158,7 +158,7 @@ export default async function AdminDashboardPage() {
                 render: (row) => (
                   <div className="flex items-center gap-3">
                     <span
-                      className="grid size-9 shrink-0 place-items-center rounded-md border border-line"
+                      className="grid size-7 shrink-0 place-items-center rounded-md border border-line"
                       style={{
                         background: `linear-gradient(150deg, hsl(${row.product.accent} 68% 22%), rgba(9,9,12,0.95))`,
                       }}
@@ -192,7 +192,7 @@ export default async function AdminDashboardPage() {
         </AdminCard>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[1fr_1fr]">
+      <div className="grid gap-3 xl:grid-cols-[1fr_1fr]">
         <AdminCard
           title="Estoque crítico"
           bodyClassName="p-0"
@@ -239,11 +239,11 @@ export default async function AdminDashboardPage() {
           />
         </AdminCard>
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
           <AdminCard>
-            <div className="flex items-center gap-4">
-              <span className="grid size-11 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300">
-                <Users className="size-5" />
+            <div className="flex items-center gap-3">
+              <span className="grid size-9 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300">
+                <Users className="size-4" />
               </span>
               <div>
                 <p className="font-display text-2xl font-bold text-ink">{overview.customersCount}</p>
@@ -254,8 +254,8 @@ export default async function AdminDashboardPage() {
 
           <AdminCard>
             <div className="flex items-center gap-4">
-              <span className="grid size-11 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300">
-                <Package className="size-5" />
+              <span className="grid size-9 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300">
+                <Package className="size-4" />
               </span>
               <div>
                 <p className="font-display text-2xl font-bold text-ink">{overview.productsCount}</p>

@@ -17,12 +17,15 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <div className="flex min-h-dvh bg-void">
+      <a href="#painel" className="skip-link">
+        Pular para o conteúdo
+      </a>
       <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 border-r border-line bg-surface/40 lg:block">
         <AdminNav />
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-line bg-void/85 px-5 py-4 backdrop-blur-2xl lg:px-10">
+        <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-line bg-void/85 px-4 py-2.5 backdrop-blur-2xl lg:px-6">
           <AdminMobileNav />
           <div className="flex items-center gap-3">
             <div className="hidden flex-col items-end sm:flex">
@@ -37,7 +40,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           </div>
         </header>
 
-        <main className="flex-1 px-5 py-8 lg:px-10 lg:py-10">{children}</main>
+        <main
+          id="painel"
+          tabIndex={-1}
+          className="min-w-0 flex-1 px-4 py-5 focus-visible:outline-none lg:px-6 lg:py-6"
+        >
+          {children}
+        </main>
       </div>
     </div>
   );
