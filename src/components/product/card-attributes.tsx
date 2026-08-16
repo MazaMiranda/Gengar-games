@@ -34,7 +34,10 @@ export function CardAttributes({ card, product }: { card: CardAttrs; product: Pr
         </h3>
         <span
           className={cn(
-            'font-tech text-2xs font-bold tracking-[0.18em] uppercase',
+            /* A raridade já é codificada por cor, que é o que carrega a
+               informação. Caixa alta com tracking em cima disso era ênfase
+               dobrada num rótulo de três palavras. */
+            'text-xs font-semibold',
             RARITY_TONE[card.rarity],
           )}
         >
@@ -59,9 +62,7 @@ export function CardAttributes({ card, product }: { card: CardAttrs; product: Pr
             key={row.label}
             className="border-line flex items-center justify-between gap-4 border-b py-2.5"
           >
-            <dt className="font-tech text-2xs text-ink-faint tracking-[0.16em] uppercase">
-              {row.label}
-            </dt>
+            <dt className="text-ink-faint text-xs">{row.label}</dt>
             <dd className="text-ink text-right text-xs font-medium">{row.value}</dd>
           </div>
         ))}
@@ -97,7 +98,7 @@ function Attribute({
 }) {
   return (
     <div className="border-line bg-ink/2 flex flex-col gap-1.5 rounded-md border p-3.5">
-      <span className="font-tech text-2xs text-ink-faint flex items-center gap-1.5 tracking-[0.16em] uppercase">
+      <span className="text-ink-faint flex items-center gap-1.5 text-xs">
         <Icon className="size-3" />
         {label}
       </span>

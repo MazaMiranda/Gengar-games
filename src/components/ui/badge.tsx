@@ -3,7 +3,17 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const badgeVariants = cva(
-  'inline-flex items-center gap-1.5 font-tech font-semibold uppercase tracking-[0.16em] transition-colors',
+  /*
+   * Caixa normal.
+   *
+   * Era `font-tech uppercase tracking-[0.16em]`. Funciona para um selo de uma
+   * palavra, mas o Badge também carrega frase — "Conferida sob luz UV",
+   * "Enviada em toploader" — e frase inteira em caixa alta com tracking vira
+   * grito, além de ficar mais lenta de ler: caixa alta apaga a silhueta da
+   * palavra. A cor e o anel já separam o selo do texto ao redor; a tipografia
+   * não precisava fazer o mesmo trabalho de novo.
+   */
+  'inline-flex items-center gap-1.5 font-medium transition-colors',
   {
     variants: {
       variant: {
@@ -17,9 +27,11 @@ const badgeVariants = cva(
         outline: 'text-ink-muted ring-1 ring-line-strong',
       },
       size: {
-        sm: 'h-5 rounded-xs px-1.5 text-[0.5625rem]',
-        md: 'h-6 rounded-sm px-2 text-2xs',
-        lg: 'h-7 rounded-sm px-2.5 text-2xs',
+        /* Sem caixa alta o glifo fica menor na mesma medida, então cada degrau
+           sobe um ponto e ganha respiro lateral para o selo não apertar. */
+        sm: 'h-5 rounded-xs px-2 text-[0.6875rem]',
+        md: 'h-6 rounded-sm px-2.5 text-xs',
+        lg: 'h-7 rounded-md px-3 text-xs',
       },
     },
     defaultVariants: { variant: 'brand', size: 'md' },

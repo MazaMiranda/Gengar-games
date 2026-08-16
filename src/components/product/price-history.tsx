@@ -57,7 +57,7 @@ export function PriceHistory({ points, current }: PriceHistoryProps) {
           },
         ].map((stat) => (
           <div key={stat.label} className="rounded-lg border border-line bg-ink/2 p-4">
-            <p className="font-tech text-2xs uppercase tracking-[0.16em] text-ink-faint">{stat.label}</p>
+            <p className="text-ink-faint text-xs">{stat.label}</p>
             <p className={`mt-1.5 font-display text-lg font-bold ${stat.tone}`}>{stat.value}</p>
           </div>
         ))}
@@ -140,7 +140,7 @@ export function PriceHistory({ points, current }: PriceHistoryProps) {
             className="pointer-events-none absolute top-3 rounded-md border border-line bg-void/90 px-3 py-2 backdrop-blur-md"
             style={{ left: `${(activeCoord.x / WIDTH) * 100}%`, transform: 'translateX(-50%)' }}
           >
-            <p className="font-tech text-2xs uppercase tracking-wider text-ink-faint">
+            <p className="text-ink-faint text-xs capitalize">
               {new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' }).format(
                 new Date(`${activeCoord.point.date}T12:00:00`),
               )}

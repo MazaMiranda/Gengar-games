@@ -45,7 +45,11 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, invalid, icon, ...props }, ref) => {
-    const a11y = useFieldProps({ id: props.id, invalid, 'aria-describedby': props['aria-describedby'] });
+    const a11y = useFieldProps({
+      id: props.id,
+      invalid,
+      'aria-describedby': props['aria-describedby'],
+    });
     const shared = {
       ref,
       id: a11y.id,
@@ -56,7 +60,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     if (icon) {
       return (
         <div className="relative">
-          <span className="pointer-events-none absolute inset-y-0 left-4 grid place-items-center text-ink-faint">
+          <span className="text-ink-faint pointer-events-none absolute inset-y-0 left-4 grid place-items-center">
             {icon}
           </span>
           <input
@@ -76,7 +80,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         {...shared}
-        className={cn(fieldBase, 'h-12', a11y.invalid && 'border-danger/60 focus:border-danger', className)}
+        className={cn(
+          fieldBase,
+          'h-12',
+          a11y.invalid && 'border-danger/60 focus:border-danger',
+          className,
+        )}
         {...props}
       />
     );
@@ -88,14 +97,23 @@ export const Textarea = React.forwardRef<
   HTMLTextAreaElement,
   React.TextareaHTMLAttributes<HTMLTextAreaElement> & { invalid?: boolean }
 >(({ className, invalid, ...props }, ref) => {
-  const a11y = useFieldProps({ id: props.id, invalid, 'aria-describedby': props['aria-describedby'] });
+  const a11y = useFieldProps({
+    id: props.id,
+    invalid,
+    'aria-describedby': props['aria-describedby'],
+  });
   return (
     <textarea
       ref={ref}
       id={a11y.id}
       aria-invalid={a11y.invalid || undefined}
       aria-describedby={a11y.describedBy}
-      className={cn(fieldBase, 'min-h-28 resize-y py-3', a11y.invalid && 'border-danger/60', className)}
+      className={cn(
+        fieldBase,
+        'min-h-28 resize-y py-3',
+        a11y.invalid && 'border-danger/60',
+        className,
+      )}
       {...props}
     />
   );
@@ -154,7 +172,11 @@ export function Field({ label, hint, error, required, htmlFor, className, childr
   const hintId = `${id}-dica`;
 
   const context = React.useMemo(
-    () => ({ id, invalid: Boolean(error), describedBy: error ? errorId : hint ? hintId : undefined }),
+    () => ({
+      id,
+      invalid: Boolean(error),
+      describedBy: error ? errorId : hint ? hintId : undefined,
+    }),
     [id, error, hint, errorId, hintId],
   );
 
@@ -165,7 +187,7 @@ export function Field({ label, hint, error, required, htmlFor, className, childr
           <Label htmlFor={id}>
             {label}
             {required ? (
-              <span className="ml-1 text-brand-300" aria-hidden>
+              <span className="text-brand-300 ml-1" aria-hidden>
                 *
               </span>
             ) : null}
@@ -176,11 +198,11 @@ export function Field({ label, hint, error, required, htmlFor, className, childr
         {/* role=alert para o erro ser lido no momento em que aparece; sem isso a
             borda vermelha é a única pista, e leitor de tela não vê borda. */}
         {error ? (
-          <p id={errorId} role="alert" className="text-xs text-danger">
+          <p id={errorId} role="alert" className="text-danger text-xs">
             {error}
           </p>
         ) : hint ? (
-          <p id={hintId} className="text-xs text-ink-faint">
+          <p id={hintId} className="text-ink-faint text-xs">
             {hint}
           </p>
         ) : null}

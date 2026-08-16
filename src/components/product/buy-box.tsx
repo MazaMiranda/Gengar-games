@@ -77,9 +77,8 @@ export function BuyBox({ product }: { product: Product }) {
           </Badge>
           {product.compareAtPrice ? <Badge variant="danger">Oferta</Badge> : null}
           {product.preOrder ? <Badge variant="info">Pré-venda</Badge> : null}
-          <span className="font-tech text-2xs text-ink-ghost tracking-[0.2em] uppercase">
-            SKU {product.sku}
-          </span>
+          {/* Mono continua: é código. Sai só a caixa alta e o tracking. */}
+          <span className="font-tech text-ink-ghost text-xs">SKU {product.sku}</span>
         </div>
 
         <h1 className="text-title text-ink font-bold">{product.name}</h1>

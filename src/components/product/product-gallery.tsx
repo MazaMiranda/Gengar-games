@@ -77,7 +77,7 @@ export function ProductGallery({ product }: { product: Product }) {
             </span>
           ) : null}
 
-          <span className="border-line bg-void/70 font-tech text-2xs text-ink-muted pointer-events-none absolute bottom-4 left-4 z-3 flex items-center gap-1.5 rounded-sm border px-2.5 py-1.5 tracking-wider uppercase opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">
+          <span className="border-line bg-void/70 text-ink-muted pointer-events-none absolute bottom-4 left-4 z-3 flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">
             <MagnifyingGlassPlus className="size-3" />
             Passe o mouse para ampliar
           </span>

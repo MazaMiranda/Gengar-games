@@ -79,20 +79,18 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
                 index === 0 ? 'md:border-t' : ''
               } ${index === 1 ? 'md:border-t' : ''}`}
             >
-              <dt className="font-tech text-2xs text-ink-faint tracking-[0.16em] uppercase">
-                {spec.label}
-              </dt>
+              <dt className="text-ink-faint text-xs">{spec.label}</dt>
               <dd className="text-ink text-right text-sm font-medium">{spec.value}</dd>
             </div>
           ))}
           <div className="border-line flex items-start justify-between gap-6 border-b py-4">
-            <dt className="font-tech text-2xs text-ink-faint tracking-[0.16em] uppercase">SKU</dt>
+            <dt className="text-ink-faint text-xs">SKU</dt>
+            {/* O valor continua em mono: SKU é código, e mono ajuda a comparar
+                caractere a caractere. O que saiu foi a caixa alta do rótulo. */}
             <dd className="font-tech text-ink text-right text-sm">{product.sku}</dd>
           </div>
           <div className="border-line flex items-start justify-between gap-6 border-b py-4">
-            <dt className="font-tech text-2xs text-ink-faint tracking-[0.16em] uppercase">
-              Lançamento
-            </dt>
+            <dt className="text-ink-faint text-xs">Lançamento</dt>
             <dd className="text-ink text-right text-sm">{formatDate(product.releasedAt)}</dd>
           </div>
         </div>
@@ -162,7 +160,7 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
 
                 <button
                   type="button"
-                  className="text-2xs text-ink-faint hover:text-brand-300 inline-flex w-fit items-center gap-2 font-semibold tracking-wider uppercase transition-colors"
+                  className="text-ink-faint hover:text-brand-300 inline-flex w-fit items-center gap-2 text-xs font-medium transition-colors"
                 >
                   <ThumbsUp className="size-3" />
                   Útil ({review.helpful})
@@ -190,7 +188,7 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
 
                 {question.answer ? (
                   <div className="border-brand-500/40 ml-7 flex flex-col gap-2 border-l-2 pl-4">
-                    <span className="font-tech text-2xs text-brand-300 font-bold tracking-wider uppercase">
+                    <span className="text-brand-300 text-xs font-semibold">
                       Resposta Gengar Games
                     </span>
                     <p className="text-ink-muted text-sm leading-relaxed">{question.answer}</p>
