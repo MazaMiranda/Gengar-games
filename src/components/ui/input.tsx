@@ -109,7 +109,20 @@ export const Label = React.forwardRef<
   <LabelPrimitive.Root
     ref={ref}
     className={cn(
-      'font-tech text-2xs font-semibold uppercase tracking-[0.18em] text-ink-muted',
+      /*
+       * Rótulo de campo em caixa e tamanho normais.
+       *
+       * Era `font-tech text-2xs uppercase tracking-[0.18em]`: 11px, caixa alta
+       * e tracking largo. Como este Label é usado por todo formulário do site
+       * (checkout, login, cadastro, endereços, configurações, admin), isso
+       * transformava "NOME COMPLETO", "E-MAIL" e "CPF" em rótulos gritados na
+       * tela mais sensível do funil.
+       *
+       * Caixa alta com tracking também custa legibilidade: apaga a silhueta da
+       * palavra, que é por onde se lê rótulo curto de relance. 13px em caixa
+       * normal lê mais rápido e dá mais área de toque no celular.
+       */
+      'text-ink-muted text-[0.8125rem] font-medium',
       className,
     )}
     {...props}

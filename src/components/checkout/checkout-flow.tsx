@@ -723,7 +723,7 @@ function ReviewBlock({
         <button
           type="button"
           onClick={onEdit}
-          className="text-2xs text-ink-faint hover:text-brand-300 font-semibold tracking-wider uppercase transition-colors"
+          className="text-ink-faint hover:text-brand-300 text-xs font-medium transition-colors"
         >
           Editar
         </button>
