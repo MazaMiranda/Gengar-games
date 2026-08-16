@@ -6,6 +6,7 @@ import { getOrder } from '@/core/application/order-service';
 import { AdminCard, AdminPage, DataTable } from '@/components/admin/admin-shell';
 import { OrderStatusSelect } from '@/components/admin/order-status-select';
 import { Separator } from '@/components/ui/controls';
+import { LineThumb } from '@/components/shop/line-thumb';
 import { formatDate, formatPrice } from '@/lib/utils';
 
 export const metadata: Metadata = { title: 'Detalhe do pedido' };
@@ -44,16 +45,13 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
                 header: 'Produto',
                 render: (item) => (
                   <div className="flex items-center gap-3">
-                    <span
-                      className="grid size-9 shrink-0 place-items-center rounded-md border border-line"
-                      style={{
-                        background: `linear-gradient(150deg, hsl(${item.accent} 68% 22%), rgba(9,9,12,0.95))`,
-                      }}
-                    >
-                      <span className="font-display text-2xs font-bold text-white/75">
-                        {item.name.charAt(0)}
-                      </span>
-                    </span>
+                    <LineThumb
+                      slug={item.productSlug}
+                      name={item.name}
+                      type={item.type}
+                      accent={item.accent}
+                      className="size-9 shrink-0 rounded-md border border-line"
+                    />
                     <Link
                       href={item.type === 'tcg-card' ? `/carta/${item.productSlug}` : `/produto/${item.productSlug}`}
                       className="line-clamp-1 text-xs font-medium text-ink hover:text-brand-200"

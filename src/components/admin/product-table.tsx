@@ -8,6 +8,7 @@ import { CONDITIONS, PRODUCT_TYPES } from '@/core/domain/taxonomy';
 import { DataTable } from '@/components/admin/admin-shell';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { LineThumb } from '@/components/shop/line-thumb';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn, formatPrice } from '@/lib/utils';
 
@@ -77,16 +78,13 @@ export function ProductTable({ products, categories, mode = 'catalog' }: Product
               header: 'Produto',
               render: (product) => (
                 <div className="flex items-center gap-2.5">
-                  <span
-                    className="grid size-8 shrink-0 place-items-center rounded-md border border-line"
-                    style={{
-                      background: `linear-gradient(150deg, hsl(${product.accent} 68% 22%), rgba(9,9,12,0.95))`,
-                    }}
-                  >
-                    <span className="font-display text-2xs font-bold text-white/75">
-                      {product.name.charAt(0)}
-                    </span>
-                  </span>
+                  <LineThumb
+                    slug={product.slug}
+                    name={product.name}
+                    type={product.type}
+                    accent={product.accent}
+                    className="size-8 shrink-0 rounded-md border border-line"
+                  />
                   <div className="flex min-w-0 flex-col">
                     <span className="line-clamp-1 text-xs font-semibold text-ink">{product.name}</span>
                     <span className="font-tech text-2xs text-ink-ghost">{product.sku}</span>

@@ -7,6 +7,7 @@ import { ProportionBar, RevenueChart } from '@/components/admin/charts';
 import { STATUS_META } from '@/components/account/order-card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { LineThumb } from '@/components/shop/line-thumb';
 import { cn, formatDate, formatPrice } from '@/lib/utils';
 
 export const metadata: Metadata = { title: 'Dashboard' };
@@ -157,16 +158,13 @@ export default async function AdminDashboardPage() {
                 header: 'Produto',
                 render: (row) => (
                   <div className="flex items-center gap-3">
-                    <span
-                      className="grid size-7 shrink-0 place-items-center rounded-md border border-line"
-                      style={{
-                        background: `linear-gradient(150deg, hsl(${row.product.accent} 68% 22%), rgba(9,9,12,0.95))`,
-                      }}
-                    >
-                      <span className="font-display text-2xs font-bold text-white/75">
-                        {row.product.name.charAt(0)}
-                      </span>
-                    </span>
+                    <LineThumb
+                      slug={row.product.slug}
+                      name={row.product.name}
+                      type={row.product.type}
+                      accent={row.product.accent}
+                      className="size-7 shrink-0 rounded-md border border-line"
+                    />
                     <span className="line-clamp-1 text-xs font-medium text-ink">{row.product.name}</span>
                   </div>
                 ),

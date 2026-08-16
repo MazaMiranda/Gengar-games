@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowUpRight, Package } from 'lucide-react';
 import type { Order, OrderStatus } from '@/core/domain/entities';
 import { Badge, type BadgeProps } from '@/components/ui/badge';
+import { LineThumb } from '@/components/shop/line-thumb';
 import { formatDate, formatPrice } from '@/lib/utils';
 
 export const STATUS_META: Record<OrderStatus, { label: string; variant: BadgeProps['variant'] }> = {
@@ -30,13 +31,14 @@ export function OrderCard({ order }: { order: Order }) {
 
       <ul className="flex flex-wrap gap-2">
         {order.items.slice(0, 4).map((item) => (
-          <li
-            key={item.productSlug}
-            className="grid size-12 place-items-center rounded-md border border-line"
-            style={{ background: `linear-gradient(150deg, hsl(${item.accent} 68% 20%), rgba(9,9,12,0.95))` }}
-            title={item.name}
-          >
-            <span className="font-display text-xs font-bold text-white/75">{item.name.charAt(0)}</span>
+          <li key={item.productSlug} title={item.name}>
+            <LineThumb
+              slug={item.productSlug}
+              name={item.name}
+              type={item.type}
+              accent={item.accent}
+              className="size-12 rounded-md border border-line"
+            />
           </li>
         ))}
         {order.items.length > 4 ? (
