@@ -46,7 +46,11 @@ export const tcgProducts = defineAll([
       foil: true,
       grade: 'NM',
     },
-    relatedSlugs: ['charizard-ex-obsidian-flames', 'sleeves-dragon-shield-matte-purple', 'binder-premium-480'],
+    relatedSlugs: [
+      'charizard-ex-obsidian-flames',
+      'sleeves-dragon-shield-matte-purple',
+      'binder-premium-480',
+    ],
   },
   {
     slug: 'charizard-ex-obsidian-flames',
@@ -89,7 +93,10 @@ export const tcgProducts = defineAll([
   },
   {
     slug: 'mewtwo-ex-151',
-    name: 'Mewtwo ex',
+    // Corrigido contra a TCGdex: a carta 193/165 de Pokémon 151 é o Mew ex
+    // (HP 180, ilustrador aky CG Works) — o cadastro antigo tinha o Pokémon,
+    // o HP e o ilustrador errados. Slug mantido para não quebrar link/relação.
+    name: 'Mew ex',
     subtitle: 'Ultra Rara · Pokémon 151 · 193/165',
     type: 'tcg-card',
     categorySlug: 'pokemon-tcg',
@@ -100,7 +107,7 @@ export const tcgProducts = defineAll([
     releasedAt: '2023-09-22',
     tags: ['meta', 'kanto'],
     description:
-      'Mewtwo ex full art da coleção 151, uma das cartas mais bonitas do retorno a Kanto. Disponível em inglês e português.',
+      'Mew ex full art da coleção 151, uma das cartas mais bonitas do retorno a Kanto. Disponível em inglês e português.',
     specs: [
       { label: 'Coleção', value: 'Pokémon 151' },
       { label: 'Número', value: '193/165' },
@@ -115,8 +122,8 @@ export const tcgProducts = defineAll([
       rarity: 'ultra-rara',
       language: 'português',
       cardType: 'Pokémon ex · Psíquico',
-      hp: 260,
-      illustrator: 'PLANETA Mochizuki',
+      hp: 180,
+      illustrator: 'aky CG Works',
       foil: true,
       grade: 'SP',
     },
@@ -174,14 +181,22 @@ export const tcgProducts = defineAll([
     tags: ['selado', 'presente'],
     description:
       'A ETB mais procurada dos últimos anos: 9 boosters de Pokémon 151, 65 sleeves do Snorlax, dados, marcadores e caixa de armazenamento.',
-    highlights: ['9 boosters lacrados', '65 sleeves exclusivos', 'Lacre de fábrica conferido em vídeo'],
+    highlights: [
+      '9 boosters lacrados',
+      '65 sleeves exclusivos',
+      'Lacre de fábrica conferido em vídeo',
+    ],
     specs: [
       { label: 'Boosters', value: '9 pacotes' },
       { label: 'Sleeves', value: '65 unidades' },
       { label: 'Idioma', value: 'Inglês' },
       { label: 'Lacre', value: 'Original de fábrica' },
     ],
-    relatedSlugs: ['booster-box-surging-sparks', 'mewtwo-ex-151', 'sleeves-dragon-shield-matte-purple'],
+    relatedSlugs: [
+      'booster-box-surging-sparks',
+      'mewtwo-ex-151',
+      'sleeves-dragon-shield-matte-purple',
+    ],
   },
   {
     slug: 'booster-box-surging-sparks',
@@ -226,5 +241,4 @@ export const tcgProducts = defineAll([
     ],
     relatedSlugs: ['booster-box-surging-sparks', 'toploader-ultra-pro-100'],
   },
-
 ]);

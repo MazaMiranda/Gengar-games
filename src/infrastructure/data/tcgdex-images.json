@@ -1,4 +1,9 @@
 {
   "_comment": "Mapa slug -> URL da arte na TCGdex, preenchido por `npm run tcgdex:backfill`. O script só grava URLs que responderam 200, então o que estiver aqui é seguro de renderizar. Cartas ausentes deste mapa caem na arte procedural do ProductVisual.",
-  "cards": {}
+  "cards": {
+    "charizard-ex-obsidian-flames": "https://assets.tcgdex.net/en/sv/sv03/223/high.webp",
+    "mewtwo-ex-151": "https://assets.tcgdex.net/en/sv/sv03.5/193/high.webp",
+    "pikachu-vmax-rainbow": "https://assets.tcgdex.net/en/swsh/swsh4/188/high.webp",
+    "umbreon-vmax-alternate-art": "https://assets.tcgdex.net/en/swsh/swsh7/215/high.webp"
+  }
 }
