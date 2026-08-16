@@ -4,11 +4,10 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
-import { Heart, Menu, Search, ShoppingBag, Sparkles, User } from 'lucide-react';
+import { Heart, Menu, Search, ShoppingBag, User } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { Marquee } from '@/components/ui/motion';
 import { Button } from '@/components/ui/button';
-import { announcements, primaryNav } from '@/lib/navigation';
+import { primaryNav } from '@/lib/navigation';
 import { useCartStore } from '@/stores/cart-store';
 import { useWishlistStore } from '@/stores/wishlist-store';
 import { cn } from '@/lib/utils';
@@ -67,47 +66,14 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40">
-      {/*
-        Ticker de avisos — só a partir de md.
-        Ele encolhe de 36px para 0 ao rolar, e como está dentro do cabeçalho
-        grudento isso arrasta a barra inteira: medido, os ícones sobem 35px ao
-        longo de ~400ms. No celular, onde rolar-e-tocar é o gesto normal, o
-        dedo chegava onde o botão estava e não onde ele foi parar — o carrinho
-        abria ou não conforme o tempo da batida. Fora do celular o ponteiro
-        acompanha, e a faixa continua como era. De quebra, devolve 36px de
-        altura útil na tela pequena.
-      */}
-      <div
-        className={cn(
-          // overflow-anchor:none — este bloco muda de altura de propósito; sem
-          // isso o navegador tenta "corrigir" o scrollY e briga com a animação.
-          'hidden overflow-hidden border-b border-line bg-void/80 backdrop-blur-xl transition-all duration-500 ease-out-expo [overflow-anchor:none] md:block',
-          scrolled ? 'h-0 opacity-0' : 'h-9 opacity-100',
-        )}
-      >
-        <Marquee speed={38} className="h-9 items-center">
-          <div className="flex items-center gap-12">
-            {announcements.map((text) => (
-              <span
-                key={text}
-                className="flex items-center gap-2.5 whitespace-nowrap font-tech text-2xs uppercase tracking-[0.22em] text-ink-muted"
-              >
-                <Sparkles className="size-3 text-brand-400" />
-                {text}
-              </span>
-            ))}
-          </div>
-        </Marquee>
-      </div>
-
       {/* Barra principal */}
       <div
         onMouseLeave={scheduleClose}
         className={cn(
-          'border-b transition-all duration-500 ease-out-expo',
+          'ease-out-expo border-b transition-all duration-500',
           scrolled || activeMenu
-            ? 'border-line bg-void/85 backdrop-blur-2xl shadow-[0_10px_40px_-24px_rgba(0,0,0,0.9)]'
-            : 'border-transparent bg-void/40 backdrop-blur-lg',
+            ? 'border-line bg-void/85 shadow-[0_10px_40px_-24px_rgba(0,0,0,0.9)] backdrop-blur-2xl'
+            : 'bg-void/40 border-transparent backdrop-blur-lg',
         )}
       >
         <div className="container-page flex h-16 items-center justify-between gap-3 md:h-18 md:gap-6">
@@ -116,7 +82,7 @@ export function Header() {
               <button
                 type="button"
                 aria-label="Abrir menu"
-                className="tap-44 grid size-10 place-items-center rounded-md border border-line text-ink-muted transition-colors hover:border-line-strong hover:text-ink lg:hidden"
+                className="tap-44 border-line text-ink-muted hover:border-line-strong hover:text-ink grid size-10 place-items-center rounded-md border transition-colors lg:hidden"
               >
                 <Menu className="size-4" />
               </button>
@@ -141,7 +107,7 @@ export function Header() {
                       {entry.label}
                       <span
                         className={cn(
-                          'absolute inset-x-3 -bottom-px h-px origin-left bg-linear-to-r from-brand-400 to-transparent transition-transform duration-400 ease-out-expo',
+                          'from-brand-400 ease-out-expo absolute inset-x-3 -bottom-px h-px origin-left bg-linear-to-r to-transparent transition-transform duration-400',
                           isActive ? 'scale-x-100' : 'scale-x-0',
                         )}
                       />
@@ -156,14 +122,14 @@ export function Header() {
             <SearchDialog>
               <button
                 type="button"
-                className="group hidden h-10 items-center gap-3 rounded-md border border-line bg-ink/3 pl-3.5 pr-2 text-sm text-ink-faint transition-all duration-300 hover:border-brand-400/40 hover:bg-brand-500/8 md:flex md:w-56 lg:w-64"
+                className="group border-line bg-ink/3 text-ink-faint hover:border-brand-400/40 hover:bg-brand-500/8 hidden h-10 items-center gap-3 rounded-md border pr-2 pl-3.5 text-sm transition-all duration-300 md:flex md:w-56 lg:w-64"
               >
                 <Search className="size-4" />
                 <span className="flex-1 text-left text-xs">Buscar produtos…</span>
                 {/* Fundo próprio: encostado no botão translúcido o contraste
                     da tecla dependia do que passasse atrás. Sobre --surface é
                     determinístico nos dois temas. */}
-                <kbd className="rounded-xs border border-line bg-surface px-1.5 py-0.5 font-tech text-[0.625rem] text-ink-faint">
+                <kbd className="border-line bg-surface font-tech text-ink-faint rounded-xs border px-1.5 py-0.5 text-[0.625rem]">
                   ⌘K
                 </kbd>
               </button>
@@ -173,7 +139,7 @@ export function Header() {
               <button
                 type="button"
                 aria-label="Buscar"
-                className="tap-44 grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink md:hidden"
+                className="tap-44 text-ink-muted hover:bg-ink/6 hover:text-ink grid size-10 place-items-center rounded-md transition-colors md:hidden"
               >
                 <Search className="size-4" />
               </button>
@@ -184,11 +150,11 @@ export function Header() {
             <Link
               href="/conta/favoritos"
               aria-label="Favoritos"
-              className="tap-44 relative hidden size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink sm:grid"
+              className="tap-44 text-ink-muted hover:bg-ink/6 hover:text-ink relative hidden size-10 place-items-center rounded-md transition-colors sm:grid"
             >
               <Heart className="size-4" />
               {wishlistCount > 0 ? (
-                <span className="absolute right-1.5 top-1.5 size-1.5 rounded-full bg-brand-400 shadow-glow-sm" />
+                <span className="bg-brand-400 shadow-glow-sm absolute top-1.5 right-1.5 size-1.5 rounded-full" />
               ) : null}
             </Link>
 
@@ -198,7 +164,7 @@ export function Header() {
             <Link
               href={destinoDaConta}
               aria-label={rotuloDaConta}
-              className="tap-44 grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink"
+              className="tap-44 text-ink-muted hover:bg-ink/6 hover:text-ink grid size-10 place-items-center rounded-md transition-colors"
             >
               <User className="size-4" />
             </Link>
@@ -207,7 +173,7 @@ export function Header() {
               type="button"
               onClick={openCart}
               aria-label={`Abrir carrinho, ${itemCount} itens`}
-              className="tap-44 relative ml-1 grid size-10 place-items-center rounded-md border border-line bg-ink/4 text-ink transition-all duration-300 hover:border-brand-400/50 hover:bg-brand-500/12 hover:shadow-glow-sm"
+              className="tap-44 border-line bg-ink/4 text-ink hover:border-brand-400/50 hover:bg-brand-500/12 hover:shadow-glow-sm relative ml-1 grid size-10 place-items-center rounded-md border transition-all duration-300"
             >
               <ShoppingBag className="size-4" />
               <AnimatePresence>
@@ -218,7 +184,7 @@ export function Header() {
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.4, opacity: 0 }}
                     transition={{ type: 'spring', stiffness: 520, damping: 24 }}
-                    className="absolute -right-1.5 -top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-linear-to-b from-brand-400 to-brand-600 px-1 font-tech text-[0.625rem] font-bold text-white shadow-glow-sm"
+                    className="from-brand-400 to-brand-600 font-tech shadow-glow-sm absolute -top-1.5 -right-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-linear-to-b px-1 text-[0.625rem] font-bold text-white"
                   >
                     {itemCount}
                   </motion.span>
@@ -238,7 +204,7 @@ export function Header() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
               onMouseEnter={() => openMenu(active.id)}
-              className="absolute inset-x-0 top-full hidden border-b border-line bg-void/95 backdrop-blur-2xl lg:block"
+              className="border-line bg-void/95 absolute inset-x-0 top-full hidden border-b backdrop-blur-2xl lg:block"
             >
               <div className="container-page grid grid-cols-12 gap-10 py-10">
                 {active.columns.map((column) => (
@@ -249,13 +215,15 @@ export function Header() {
                         <li key={link.href + link.label}>
                           <Link
                             href={link.href}
-                            className="group flex flex-col gap-0.5 rounded-md px-3 py-2 transition-colors hover:bg-ink/5"
+                            className="group hover:bg-ink/5 flex flex-col gap-0.5 rounded-md px-3 py-2 transition-colors"
                           >
-                            <span className="text-sm font-semibold text-ink-muted transition-colors group-hover:text-ink">
+                            <span className="text-ink-muted group-hover:text-ink text-sm font-semibold transition-colors">
                               {link.label}
                             </span>
                             {link.hint ? (
-                              <span className="line-clamp-1 text-2xs text-ink-ghost">{link.hint}</span>
+                              <span className="text-2xs text-ink-ghost line-clamp-1">
+                                {link.hint}
+                              </span>
                             ) : null}
                           </Link>
                         </li>
@@ -268,14 +236,17 @@ export function Header() {
                   <div className="col-span-3 col-start-10">
                     <div className="plate grain relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl p-6">
                       <div
-                        className="absolute -right-10 -top-10 size-40 rounded-full blur-3xl"
-                        style={{ background: 'radial-gradient(circle, rgba(147,51,234,0.5), transparent 70%)' }}
+                        className="absolute -top-10 -right-10 size-40 rounded-full blur-3xl"
+                        style={{
+                          background:
+                            'radial-gradient(circle, rgba(147,51,234,0.5), transparent 70%)',
+                        }}
                       />
                       <div className="relative flex flex-col gap-2">
-                        <h4 className="font-display text-base font-bold leading-snug text-ink">
+                        <h4 className="font-display text-ink text-base leading-snug font-bold">
                           {active.highlight.title}
                         </h4>
-                        <p className="text-xs leading-relaxed text-ink-muted">
+                        <p className="text-ink-muted text-xs leading-relaxed">
                           {active.highlight.description}
                         </p>
                       </div>

@@ -179,22 +179,27 @@ export default async function HomePage() {
       <Section>
         <Reveal className="plate grain relative overflow-hidden rounded-2xl p-10 text-center md:p-16">
           <div
-            className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-brand-400 to-transparent"
+            className="absolute inset-x-0 top-0 h-px bg-[image:var(--gradient-foil-sweep)] opacity-70"
             aria-hidden
           />
           <div
             className="absolute left-1/2 top-0 size-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-[110px]"
-            style={{ background: 'radial-gradient(circle, rgba(147,51,234,0.6), transparent 68%)' }}
+            style={{
+              background:
+                'radial-gradient(circle at 45% 40%, rgba(147,51,234,0.55), transparent 45%), radial-gradient(circle at 60% 60%, rgba(232,57,156,0.2), transparent 55%)',
+            }}
             aria-hidden
           />
 
           <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-6">
-            <span className="eyebrow flex items-center gap-2">
+            {/* Sem kicker acima do título; sem texto em degradê — ambos
+                banidos pelo craft floor. Cor sólida de marca no lugar. */}
+            <h2 className="text-display font-extrabold text-ink">
+              Falta pouco para o seu próximo <span className="text-brand-300">chase</span>
+            </h2>
+            <span className="cert-label inline-flex items-center gap-2">
               <Sparkles className="size-3" /> Comece sua coleção
             </span>
-            <h2 className="text-display font-extrabold text-ink">
-              Falta pouco para o seu próximo <span className="text-gradient-brand">chase</span>
-            </h2>
             <p className="max-w-xl text-sm leading-relaxed text-ink-muted">
               Mais de {data.totalProdutos} produtos com curadoria, envio protegido e parcelamento em
               até 12x sem juros. Frete grátis a partir de R$ 299.

@@ -64,9 +64,11 @@ export function LoginForm() {
   return (
     <div className="flex flex-col gap-8">
       <header className="flex flex-col gap-2">
-        <span className="eyebrow">Acessar conta</span>
-        <h1 className="text-title font-bold text-ink">Entrar na Gengar Games</h1>
-        <p className="text-sm text-ink-muted">
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-title text-ink font-bold">Entrar na Gengar Games</h1>
+          <span className="cert-label">Acessar conta</span>
+        </div>
+        <p className="text-ink-muted text-sm">
           Acompanhe pedidos, favoritos e cupons em um só lugar.
         </p>
       </header>
@@ -74,10 +76,10 @@ export function LoginForm() {
       {failed ? (
         <div
           role="alert"
-          className="flex items-start gap-3 rounded-md border border-danger/30 bg-danger/8 px-4 py-3"
+          className="border-danger/30 bg-danger/8 flex items-start gap-3 rounded-md border px-4 py-3"
         >
-          <AlertCircle className="mt-0.5 size-4 shrink-0 text-danger" />
-          <p className="text-xs leading-relaxed text-ink-muted">
+          <AlertCircle className="text-danger mt-0.5 size-4 shrink-0" />
+          <p className="text-ink-muted text-xs leading-relaxed">
             E-mail ou senha incorretos. Verifique os dados e tente novamente.
           </p>
         </div>
@@ -123,7 +125,7 @@ export function LoginForm() {
               type="button"
               onClick={() => setShowPassword((value) => !value)}
               aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-              className="absolute right-1.5 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-sm text-ink-faint transition-colors hover:text-ink"
+              className="text-ink-faint hover:text-ink absolute top-1/2 right-1.5 grid size-11 -translate-y-1/2 place-items-center rounded-sm transition-colors"
             >
               {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
             </button>
@@ -131,13 +133,13 @@ export function LoginForm() {
         </Field>
 
         <div className="flex items-center justify-between gap-4">
-          <label className="flex cursor-pointer items-center gap-2.5 text-xs text-ink-muted">
+          <label className="text-ink-muted flex cursor-pointer items-center gap-2.5 text-xs">
             <Checkbox defaultChecked />
             Manter conectado
           </label>
           <Link
             href="/login/recuperar"
-            className="-my-2.5 py-2.5 text-xs font-semibold text-brand-300 transition-colors hover:text-brand-200"
+            className="text-brand-300 hover:text-brand-200 -my-2.5 py-2.5 text-xs font-semibold transition-colors"
           >
             Esqueci minha senha
           </Link>
@@ -149,8 +151,8 @@ export function LoginForm() {
         </Button>
       </form>
 
-      <div className="flex flex-col gap-3 rounded-lg border border-line bg-ink/2 p-5">
-        <p className="font-tech text-2xs uppercase tracking-[0.18em] text-ink-faint">
+      <div className="border-line bg-ink/2 flex flex-col gap-3 rounded-lg border p-5">
+        <p className="font-tech text-2xs text-ink-faint tracking-[0.18em] uppercase">
           Contas de demonstração · senha gengar123
         </p>
         <div className="flex flex-wrap gap-2">
@@ -162,7 +164,7 @@ export function LoginForm() {
                 setValue('email', account.email);
                 setValue('password', 'gengar123');
               }}
-              className="h-9 rounded-sm border border-line px-3.5 text-xs font-medium text-ink-muted transition-all hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-ink"
+              className="border-line text-ink-muted hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-ink h-9 rounded-sm border px-3.5 text-xs font-medium transition-all"
             >
               {account.label}
             </button>
@@ -170,11 +172,11 @@ export function LoginForm() {
         </div>
       </div>
 
-      <p className="text-center text-sm text-ink-muted">
+      <p className="text-ink-muted text-center text-sm">
         Ainda não tem conta?{' '}
         <Link
           href="/cadastro"
-          className="-my-2.5 inline-block py-2.5 font-semibold text-brand-300 transition-colors hover:text-brand-200"
+          className="text-brand-300 hover:text-brand-200 -my-2.5 inline-block py-2.5 font-semibold transition-colors"
         >
           Criar cadastro
         </Link>

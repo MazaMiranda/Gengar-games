@@ -82,9 +82,13 @@ export default async function PlatformPage({ params }: PageProps) {
               </div>
 
               <div className="flex flex-col gap-6">
-                <span className="eyebrow">Destaque da plataforma</span>
+                {/* Sem kicker acima do título — "Destaque da plataforma"
+                    vira cert-label anexado ao nome, não linha antes dele. */}
                 <div className="flex flex-col gap-3">
-                  <h2 className="text-title font-bold text-ink">{flagship.name}</h2>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h2 className="text-title font-bold text-ink">{flagship.name}</h2>
+                    <span className="cert-label">Destaque da plataforma</span>
+                  </div>
                   <p className="text-sm leading-relaxed text-ink-muted">{flagship.description}</p>
                 </div>
 

@@ -20,8 +20,11 @@ const buttonVariants = cva(
          * contrário do que se espera do estado de foco da ação principal.
          * Medido atrás da glifo: 6,4–7,5:1 em repouso, 4,9–5,8:1 no hover.
          */
+        // A ação primária carrega a banda de foil (violeta→magenta→dourado→
+        // ciano) em vez do degradê só-violeta — é o mecanismo de toque do
+        // mundo Foil sob a Luz, não decoração.
         primary:
-          'sweep bg-linear-to-b from-brand-500 to-brand-700 text-white shadow-[0_0_0_1px_rgba(147,51,234,0.5),var(--shadow-glow-sm),var(--shadow-inset-top)] hover:from-brand-400 hover:to-brand-600 hover:shadow-[0_0_0_1px_rgba(168,85,247,0.7),var(--shadow-glow),var(--shadow-inset-top)] active:scale-[0.98]',
+          'sweep bg-[image:var(--gradient-foil-sweep)] bg-[length:220%_100%] bg-[position:0%_0%] text-white shadow-[0_0_0_1px_rgba(147,51,234,0.5),var(--shadow-glow-sm),var(--shadow-inset-top)] transition-[background-position,box-shadow,transform] duration-300 hover:bg-[position:100%_0%] hover:shadow-[0_0_0_1px_rgba(232,57,156,0.55),var(--shadow-glow),var(--shadow-inset-top)] active:scale-[0.98]',
         secondary:
           'glass text-ink hover:border-line-brand hover:bg-ink/8 hover:shadow-glow-sm active:scale-[0.98]',
         outline:
@@ -49,14 +52,16 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   loading?: boolean;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, block, asChild = false, loading, children, disabled, ...props }, ref) => {
+  (
+    { className, variant, size, block, asChild = false, loading, children, disabled, ...props },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : 'button';
 
     return (

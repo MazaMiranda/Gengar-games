@@ -12,8 +12,10 @@ export default function RecoverPage() {
   return (
     <div className="flex flex-col gap-8">
       <header className="flex flex-col gap-2">
-        <span className="eyebrow">Recuperar acesso</span>
-        <h1 className="text-title font-bold text-ink">Esqueceu a senha?</h1>
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-title font-bold text-ink">Esqueceu a senha?</h1>
+          <span className="cert-label">Recuperar acesso</span>
+        </div>
         <p className="text-sm leading-relaxed text-ink-muted">
           Informe o e-mail cadastrado e enviamos um link para você criar uma nova senha.
         </p>
