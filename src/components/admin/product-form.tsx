@@ -3,13 +3,37 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Controller, useForm } from 'react-hook-form';
+import {
+  Controller,
+  useForm,
+  type Control,
+  type FieldErrors,
+  type UseFormSetValue,
+  type UseFormWatch,
+} from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, ImageOff, Loader2, PackagePlus, Repeat2, Sparkles, Package } from 'lucide-react';
+import {
+  ArrowLeft,
+  ImageOff,
+  Loader2,
+  PackagePlus,
+  Plus,
+  Repeat2,
+  Sparkles,
+  Package,
+  Trash2,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import type { Brand, Category } from '@/core/domain/entities';
 import type { TcgdexMatch } from '@/infrastructure/tcgdex/client';
-import { CARD_GRADES, CONDITIONS, PRODUCT_TYPES, RARITIES, TCG_GAMES, cardGradeList } from '@/core/domain/taxonomy';
+import {
+  CARD_GRADES,
+  CONDITIONS,
+  PRODUCT_TYPES,
+  RARITIES,
+  TCG_GAMES,
+  cardGradeList,
+} from '@/core/domain/taxonomy';
 import { AdminCard } from '@/components/admin/admin-shell';
 import { CardPicker } from '@/components/admin/card-picker';
 import { Button } from '@/components/ui/button';
@@ -88,6 +112,7 @@ function defaultsFor(mode: Mode, categories: Category[]): ProductDraft {
     description: '',
     brandSlug: '',
     card: null,
+    mediaUrls: [],
   } as ProductDraft;
 }
 
@@ -103,7 +128,9 @@ function MoneyInput({
   id?: string;
   placeholder?: string;
 }) {
-  const [text, setText] = React.useState(value === null ? '' : (value / 100).toFixed(2).replace('.', ','));
+  const [text, setText] = React.useState(
+    value === null ? '' : (value / 100).toFixed(2).replace('.', ','),
+  );
 
   return (
     <Input
@@ -118,6 +145,104 @@ function MoneyInput({
         onChange(raw.trim() === '' || !Number.isFinite(parsed) ? null : Math.round(parsed * 100));
       }}
     />
+  );
+}
+
+const MAX_PHOTOS = 4;
+
+/**
+ * Até 4 URLs de foto — sem storage de arquivo neste projeto, a loja cola o
+ * link de onde a imagem já está hospedada. A primeira é a capa (o que
+ * aparece no card e abre a galeria); sem nenhuma, o produto cai na arte
+ * procedural do ProductVisual, como hoje.
+ */
+function PhotoUrlFields({
+  control,
+  watch,
+  setValue,
+  errors,
+}: {
+  control: Control<ProductDraft>;
+  watch: UseFormWatch<ProductDraft>;
+  setValue: UseFormSetValue<ProductDraft>;
+  errors: FieldErrors<ProductDraft>;
+}) {
+  const urls = watch('mediaUrls') ?? [];
+
+  const addRow = () => {
+    if (urls.length >= MAX_PHOTOS) return;
+    setValue('mediaUrls', [...urls, ''], { shouldValidate: true });
+  };
+
+  const removeRow = (index: number) => {
+    setValue(
+      'mediaUrls',
+      urls.filter((_, i) => i !== index),
+      { shouldValidate: true },
+    );
+  };
+
+  return (
+    <div className="flex flex-col gap-4">
+      <p className="text-ink-faint text-xs leading-relaxed">
+        Cole o link de cada foto já hospedada (até {MAX_PHOTOS}). A primeira é a capa — a que
+        aparece no card do catálogo. Sem nenhuma foto, o produto usa a arte gerada da loja.
+      </p>
+
+      {urls.length === 0 ? (
+        <p className="border-line text-ink-faint rounded-md border border-dashed px-4 py-6 text-center text-xs">
+          Nenhuma foto ainda — o produto vai usar a arte procedural.
+        </p>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {urls.map((_, index) => (
+            <div key={index} className="flex items-end gap-2">
+              <Field
+                label={index === 0 ? 'Foto 1 · capa' : `Foto ${index + 1}`}
+                error={errors.mediaUrls?.[index]?.message}
+                className="flex-1"
+                htmlFor={`media-url-${index}`}
+              >
+                <Controller
+                  control={control}
+                  name={`mediaUrls.${index}` as const}
+                  render={({ field }) => (
+                    <Input
+                      id={`media-url-${index}`}
+                      value={field.value ?? ''}
+                      onChange={field.onChange}
+                      placeholder="https://..."
+                      inputMode="url"
+                    />
+                  )}
+                />
+              </Field>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon-sm"
+                aria-label={`Remover foto ${index + 1}`}
+                onClick={() => removeRow(index)}
+              >
+                <Trash2 className="size-4" />
+              </Button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <Button
+        type="button"
+        variant="secondary"
+        size="sm"
+        className="w-fit"
+        onClick={addRow}
+        disabled={urls.length >= MAX_PHOTOS}
+      >
+        <Plus className="size-4" />
+        Adicionar foto
+      </Button>
+    </div>
   );
 }
 
@@ -193,13 +318,13 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
           <button
             type="button"
             onClick={() => start('card')}
-            className="group flex flex-col items-start gap-3 rounded-lg border border-line bg-ink/2 p-6 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-400/50 hover:bg-brand-500/8"
+            className="group border-line bg-ink/2 hover:border-brand-400/50 hover:bg-brand-500/8 flex flex-col items-start gap-3 rounded-lg border p-6 text-left transition-all duration-300 hover:-translate-y-0.5"
           >
-            <span className="grid size-11 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300 transition-colors group-hover:border-brand-400/50">
+            <span className="border-line bg-brand-500/12 text-brand-300 group-hover:border-brand-400/50 grid size-11 place-items-center rounded-md border transition-colors">
               <Sparkles className="size-5" />
             </span>
-            <span className="font-display text-base font-bold text-ink">Carta avulsa</span>
-            <span className="text-xs leading-relaxed text-ink-muted">
+            <span className="font-display text-ink text-base font-bold">Carta avulsa</span>
+            <span className="text-ink-muted text-xs leading-relaxed">
               Busca a carta na TCGdex pelo nome. Número, coleção, raridade, ilustrador e a arte
               oficial entram sozinhos.
             </span>
@@ -208,13 +333,13 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
           <button
             type="button"
             onClick={() => start('produto')}
-            className="group flex flex-col items-start gap-3 rounded-lg border border-line bg-ink/2 p-6 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-400/50 hover:bg-brand-500/8"
+            className="group border-line bg-ink/2 hover:border-brand-400/50 hover:bg-brand-500/8 flex flex-col items-start gap-3 rounded-lg border p-6 text-left transition-all duration-300 hover:-translate-y-0.5"
           >
-            <span className="grid size-11 place-items-center rounded-md border border-line bg-ink/6 text-ink-muted transition-colors group-hover:border-brand-400/50">
+            <span className="border-line bg-ink/6 text-ink-muted group-hover:border-brand-400/50 grid size-11 place-items-center rounded-md border transition-colors">
               <Package className="size-5" />
             </span>
-            <span className="font-display text-base font-bold text-ink">Outro produto</span>
-            <span className="text-xs leading-relaxed text-ink-muted">
+            <span className="font-display text-ink text-base font-bold">Outro produto</span>
+            <span className="text-ink-muted text-xs leading-relaxed">
               Produto selado, console, jogo, acessório ou colecionável — preenchido à mão.
             </span>
           </button>
@@ -231,7 +356,7 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
         <button
           type="button"
           onClick={() => setMode(null)}
-          className="-my-1 inline-flex w-fit items-center gap-2 py-1 text-xs font-semibold text-ink-faint transition-colors hover:text-ink"
+          className="text-ink-faint hover:text-ink -my-1 inline-flex w-fit items-center gap-2 py-1 text-xs font-semibold transition-colors"
         >
           <ArrowLeft className="size-3.5" />
           Trocar o tipo de cadastro
@@ -240,11 +365,11 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
         {isCard ? (
           <AdminCard title="Carta">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
-              <div className="relative aspect-[5/7] w-32 shrink-0 overflow-hidden rounded-md border border-line bg-ink/4">
+              <div className="border-line bg-ink/4 relative aspect-[5/7] w-32 shrink-0 overflow-hidden rounded-md border">
                 {chosen?.imageUrl ? (
                   <Image src={chosen.imageUrl} alt={chosen.name} fill className="object-cover" />
                 ) : (
-                  <span className="grid h-full place-items-center text-ink-ghost">
+                  <span className="text-ink-ghost grid h-full place-items-center">
                     <ImageOff className="size-6" />
                   </span>
                 )}
@@ -254,19 +379,21 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
                 {chosen ? (
                   <>
                     <div className="flex flex-col gap-1">
-                      <p className="font-display text-lg font-bold text-ink">{chosen.name}</p>
-                      <p className="text-xs text-ink-muted">
-                        {[chosen.setName, chosen.localId, chosen.rarity].filter(Boolean).join(' · ')}
+                      <p className="font-display text-ink text-lg font-bold">{chosen.name}</p>
+                      <p className="text-ink-muted text-xs">
+                        {[chosen.setName, chosen.localId, chosen.rarity]
+                          .filter(Boolean)
+                          .join(' · ')}
                       </p>
                     </div>
-                    <p className="text-xs text-ink-faint">
+                    <p className="text-ink-faint text-xs">
                       A arte oficial acima entra como foto do produto na loja.
                     </p>
                   </>
                 ) : (
-                  <p className="text-sm text-ink-muted">
-                    Nenhuma carta escolhida ainda. A busca preenche nome, número, coleção,
-                    raridade, ilustrador e a arte.
+                  <p className="text-ink-muted text-sm">
+                    Nenhuma carta escolhida ainda. A busca preenche nome, número, coleção, raridade,
+                    ilustrador e a arte.
                   </p>
                 )}
 
@@ -280,7 +407,7 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
                   <Repeat2 className="size-4" />
                   {chosen ? 'Trocar carta' : 'Buscar carta na TCGdex'}
                 </Button>
-                {errors.name ? <p className="text-xs text-danger">{errors.name.message}</p> : null}
+                {errors.name ? <p className="text-danger text-xs">{errors.name.message}</p> : null}
               </div>
             </div>
           </AdminCard>
@@ -292,7 +419,11 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
               </Field>
 
               <Field label="Subtítulo" required error={errors.subtitle?.message} htmlFor="subtitle">
-                <Input id="subtitle" {...register('subtitle')} placeholder="1TB · versão com leitor" />
+                <Input
+                  id="subtitle"
+                  {...register('subtitle')}
+                  placeholder="1TB · versão com leitor"
+                />
               </Field>
 
               <Field
@@ -413,7 +544,11 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
                 control={control}
                 name="price"
                 render={({ field }) => (
-                  <MoneyInput id="price" value={field.value} onChange={(v) => field.onChange(v ?? 0)} />
+                  <MoneyInput
+                    id="price"
+                    value={field.value}
+                    onChange={(v) => field.onChange(v ?? 0)}
+                  />
                 )}
               />
             </Field>
@@ -434,18 +569,26 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
             </Field>
 
             <Field label="Estoque" required error={errors.stock?.message} htmlFor="stock">
-              <Input id="stock" type="number" min={0} {...register('stock', { valueAsNumber: true })} />
+              <Input
+                id="stock"
+                type="number"
+                min={0}
+                {...register('stock', { valueAsNumber: true })}
+              />
             </Field>
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-6 border-t border-line pt-5">
+          <div className="border-line mt-6 flex flex-wrap gap-6 border-t pt-5">
             <Controller
               control={control}
               name="featured"
               render={({ field }) => (
                 <label className="flex cursor-pointer items-center gap-2.5">
-                  <Checkbox checked={field.value} onCheckedChange={(c) => field.onChange(c === true)} />
-                  <span className="text-sm text-ink-muted">Produto em destaque</span>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={(c) => field.onChange(c === true)}
+                  />
+                  <span className="text-ink-muted text-sm">Produto em destaque</span>
                 </label>
               )}
             />
@@ -454,13 +597,22 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
               name="preOrder"
               render={({ field }) => (
                 <label className="flex cursor-pointer items-center gap-2.5">
-                  <Checkbox checked={field.value} onCheckedChange={(c) => field.onChange(c === true)} />
-                  <span className="text-sm text-ink-muted">Pré-venda</span>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={(c) => field.onChange(c === true)}
+                  />
+                  <span className="text-ink-muted text-sm">Pré-venda</span>
                 </label>
               )}
             />
           </div>
         </AdminCard>
+
+        {!isCard ? (
+          <AdminCard title="Fotos do produto">
+            <PhotoUrlFields control={control} watch={watch} setValue={setValue} errors={errors} />
+          </AdminCard>
+        ) : null}
 
         {isCard ? (
           <AdminCard title="Ficha da carta">
@@ -473,11 +625,21 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
                 <Input id="card-set" {...register('card.set')} placeholder="Obsidian Flames" />
               </Field>
 
-              <Field label="Código" required error={errors.card?.setCode?.message} htmlFor="card-code">
+              <Field
+                label="Código"
+                required
+                error={errors.card?.setCode?.message}
+                htmlFor="card-code"
+              >
                 <Input id="card-code" {...register('card.setCode')} placeholder="OBF" />
               </Field>
 
-              <Field label="Número" required error={errors.card?.number?.message} htmlFor="card-number">
+              <Field
+                label="Número"
+                required
+                error={errors.card?.number?.message}
+                htmlFor="card-number"
+              >
                 <Input id="card-number" {...register('card.number')} placeholder="223" />
               </Field>
 
@@ -549,7 +711,12 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
                 />
               </Field>
 
-              <Field label="Tipo da carta" required error={errors.card?.cardType?.message} htmlFor="card-type">
+              <Field
+                label="Tipo da carta"
+                required
+                error={errors.card?.cardType?.message}
+                htmlFor="card-type"
+              >
                 <Input id="card-type" {...register('card.cardType')} placeholder="Pokémon · Fogo" />
               </Field>
 
@@ -585,7 +752,7 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
                         checked={field.value}
                         onCheckedChange={(c) => field.onChange(c === true)}
                       />
-                      <span className="text-sm text-ink-muted">Foil</span>
+                      <span className="text-ink-muted text-sm">Foil</span>
                     </label>
                   </div>
                 )}
