@@ -23,7 +23,8 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
         <div className="relative flex flex-col gap-8">
           <h2 className="max-w-md text-display font-extrabold leading-[1.05] text-ink">
-            A loja que trata sua <span className="text-gradient-brand">coleção</span> como você trata.
+            {/* Cor sólida de marca, não degradê — banido pelo craft floor. */}
+            A loja que trata sua <span className="text-brand-300">coleção</span> como você trata.
           </h2>
           <ul className="flex flex-col gap-4">
             {PROOF.map(({ icon: Icon, text }) => (

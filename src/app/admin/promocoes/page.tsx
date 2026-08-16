@@ -5,6 +5,7 @@ import { searchCatalog } from '@/core/application/catalog-service';
 import { AdminCard, AdminPage, DataTable } from '@/components/admin/admin-shell';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { LineThumb } from '@/components/shop/line-thumb';
 import { discountPercent, formatPrice } from '@/lib/utils';
 
 export const metadata: Metadata = { title: 'Promoções' };
@@ -67,16 +68,13 @@ export default async function AdminPromotionsPage() {
               header: 'Produto',
               render: (product) => (
                 <div className="flex items-center gap-3">
-                  <span
-                    className="grid size-9 shrink-0 place-items-center rounded-md border border-line"
-                    style={{
-                      background: `linear-gradient(150deg, hsl(${product.accent} 68% 22%), rgba(9,9,12,0.95))`,
-                    }}
-                  >
-                    <span className="font-display text-2xs font-bold text-white/75">
-                      {product.name.charAt(0)}
-                    </span>
-                  </span>
+                  <LineThumb
+                    slug={product.slug}
+                    name={product.name}
+                    type={product.type}
+                    accent={product.accent}
+                    className="size-9 shrink-0 rounded-md border border-line"
+                  />
                   <span className="line-clamp-1 text-xs font-semibold text-ink">{product.name}</span>
                 </div>
               ),

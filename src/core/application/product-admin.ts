@@ -6,8 +6,7 @@ import { CARD_GRADES, RARITIES } from '../domain/taxonomy';
 import type { CardAttributes, MediaItem, Product } from '../domain/entities';
 
 export type CreateProductResult =
-  | { ok: true; product: Product }
-  | { ok: false; field?: keyof ProductDraft; message: string };
+  { ok: true; product: Product } | { ok: false; field?: keyof ProductDraft; message: string };
 
 /** Matiz estável derivada do slug — mesma ideia usada na arte gerada do card. */
 function accentFor(slug: string) {
@@ -109,11 +108,22 @@ export async function createProduct(draft: ProductDraft): Promise<CreateProductR
   const all = await products.search({ perPage: Number.MAX_SAFE_INTEGER });
   const { slug, sku, subtitle, description, brandSlug } = derive(draft, all.items);
 
-  // Carta avulsa: busca a arte real na TCGdex. Sem correspondência (ou API
-  // fora do ar), o produto ainda é criado — a arte procedural do ProductVisual
-  // assume, exatamente como hoje.
+  /*
+   * Carta avulsa: busca a arte real na TCGdex. Sem correspondência (ou API
+   * fora do ar), o produto ainda é criado — a arte procedural do
+   * ProductVisual assume, exatamente como hoje. Outro produto: usa as fotos
+   * que o operador colou no cadastro (até 4, a primeira é a capa); sem
+   * nenhuma, cai na mesma arte procedural.
+   */
   const media: MediaItem[] =
-    draft.type === 'tcg-card' && draft.card ? await resolveTcgdexMedia(draft.name, draft.card) : [];
+    draft.type === 'tcg-card' && draft.card
+      ? await resolveTcgdexMedia(draft.name, draft.card)
+      : (draft.mediaUrls ?? []).map((url, index) => ({
+          id: `${slug}-foto-${index + 1}`,
+          kind: 'image' as const,
+          label: index === 0 ? 'Frente' : `Foto ${index + 1}`,
+          src: url,
+        }));
 
   // tcgdexId é rastro da origem (serviu para achar a arte exata) e não faz
   // parte da ficha que a loja exibe; o domínio não o conhece.
@@ -183,7 +193,9 @@ export interface TcgdexSyncResult {
 export async function syncTcgdexArt(): Promise<TcgdexSyncResult> {
   const { products } = await getRepositories();
   const catalog = await products.search({ types: ['tcg-card'], perPage: Number.MAX_SAFE_INTEGER });
-  const pendentes = catalog.items.filter((product) => product.card && product.media[0]?.kind !== 'image');
+  const pendentes = catalog.items.filter(
+    (product) => product.card && product.media[0]?.kind !== 'image',
+  );
 
   const entradas: TcgdexSyncEntry[] = [];
   for (const product of pendentes) {

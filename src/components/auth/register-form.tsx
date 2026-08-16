@@ -58,7 +58,11 @@ export function RegisterForm() {
       return;
     }
 
-    await signIn('credentials', { email: values.email, password: values.password, redirect: false });
+    await signIn('credentials', {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+    });
     toast.success('Conta criada!', { description: 'Bem-vindo à Gengar Games.' });
     router.push('/conta');
     router.refresh();
@@ -67,17 +71,22 @@ export function RegisterForm() {
   return (
     <div className="flex flex-col gap-8">
       <header className="flex flex-col gap-2">
-        <span className="eyebrow">Criar conta</span>
-        <h1 className="text-title font-bold text-ink">Comece sua coleção</h1>
-        <p className="text-sm text-ink-muted">
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-title text-ink font-bold">Comece sua coleção</h1>
+          <span className="cert-label">Criar conta</span>
+        </div>
+        <p className="text-ink-muted text-sm">
           Leva menos de um minuto e libera cupons exclusivos de primeira compra.
         </p>
       </header>
 
       {error ? (
-        <div role="alert" className="flex items-start gap-3 rounded-md border border-danger/30 bg-danger/8 px-4 py-3">
-          <AlertCircle className="mt-0.5 size-4 shrink-0 text-danger" />
-          <p className="text-xs leading-relaxed text-ink-muted">{error}</p>
+        <div
+          role="alert"
+          className="border-danger/30 bg-danger/8 flex items-start gap-3 rounded-md border px-4 py-3"
+        >
+          <AlertCircle className="text-danger mt-0.5 size-4 shrink-0" />
+          <p className="text-ink-muted text-xs leading-relaxed">{error}</p>
         </div>
       ) : null}
 
@@ -90,7 +99,13 @@ export function RegisterForm() {
         noValidate
       >
         <Field label="Nome completo" required error={errors.name?.message} htmlFor="name">
-          <Input id="name" autoComplete="name" placeholder="Ana Beatriz Lopes" invalid={Boolean(errors.name)} {...register('name')} />
+          <Input
+            id="name"
+            autoComplete="name"
+            placeholder="Ana Beatriz Lopes"
+            invalid={Boolean(errors.name)}
+            {...register('name')}
+          />
         </Field>
 
         <Field label="E-mail" required error={errors.email?.message} htmlFor="reg-email">
@@ -134,7 +149,12 @@ export function RegisterForm() {
           </div>
         ) : null}
 
-        <Field label="Confirmar senha" required error={errors.confirmPassword?.message} htmlFor="confirm">
+        <Field
+          label="Confirmar senha"
+          required
+          error={errors.confirmPassword?.message}
+          htmlFor="confirm"
+        >
           <Input
             id="confirm"
             type="password"
@@ -146,7 +166,7 @@ export function RegisterForm() {
         </Field>
 
         <div className="flex flex-col gap-2">
-          <label className="flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-ink-muted">
+          <label className="text-ink-muted flex cursor-pointer items-start gap-3 text-xs leading-relaxed">
             <Checkbox
               className="mt-0.5"
               onCheckedChange={(checked) =>
@@ -155,18 +175,24 @@ export function RegisterForm() {
             />
             <span>
               Li e aceito os{' '}
-              <Link href="/institucional/termos" className="font-semibold text-brand-300 hover:text-brand-200">
+              <Link
+                href="/institucional/termos"
+                className="text-brand-300 hover:text-brand-200 font-semibold"
+              >
                 termos de uso
               </Link>{' '}
               e a{' '}
-              <Link href="/institucional/privacidade" className="font-semibold text-brand-300 hover:text-brand-200">
+              <Link
+                href="/institucional/privacidade"
+                className="text-brand-300 hover:text-brand-200 font-semibold"
+              >
                 política de privacidade
               </Link>
               .
             </span>
           </label>
           {errors.acceptTerms ? (
-            <p className="text-xs text-danger">{errors.acceptTerms.message}</p>
+            <p className="text-danger text-xs">{errors.acceptTerms.message}</p>
           ) : null}
         </div>
 
@@ -177,21 +203,23 @@ export function RegisterForm() {
       </form>
 
       <ul className="flex flex-col gap-2.5">
-        {['Cupom de R$ 50 na primeira compra', 'Alertas de restock dos seus favoritos', 'Histórico de pedidos e rastreio'].map(
-          (benefit) => (
-            <li key={benefit} className="flex items-center gap-2.5 text-xs text-ink-muted">
-              <Check className="size-3.5 text-success" />
-              {benefit}
-            </li>
-          ),
-        )}
+        {[
+          'Cupom de R$ 50 na primeira compra',
+          'Alertas de restock dos seus favoritos',
+          'Histórico de pedidos e rastreio',
+        ].map((benefit) => (
+          <li key={benefit} className="text-ink-muted flex items-center gap-2.5 text-xs">
+            <Check className="text-success size-3.5" />
+            {benefit}
+          </li>
+        ))}
       </ul>
 
-      <p className="text-center text-sm text-ink-muted">
+      <p className="text-ink-muted text-center text-sm">
         Já tem cadastro?{' '}
         <Link
           href="/login"
-          className="-my-2.5 inline-block py-2.5 font-semibold text-brand-300 transition-colors hover:text-brand-200"
+          className="text-brand-300 hover:text-brand-200 -my-2.5 inline-block py-2.5 font-semibold transition-colors"
         >
           Entrar
         </Link>

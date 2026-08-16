@@ -6,7 +6,14 @@
  * restrita ao catálogo já cadastrado (ver core/application/catalog-query.ts).
  */
 
-const BASE_URL = 'https://api.tcgdex.net/v2/pt-br';
+/*
+ * Locale "pt-br" da TCGdex só indexa o Pokémon TCG Pocket (mobile) — o TCG
+ * físico (Evolving Skies, Obsidian Flames, os sets que a loja vende) só
+ * existe no locale "en". Confirmado direto na API: /v2/pt-br/cards?name=Umbreon
+ * VMAX devolve vazio; /v2/en/cards?name=Umbreon VMAX acha as 4 impressões
+ * certas. Nome/rótulos continuam em português — só a busca troca de idioma.
+ */
+const BASE_URL = 'https://api.tcgdex.net/v2/en';
 const REQUEST_TIMEOUT_MS = 8000;
 
 interface TcgdexCardBrief {
@@ -99,11 +106,7 @@ async function getJson<T>(path: string): Promise<T | null> {
 }
 
 function normalize(value: string) {
-  return value
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .trim();
+  return value.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
 }
 
 /**
@@ -130,14 +133,18 @@ export async function lookupTcgdexCard(params: {
   // Mais de um: busca o detalhe de cada candidato (lista já é pequena, filtrada
   // por nome + número) e escolhe pelo nome da coleção informado no cadastro.
   const candidates = (
-    await Promise.all(briefs.slice(0, 8).map((brief) => getJson<TcgdexCardFull>(`/cards/${brief.id}`)))
+    await Promise.all(
+      briefs.slice(0, 8).map((brief) => getJson<TcgdexCardFull>(`/cards/${brief.id}`)),
+    )
   ).filter((card): card is TcgdexCardFull => Boolean(card));
 
   if (!candidates.length) return null;
   if (!params.setName) return toMatch(candidates[0]!);
 
   const target = normalize(params.setName);
-  const bySet = candidates.find((card) => card.set?.name && normalize(card.set.name).includes(target));
+  const bySet = candidates.find(
+    (card) => card.set?.name && normalize(card.set.name).includes(target),
+  );
   return toMatch(bySet ?? candidates[0]!);
 }
 

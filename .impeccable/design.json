@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-16T04:00:00.000Z",
+  "title": "Design System: Gengar Games",
+  "extensions": {
+    "colorMeta": {
+      "arcade-violet": { "role": "primary", "displayName": "Arcade Violet", "canonical": "#6D28D9", "tonalRamp": ["#14062a", "#3f1178", "#5b21b6", "#6d28d9", "#9333ea", "#a855f7", "#c084fc", "#ede4ff"] },
+      "arcade-violet-glow": { "role": "primary", "displayName": "Arcade Violet Glow", "canonical": "#9333EA" },
+      "arcade-violet-hover": { "role": "primary", "displayName": "Arcade Violet Hover", "canonical": "#A855F7" },
+      "arcade-violet-bright": { "role": "primary", "displayName": "Arcade Violet Bright", "canonical": "#C084FC" },
+      "arcade-violet-deep": { "role": "primary", "displayName": "Arcade Violet Deep", "canonical": "#5B21B6" },
+      "circuit-black": { "role": "neutral", "displayName": "Circuit Black", "canonical": "#09090B", "tonalRamp": ["#09090b", "#111114", "#18181b", "#202024", "#3a3a40", "#5c5c63", "#8a8a90", "#c7c7cc"] },
+      "panel-black": { "role": "neutral", "displayName": "Panel Black", "canonical": "#111114" },
+      "deck-black": { "role": "neutral", "displayName": "Deck Black", "canonical": "#18181B" },
+      "hud-overlay": { "role": "neutral", "displayName": "HUD Overlay", "canonical": "#202024" },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#FFFFFF" },
+      "ink-muted": { "role": "neutral", "displayName": "Ink Muted", "canonical": "#B1B1B9" },
+      "ink-faint": { "role": "neutral", "displayName": "Ink Faint", "canonical": "#9A9AA1" },
+      "ink-ghost": { "role": "neutral", "displayName": "Ink Ghost", "canonical": "#888894" },
+      "signal-green": { "role": "secondary", "displayName": "Signal Green", "canonical": "#34D399" },
+      "signal-amber": { "role": "secondary", "displayName": "Signal Amber", "canonical": "#FBBF24" },
+      "signal-red": { "role": "secondary", "displayName": "Signal Red", "canonical": "#FB7185" },
+      "signal-cyan": { "role": "secondary", "displayName": "Signal Cyan", "canonical": "#38BDF8" },
+      "danger-solid": { "role": "secondary", "displayName": "Danger Solid", "canonical": "#E11D48" },
+      "danger-solid-deep": { "role": "secondary", "displayName": "Danger Solid Deep", "canonical": "#9F1239" },
+      "rarity-common": { "role": "tertiary", "displayName": "Rarity — Common", "canonical": "#A1A1AA" },
+      "rarity-uncommon": { "role": "tertiary", "displayName": "Rarity — Uncommon", "canonical": "#34D399" },
+      "rarity-rare": { "role": "tertiary", "displayName": "Rarity — Rare", "canonical": "#38BDF8" },
+      "rarity-ultra": { "role": "tertiary", "displayName": "Rarity — Ultra", "canonical": "#C084FC" },
+      "rarity-secret": { "role": "tertiary", "displayName": "Rarity — Secret", "canonical": "#FBBF24" },
+      "foil-magenta": { "role": "secondary", "displayName": "Foil Magenta", "canonical": "#E8399C" },
+      "foil-gold": { "role": "secondary", "displayName": "Foil Gold", "canonical": "#E8B23F" },
+      "foil-cyan": { "role": "secondary", "displayName": "Foil Cyan", "canonical": "#4DD8F0" },
+      "label": { "role": "neutral", "displayName": "Cert-Label Cardstock", "canonical": "#F0EBE2" },
+      "label-ink": { "role": "neutral", "displayName": "Cert-Label Ink", "canonical": "#18181B" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero de página, um por view." },
+      "headline": { "displayName": "Headline", "purpose": "Título de seção grande." },
+      "title": { "displayName": "Title", "purpose": "h1–h4 padrão de página e card." },
+      "body": { "displayName": "Body", "purpose": "Texto corrido, descrição de produto." },
+      "label": { "displayName": "Label", "purpose": "Eyebrow, badge, campo, símbolo/centavos de preço." }
+    },
+    "shadows": [
+      { "name": "plate", "value": "0 1px 0 0 rgba(255,255,255,0.04) inset, 0 20px 50px -24px rgba(0,0,0,0.9)", "purpose": "Card e superfície em repouso." },
+      { "name": "lift", "value": "0 32px 64px -32px rgba(0,0,0,0.95), 0 0 0 1px rgba(255,255,255,0.05)", "purpose": "Card/surface interativo no hover." },
+      { "name": "glow-sm", "value": "0 0 18px -4px rgba(147,51,234,0.5)", "purpose": "Resposta padrão de ação primária e badge sólida." },
+      { "name": "glow", "value": "0 0 40px -8px rgba(147,51,234,0.55)", "purpose": "Hover de ação primária, foco de destaque." },
+      { "name": "glow-lg", "value": "0 0 80px -12px rgba(147,51,234,0.6)", "purpose": "Estados de maior ênfase (skip-link, alerta de destaque)." }
+    ],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Easing padrão de botão, superfície interativa e reveal." },
+      { "name": "ease-out-quart", "value": "cubic-bezier(0.25, 1, 0.5, 1)", "purpose": "Holo, sweep de luz." },
+      { "name": "ease-spring", "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "purpose": "Micro-interação com leve overshoot." },
+      { "name": "ease-in-out-soft", "value": "cubic-bezier(0.65, 0, 0.35, 1)", "purpose": "Transições de tema e painéis grandes." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação principal — banda de foil (violeta→magenta→dourado→ciano) deslizando no hover, scale no press.",
+      "html": "<button class=\"ds-btn-primary\">Adicionar ao carrinho</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 24px; border: none; border-radius: var(--radius-lg, 1rem); background-image: linear-gradient(100deg, var(--color-brand-400), #E8399C 32%, #E8B23F 62%, #4DD8F0 100%); background-size: 220% 100%; background-position: 0% 0%; color: #fff; font-family: var(--font-sans); font-weight: 600; font-size: 14px; box-shadow: 0 0 0 1px rgba(147,51,234,0.5), 0 0 18px -4px rgba(147,51,234,0.5), inset 0 1px 0 0 rgba(255,255,255,0.14); transition: background-position 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s; cursor: pointer; } .ds-btn-primary:hover { background-position: 100% 0%; box-shadow: 0 0 0 1px rgba(232,57,156,0.55), 0 0 40px -8px rgba(147,51,234,0.55), inset 0 1px 0 0 rgba(255,255,255,0.14); } .ds-btn-primary:active { transform: scale(0.98); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-brand-400); outline-offset: 2px; }"
+    },
+    {
+      "name": "Cert Label",
+      "kind": "custom",
+      "refersTo": "cert-label",
+      "description": "Faixa impressa estilo tarja de grading — substitui todo kicker/eyebrow decorativo acima de heading, carregando informação real anexada ao conteúdo.",
+      "html": "<span class=\"ds-cert-label\">Drop nº 001 · Pré-vendas abertas</span>",
+      "css": ".ds-cert-label { position: relative; display: inline-flex; align-items: center; gap: 10px; border-top: 1px solid rgba(24,24,27,0.35); border-bottom: 1px solid rgba(24,24,27,0.35); background: #F0EBE2; padding: 6px 14px; font-family: var(--font-tech); font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #18181B; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Ação secundária — vidro translúcido, borda vira line-brand no hover.",
+      "html": "<button class=\"ds-btn-secondary\">Ver detalhes</button>",
+      "css": ".ds-btn-secondary { height: 48px; padding: 0 24px; border-radius: 1rem; border: 1px solid var(--color-line); background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02)); backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%); color: var(--color-ink); font-family: var(--font-sans); font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); } .ds-btn-secondary:hover { border-color: var(--color-line-brand); background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04)); }"
+    },
+    {
+      "name": "Brand Badge",
+      "kind": "chip",
+      "refersTo": "badge-brand",
+      "description": "Rótulo técnico uppercase — raridade, status de pedido, tag de estoque.",
+      "html": "<span class=\"ds-badge-brand\">Ultra Rare</span>",
+      "css": ".ds-badge-brand { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 8px; border-radius: 0.5rem; background: rgba(147,51,234,0.15); box-shadow: inset 0 0 0 1px rgba(168,85,247,0.3); color: var(--color-brand-300, #C084FC); font-family: var(--font-tech); font-weight: 600; font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; }"
+    },
+    {
+      "name": "Selected Toggle Chip",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "Faceta rápida de catálogo, estado selecionado com glow.",
+      "html": "<button class=\"ds-chip-selected\">Charizard <span class=\"ds-chip-count\">42</span></button>",
+      "css": ".ds-chip-selected { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; border-radius: 0.5rem; border: 1px solid rgba(168,85,247,0.6); background: rgba(147,51,234,0.18); color: var(--color-brand-300, #C084FC); font-family: var(--font-sans); font-weight: 600; font-size: 12px; box-shadow: 0 0 18px -4px rgba(147,51,234,0.5); cursor: pointer; } .ds-chip-count { font-family: var(--font-tech); font-size: 0.625rem; color: var(--color-ink-faint); }"
+    },
+    {
+      "name": "Plate Card",
+      "kind": "card",
+      "refersTo": "surface (tone=plate)",
+      "description": "Superfície de repouso padrão — chapa fosca com luz de topo, não vidro.",
+      "html": "<div class=\"ds-card-plate\"><h3 class=\"ds-card-title\">Elite Trainer Box · Pokémon 151</h3><p class=\"ds-card-body\">Inclui 9 boosters, moedas e playmat exclusivo.</p></div>",
+      "css": ".ds-card-plate { border-radius: 1rem; border: 1px solid var(--color-line); background: linear-gradient(168deg, #16161a 0%, #101013 55%, #0d0d10 100%); box-shadow: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 20px 50px -24px rgba(0,0,0,0.9); padding: 24px; color: var(--color-ink); font-family: var(--font-sans); } .ds-card-title { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; margin: 0 0 8px; } .ds-card-body { color: var(--color-ink-muted); font-size: 14px; margin: 0; }"
+    },
+    {
+      "name": "Default Input",
+      "kind": "input",
+      "refersTo": "input-default",
+      "description": "Campo de formulário — halo suave no clique, anel forte no foco por teclado.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Buscar cartas, consoles...\" />",
+      "css": ".ds-input { width: 100%; height: 48px; padding: 0 16px; border-radius: 0.75rem; border: 1px solid var(--color-line); background: rgba(255,255,255,0.03); color: var(--color-ink); font-family: var(--font-sans); font-size: 14px; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); } .ds-input::placeholder { color: var(--color-ink-ghost); } .ds-input:focus { background: rgba(255,255,255,0.05); outline: none; } .ds-input:focus-visible { border-color: rgba(168,85,247,0.6); box-shadow: 0 0 0 3px rgba(168,85,247,0.22); }"
+    },
+    {
+      "name": "Price",
+      "kind": "custom",
+      "refersTo": "price (signature)",
+      "description": "Composição tipográfica do preço — símbolo/centavos em Chakra Petch, valor em Sora com tabular-nums.",
+      "html": "<div class=\"ds-price\"><span class=\"ds-price-symbol\">R$</span><span class=\"ds-price-amount\">1.289</span><span class=\"ds-price-cents\">,90</span></div>",
+      "css": ".ds-price { display: flex; align-items: baseline; gap: 4px; font-family: var(--font-display); font-weight: 700; color: var(--color-ink); letter-spacing: -0.01em; } .ds-price-symbol { font-family: var(--font-tech); font-weight: 600; font-size: 0.625rem; color: var(--color-ink-muted); } .ds-price-amount { font-size: 1.25rem; font-variant-numeric: tabular-nums; } .ds-price-cents { font-family: var(--font-tech); font-size: 0.75rem; color: var(--color-ink-muted); font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Holo Card",
+      "kind": "custom",
+      "refersTo": "holo (signature)",
+      "description": "Brilho holográfico de carta foil — segue o ponteiro via --mx/--my, color-dodge sobre a arte.",
+      "html": "<div class=\"ds-holo-card\"><div class=\"ds-holo-shine\"></div><span class=\"ds-holo-label\">Charizard ex</span></div>",
+      "css": ".ds-holo-card { position: relative; isolation: isolate; border-radius: 1rem; overflow: hidden; background: linear-gradient(168deg, #16161a 0%, #101013 55%, #0d0d10 100%); border: 1px solid var(--color-line); padding: 32px; color: var(--color-ink); font-family: var(--font-display); font-weight: 700; } .ds-holo-shine { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0.85; background: radial-gradient(130% 90% at 50% 40%, rgba(255,255,255,0.28) 0%, rgba(192,132,252,0.22) 22%, rgba(56,189,248,0.14) 42%, transparent 68%); mix-blend-mode: color-dodge; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Foil sob a Luz",
+    "overview": "O momento de puxar uma secret rare e inclinar a carta sob a luz — a superfície reage, não brilha parada. Substitui o mundo anterior (Neon Arcade Noir): preto absoluto e o roxo de marca são fatos preservados, mas a leitura deixou de ser HUD de arcade gamer e passou a ser a física de difração de um foil real — violeta, magenta, dourado e ciano varrendo a superfície quando algo é tocado.\n\nO holo — já a assinatura da casa, antes restrito às cartas — agora é o mecanismo de toque do site inteiro: botão primário, sublinhado do hero, atmosfera de fundo (Aurora, que virou faixas de luz varrendo em vez de nebulosa parada).\n\nOnde a página precisava de peso técnico acima de um título, isso virou cert-label, uma faixa impressa (estilo tarja de slab de grading) com informação real, anexada ao conteúdo — nunca mais um kicker decorativo solto acima de heading.",
+    "keyCharacteristics": [
+      "Preto absoluto como chão; a banda de foil varre superfícies no toque, nunca um glow parado.",
+      "holo é o mecanismo de toque do site — não só um easter egg de card.",
+      "Nenhum kicker/eyebrow decorativo acima de heading — informação real vira cert-label anexado ao conteúdo.",
+      "Vidro só em camadas flutuantes (herdado); superfícies de repouso continuam plate.",
+      "Escada de raridade fixa (herdada, disciplina que sobrevive à troca de mundo).",
+      "cert-label é a única superfície fixa nos dois temas — um selo impresso não inverte."
+    ],
+    "rules": [
+      { "name": "The Sweep, Not Glow Rule", "body": "Foil é varredura em resposta a toque/hover, nunca uma superfície ou glow em repouso. Se algo brilha parado, não é foil — é o mundo antigo vazando.", "section": "colors" },
+      { "name": "The Fixed Rarity Ladder Rule", "body": "As cinco cores de raridade nunca mudam de papel entre temas ou contextos — cinza sempre é Common, âmbar sempre é Secret.", "section": "colors" },
+      { "name": "The No Kicker Rule", "body": "Nenhum rótulo decorativo acima de título — banido pelo craft floor sem exceção de brief. Informação real vira cert-label anexado ao conteúdo (ao lado do título, preso na vitrine), nunca uma linha antes do heading.", "section": "typography" },
+      { "name": "The Overlay-Only Glass Rule", "body": "Vidro (blur + tint) é reservado para camadas que flutuam sobre conteúdo — dialog, drawer, select, disclosure, header ao rolar. Cards e superfícies estacionárias usam plate, não vidro.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do tratar foil como resposta a toque/hover — nunca um glow ou superfície em repouso (Sweep, Not Glow Rule).",
+      "Do usar cert-label para informação real anexada ao conteúdo; nunca um kicker decorativo acima de heading (No Kicker Rule).",
+      "Do manter a escada de raridade fixa e o roxo de marca como acento raro, não fundo.",
+      "Do preservar vidro só em overlay (Overlay-Only Glass Rule) e plate como repouso."
+    ],
+    "donts": [
+      "Don't reintroduzir um kicker/eyebrow solto acima de título — banido, sem exceção de brief.",
+      "Don't deixar a banda de foil parada como decoração; ela existe pra reagir.",
+      "Don't aproximar o visual de dashboard SaaS genérico.",
+      "Don't escrever cor hex direto fora de @theme/token."
+    ]
+  }
+}

@@ -77,6 +77,15 @@ export const productDraftSchema = z
     featured: z.boolean(),
     preOrder: z.boolean(),
     card: cardDraftSchema.nullable(),
+    /*
+     * Só para produto que não é carta — carta sempre usa a arte oficial da
+     * TCGdex, nunca upload manual. Sem storage de arquivo neste projeto, o
+     * operador cola a URL da foto já hospedada; até 4, a primeira é a capa.
+     */
+    mediaUrls: z
+      .array(z.string().trim().url('URL de imagem inválida.'))
+      .max(4, 'No máximo 4 fotos.')
+      .optional(),
   })
   .refine((draft) => draft.type !== 'tcg-card' || draft.card !== null, {
     message: 'Carta avulsa exige a ficha da carta.',
@@ -111,10 +120,7 @@ export type CardDraft = z.infer<typeof cardDraftSchema>;
  */
 export function mapTcgdexRarity(raw: string | null | undefined): CardRarity {
   if (!raw) return 'rara';
-  const value = raw
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase();
+  const value = raw.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
   if (value.includes('secret')) return 'secreta';
   if (value.includes('ultra') || value.includes('special illustration')) return 'ultra-rara';

@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { QuantityStepper, Separator } from '@/components/ui/controls';
 import { Badge } from '@/components/ui/badge';
+import { LineThumb } from '@/components/shop/line-thumb';
 import { useCartStore } from '@/stores/cart-store';
 import { useCartTotals } from '@/hooks/use-cart-totals';
 import { etaLabel, shippingOptions } from '@/lib/shipping';
@@ -83,10 +84,10 @@ export function CartDrawer() {
         <DrawerHeader>
           <div className="flex flex-col gap-1">
             <DrawerTitle className="flex items-center gap-2">
-              <ShoppingBag className="size-4 text-brand-300" />
+              <ShoppingBag className="text-brand-300 size-4" />
               Seu carrinho
             </DrawerTitle>
-            <p className="font-tech text-2xs uppercase tracking-[0.2em] text-ink-faint">
+            <p className="font-tech text-2xs text-ink-faint tracking-[0.2em] uppercase">
               {totals.itemCount} {totals.itemCount === 1 ? 'item' : 'itens'}
             </p>
           </div>
@@ -94,25 +95,29 @@ export function CartDrawer() {
         </DrawerHeader>
 
         {/* Barra de progresso do frete grátis */}
-        <div className="border-b border-line px-6 py-4">
+        <div className="border-line border-b px-6 py-4">
           <div className="mb-2 flex items-center justify-between text-xs">
-            <span className="flex items-center gap-2 text-ink-muted">
-              <Truck className="size-3.5 text-brand-300" />
+            <span className="text-ink-muted flex items-center gap-2">
+              <Truck className="text-brand-300 size-3.5" />
               {totals.freeShippingRemaining > 0 ? (
                 <>
                   Faltam{' '}
-                  <strong className="text-ink">{formatPrice(totals.freeShippingRemaining)}</strong> para
-                  o frete grátis
+                  <strong className="text-ink">{formatPrice(totals.freeShippingRemaining)}</strong>{' '}
+                  para o frete grátis
                 </>
               ) : (
                 <strong className="text-success">Frete grátis desbloqueado</strong>
               )}
             </span>
-            <span className="font-tech text-2xs text-ink-faint">{totals.freeShippingProgress}%</span>
+            <span className="font-tech text-2xs text-ink-faint">
+              {totals.freeShippingProgress}%
+            </span>
           </div>
-          <div className="h-1.5 overflow-hidden rounded-full bg-ink/8">
+          <div className="bg-ink/8 h-1.5 overflow-hidden rounded-full">
+            {/* Banda de foil em vez de degradê só-violeta — a barra
+                enchendo é a mesma física de luz varrendo a superfície. */}
             <motion.div
-              className="h-full rounded-full bg-linear-to-r from-brand-600 via-brand-400 to-brand-300"
+              className="h-full rounded-full bg-[image:var(--gradient-foil-sweep)]"
               initial={{ width: 0 }}
               animate={{ width: `${totals.freeShippingProgress}%` }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
@@ -123,12 +128,12 @@ export function CartDrawer() {
         <DrawerBody className="flex flex-col gap-6">
           {lines.length === 0 ? (
             <div className="flex flex-1 flex-col items-center justify-center gap-4 py-16 text-center">
-              <span className="grid size-16 place-items-center rounded-full border border-line bg-ink/3">
-                <ShoppingBag className="size-6 text-ink-faint" />
+              <span className="border-line bg-ink/3 grid size-16 place-items-center rounded-full border">
+                <ShoppingBag className="text-ink-faint size-6" />
               </span>
               <div>
-                <p className="font-display text-base font-semibold text-ink">Carrinho vazio</p>
-                <p className="mt-1 text-sm text-ink-muted">
+                <p className="font-display text-ink text-base font-semibold">Carrinho vazio</p>
+                <p className="text-ink-muted mt-1 text-sm">
                   Que tal começar pelas cartas mais procuradas da semana?
                 </p>
               </div>
@@ -150,29 +155,32 @@ export function CartDrawer() {
                     className="plate flex gap-4 rounded-lg p-3"
                   >
                     <Link
-                      href={line.type === 'tcg-card' ? `/carta/${line.slug}` : `/produto/${line.slug}`}
+                      href={
+                        line.type === 'tcg-card' ? `/carta/${line.slug}` : `/produto/${line.slug}`
+                      }
                       onClick={() => setOpen(false)}
-                      className="grid size-20 shrink-0 place-items-center overflow-hidden rounded-md border border-line"
-                      style={{
-                        background: `linear-gradient(150deg, hsl(${line.accent} 68% 20%), rgba(9,9,12,0.95))`,
-                      }}
+                      className="border-line block size-20 shrink-0 overflow-hidden rounded-md border"
                     >
-                      <span className="font-display text-lg font-bold text-white/80">
-                        {line.name.charAt(0)}
-                      </span>
+                      <LineThumb
+                        slug={line.slug}
+                        name={line.name}
+                        type={line.type}
+                        accent={line.accent}
+                        className="size-full"
+                      />
                     </Link>
 
                     <div className="flex min-w-0 flex-1 flex-col gap-2">
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
-                          <p className="truncate text-sm font-semibold text-ink">{line.name}</p>
-                          <p className="truncate text-xs text-ink-faint">{line.subtitle}</p>
+                          <p className="text-ink truncate text-sm font-semibold">{line.name}</p>
+                          <p className="text-ink-faint truncate text-xs">{line.subtitle}</p>
                         </div>
                         <button
                           type="button"
                           onClick={() => remove(line.slug)}
                           aria-label={`Remover ${line.name}`}
-                          className="grid size-7 shrink-0 place-items-center rounded-sm text-ink-ghost transition-colors hover:bg-ink/8 hover:text-danger"
+                          className="text-ink-ghost hover:bg-ink/8 hover:text-danger grid size-7 shrink-0 place-items-center rounded-sm transition-colors"
                         >
                           <X className="size-3.5" />
                         </button>
@@ -185,7 +193,7 @@ export function CartDrawer() {
                           max={line.stock}
                           onChange={(value) => setQuantity(line.slug, value)}
                         />
-                        <span className="font-display text-sm font-bold tabular-nums text-ink">
+                        <span className="font-display text-ink text-sm font-bold tabular-nums">
                           {formatPrice(line.price * line.quantity)}
                         </span>
                       </div>
@@ -193,7 +201,7 @@ export function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => saveForLater(line.slug)}
-                        className="inline-flex w-fit items-center gap-1.5 text-2xs font-semibold uppercase tracking-wider text-ink-faint transition-colors hover:text-brand-300"
+                        className="text-2xs text-ink-faint hover:text-brand-300 inline-flex w-fit items-center gap-1.5 font-semibold tracking-wider uppercase transition-colors"
                       >
                         <BookmarkPlus className="size-3" />
                         Salvar para depois
@@ -213,10 +221,10 @@ export function CartDrawer() {
                 {saved.map((line) => (
                   <li
                     key={line.slug}
-                    className="flex items-center gap-3 rounded-md border border-line bg-ink/2 p-3"
+                    className="border-line bg-ink/2 flex items-center gap-3 rounded-md border p-3"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-xs font-semibold text-ink">{line.name}</p>
+                      <p className="text-ink truncate text-xs font-semibold">{line.name}</p>
                       <p className="font-tech text-2xs text-ink-faint">{formatPrice(line.price)}</p>
                     </div>
                     <Button size="xs" variant="secondary" onClick={() => moveToCart(line.slug)}>
@@ -226,7 +234,7 @@ export function CartDrawer() {
                       type="button"
                       onClick={() => removeSaved(line.slug)}
                       aria-label={`Descartar ${line.name}`}
-                      className="grid size-7 place-items-center rounded-sm text-ink-ghost hover:text-danger"
+                      className="text-ink-ghost hover:text-danger grid size-7 place-items-center rounded-sm"
                     >
                       <Trash2 className="size-3.5" />
                     </button>
@@ -243,20 +251,22 @@ export function CartDrawer() {
                 <Ticket className="size-3" /> Cupom de desconto
               </h4>
               {couponCode && coupon?.valid ? (
-                <div className="flex items-center justify-between gap-3 rounded-md border border-success/30 bg-success/8 px-4 py-3">
+                // Cupom aplicado lê como um selo carimbado — cert-label com
+                // acento de sucesso, não a caixa verde genérica de antes.
+                <div className="cert-label flex items-center justify-between gap-3 py-2.5">
                   <div className="flex items-center gap-2.5">
-                    <Check className="size-4 text-success" />
+                    <Check className="text-success size-4 shrink-0" />
                     <div>
-                      <p className="font-tech text-xs font-bold uppercase tracking-wider text-success">
-                        {coupon.code}
+                      <p className="text-xs font-bold">{coupon.code}</p>
+                      <p className="text-label-ink/70 text-[0.625rem] font-normal tracking-normal normal-case">
+                        {coupon.description ?? coupon.message}
                       </p>
-                      <p className="text-2xs text-ink-muted">{coupon.description ?? coupon.message}</p>
                     </div>
                   </div>
                   <button
                     type="button"
                     onClick={() => setCoupon(null)}
-                    className="text-2xs font-semibold uppercase tracking-wider text-ink-faint hover:text-danger"
+                    className="text-label-ink/70 hover:text-danger shrink-0 text-[0.625rem] font-semibold"
                   >
                     Remover
                   </button>
@@ -267,7 +277,7 @@ export function CartDrawer() {
                     value={code}
                     onChange={(event) => setCode(event.target.value.toUpperCase())}
                     placeholder="GENGAR10"
-                    className="h-11 flex-1 font-tech uppercase tracking-wider"
+                    className="font-tech h-11 flex-1 tracking-wider uppercase"
                     aria-label="Código do cupom"
                   />
                   <Button type="submit" variant="secondary" size="sm" loading={validatingCoupon}>
@@ -299,7 +309,7 @@ export function CartDrawer() {
                       )}
                     >
                       <div>
-                        <p className="text-xs font-semibold text-ink">{option.name}</p>
+                        <p className="text-ink text-xs font-semibold">{option.name}</p>
                         <p className="text-2xs text-ink-faint">
                           {option.carrier} · {etaLabel(option)}
                         </p>
@@ -329,24 +339,23 @@ export function CartDrawer() {
                 {recommendations.slice(0, 4).map((item) => (
                   <Link
                     key={item.slug}
-                    href={item.type === 'tcg-card' ? `/carta/${item.slug}` : `/produto/${item.slug}`}
+                    href={
+                      item.type === 'tcg-card' ? `/carta/${item.slug}` : `/produto/${item.slug}`
+                    }
                     onClick={() => setOpen(false)}
-                    className="group flex flex-col gap-2 rounded-md border border-line bg-ink/2 p-3 transition-all hover:border-brand-400/40 hover:bg-brand-500/6"
+                    className="group border-line bg-ink/2 hover:border-brand-400/40 hover:bg-brand-500/6 flex flex-col gap-2 rounded-md border p-3 transition-all"
                   >
-                    <span
-                      className="grid h-14 place-items-center rounded-sm"
-                      style={{
-                        background: `linear-gradient(150deg, hsl(${item.accent} 68% 22%), rgba(9,9,12,0.9))`,
-                      }}
-                    >
-                      <span className="font-display text-sm font-bold text-white/70">
-                        {item.name.charAt(0)}
-                      </span>
-                    </span>
-                    <span className="line-clamp-2 text-2xs font-semibold leading-snug text-ink-muted group-hover:text-ink">
+                    <LineThumb
+                      slug={item.slug}
+                      name={item.name}
+                      type={item.type}
+                      accent={item.accent}
+                      className="h-14 rounded-sm"
+                    />
+                    <span className="text-2xs text-ink-muted group-hover:text-ink line-clamp-2 leading-snug font-semibold">
                       {item.name}
                     </span>
-                    <span className="font-tech text-2xs font-bold text-brand-200">
+                    <span className="font-tech text-2xs text-brand-200 font-bold">
                       {formatPrice(item.price)}
                     </span>
                   </Link>
@@ -359,17 +368,17 @@ export function CartDrawer() {
         {lines.length > 0 ? (
           <DrawerFooter className="flex flex-col gap-4">
             <dl className="flex flex-col gap-2 text-sm">
-              <div className="flex justify-between text-ink-muted">
+              <div className="text-ink-muted flex justify-between">
                 <dt>Subtotal</dt>
                 <dd className="tabular-nums">{formatPrice(totals.subtotal)}</dd>
               </div>
               {totals.discount > 0 ? (
-                <div className="flex justify-between text-success">
+                <div className="text-success flex justify-between">
                   <dt>Desconto</dt>
                   <dd className="tabular-nums">−{formatPrice(totals.discount)}</dd>
                 </div>
               ) : null}
-              <div className="flex justify-between text-ink-muted">
+              <div className="text-ink-muted flex justify-between">
                 <dt>Frete</dt>
                 <dd className="tabular-nums">
                   {totals.shipping === 0 ? (
@@ -381,8 +390,8 @@ export function CartDrawer() {
               </div>
               <Separator className="my-1" />
               <div className="flex items-end justify-between">
-                <dt className="font-display text-sm font-semibold text-ink">Total</dt>
-                <dd className="font-display text-2xl font-bold tabular-nums text-ink">
+                <dt className="font-display text-ink text-sm font-semibold">Total</dt>
+                <dd className="font-display text-ink text-2xl font-bold tabular-nums">
                   {formatPrice(totals.total)}
                 </dd>
               </div>

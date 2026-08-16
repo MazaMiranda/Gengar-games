@@ -34,14 +34,23 @@ export function SectionHeading({
       )}
     >
       <div className={cn('flex max-w-2xl flex-col gap-3', align === 'center' && 'items-center')}>
-        {eyebrow ? (
-          <div className="flex items-center gap-3">
-            <span className="h-px w-8 bg-linear-to-r from-brand-500 to-transparent" aria-hidden />
-            <span className="eyebrow">{eyebrow}</span>
-          </div>
+        {/*
+          Sem kicker acima do título — banido pelo craft floor, sem exceção
+          de brief. O título carrega o peso; quando existe, o eyebrow vira
+          anotação de cert-label ao lado, não uma linha decorativa antes.
+        */}
+        <div
+          className={cn(
+            'flex flex-wrap items-center gap-3',
+            align === 'center' && 'justify-center',
+          )}
+        >
+          <h2 className="text-title text-ink font-bold">{title}</h2>
+          {eyebrow ? <span className="cert-label">{eyebrow}</span> : null}
+        </div>
+        {description ? (
+          <p className="text-ink-muted text-sm leading-relaxed">{description}</p>
         ) : null}
-        <h2 className="text-title font-bold text-ink">{title}</h2>
-        {description ? <p className="text-sm leading-relaxed text-ink-muted">{description}</p> : null}
       </div>
 
       {actions}
@@ -49,11 +58,11 @@ export function SectionHeading({
       {href ? (
         <Link
           href={href}
-          className="group inline-flex shrink-0 items-center gap-2 py-1 text-sm font-semibold text-ink-muted transition-colors hover:text-brand-200"
+          className="group text-ink-muted hover:text-brand-200 inline-flex shrink-0 items-center gap-2 py-1 text-sm font-semibold transition-colors"
         >
           {linkLabel}
-          <span className="grid size-9 place-items-center rounded-full border border-line transition-all duration-400 ease-out-expo group-hover:border-brand-400/50 group-hover:bg-brand-500/12 group-hover:shadow-glow-sm">
-            <ArrowUpRight className="size-3.5 transition-transform duration-400 ease-out-expo group-hover:-translate-y-px group-hover:translate-x-px" />
+          <span className="border-line ease-out-expo group-hover:border-brand-400/50 group-hover:bg-brand-500/12 group-hover:shadow-glow-sm grid size-9 place-items-center rounded-full border transition-all duration-400">
+            <ArrowUpRight className="ease-out-expo size-3.5 transition-transform duration-400 group-hover:translate-x-px group-hover:-translate-y-px" />
           </span>
         </Link>
       ) : null}
@@ -61,11 +70,7 @@ export function SectionHeading({
   );
 }
 
-export function Section({
-  className,
-  children,
-  ...props
-}: React.HTMLAttributes<HTMLElement>) {
+export function Section({ className, children, ...props }: React.HTMLAttributes<HTMLElement>) {
   return (
     <section className={cn('container-page py-16 md:py-24', className)} {...props}>
       {children}

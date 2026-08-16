@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/controls';
 import { Aurora } from '@/components/layout/aurora';
+import { LineThumb } from '@/components/shop/line-thumb';
 import { formatDate, formatPrice } from '@/lib/utils';
 
 export const metadata: Metadata = {
@@ -39,9 +40,13 @@ export default async function CheckoutSuccessPage({ params }: PageProps) {
           <span className="grid size-20 place-items-center rounded-full border border-success/30 bg-success/12 shadow-[0_0_60px_-12px_rgba(52,211,153,0.5)]">
             <CheckCircle2 className="size-9 text-success" />
           </span>
-          <div className="flex flex-col gap-3">
-            <span className="eyebrow">Pedido {order.number}</span>
-            <h1 className="text-display font-extrabold text-ink">Compra confirmada</h1>
+          <div className="flex flex-col items-center gap-3">
+            {/* Sem kicker acima do h1 — número do pedido vira cert-label
+                anexado ao título, não uma linha decorativa antes. */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <h1 className="text-display font-extrabold text-ink">Compra confirmada</h1>
+              <span className="cert-label">Pedido {order.number}</span>
+            </div>
             <p className="text-sm leading-relaxed text-ink-muted">
               Enviamos a confirmação para <strong className="text-ink">{order.customerEmail}</strong>. Você
               acompanha cada etapa pela sua conta e recebe o rastreio assim que o pedido for postado.
@@ -107,14 +112,13 @@ export default async function CheckoutSuccessPage({ params }: PageProps) {
               <ul className="flex flex-col gap-3">
                 {order.items.map((item) => (
                   <li key={item.productSlug} className="flex items-center gap-3">
-                    <span
-                      className="grid size-12 shrink-0 place-items-center rounded-md border border-line"
-                      style={{ background: `linear-gradient(150deg, hsl(${item.accent} 68% 20%), rgba(9,9,12,0.95))` }}
-                    >
-                      <span className="font-display text-xs font-bold text-white/75">
-                        {item.name.charAt(0)}
-                      </span>
-                    </span>
+                    <LineThumb
+                      slug={item.productSlug}
+                      name={item.name}
+                      type={item.type}
+                      accent={item.accent}
+                      className="size-12 shrink-0 rounded-md border border-line"
+                    />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-xs font-semibold text-ink">{item.name}</p>
                       <p className="font-tech text-2xs text-ink-faint">

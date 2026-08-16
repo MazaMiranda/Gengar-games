@@ -9,8 +9,13 @@ import tcgdexImages from './tcgdex-images.json';
  */
 const REAL_ART: Record<string, string> = tcgdexImages.cards;
 
-type Draft = Pick<Product, 'slug' | 'name' | 'subtitle' | 'type' | 'categorySlug' | 'brandSlug' | 'price'> &
-  Partial<Omit<Product, 'slug' | 'name' | 'subtitle' | 'type' | 'categorySlug' | 'brandSlug' | 'price'>>;
+type Draft = Pick<
+  Product,
+  'slug' | 'name' | 'subtitle' | 'type' | 'categorySlug' | 'brandSlug' | 'price'
+> &
+  Partial<
+    Omit<Product, 'slug' | 'name' | 'subtitle' | 'type' | 'categorySlug' | 'brandSlug' | 'price'>
+  >;
 
 const TYPE_PREFIX: Record<Product['type'], string> = {
   'tcg-card': 'CRD',
@@ -21,24 +26,25 @@ const TYPE_PREFIX: Record<Product['type'], string> = {
   collectible: 'COL',
 };
 
+/**
+ * Sem arte real, a galeria não finge ter 3-4 ângulos: mostrar "Frente",
+ * "Detalhe", "Verso" e "Conteúdo da caixa" como quatro miniaturas
+ * praticamente idênticas (mesma composição procedural, só o frame muda)
+ * é o tipo de furo que denuncia catálogo vazio. Uma miniatura honesta bate
+ * quatro fingindo variedade que não existe.
+ *
+ * Carta é estática: com arte real da TCGdex, essa é a única mídia — sem
+ * segunda aba de "ficha". Múltiplas fotos são coisa de produto com fotos de
+ * verdade cadastradas pela loja (ver Draft.media no cadastro do admin).
+ */
 function defaultMedia(draft: Draft): MediaItem[] {
   const real = REAL_ART[draft.slug];
 
-  // Com arte real da TCGdex, ela é a primeira mídia (a que aparece no card e
-  // abre a galeria); as composições procedurais seguem como ângulos extras.
-  const base: MediaItem[] = real
-    ? [{ id: `${draft.slug}-tcgdex`, kind: 'image', label: 'Frente', src: real }]
-    : [{ id: `${draft.slug}-a`, kind: 'art', label: 'Frente' }];
-
-  base.push(
-    { id: `${draft.slug}-b`, kind: 'art', label: 'Detalhe' },
-    { id: `${draft.slug}-c`, kind: 'art', label: 'Verso' },
-  );
-
-  if (draft.type === 'console' || draft.type === 'accessory') {
-    base.push({ id: `${draft.slug}-d`, kind: 'art', label: 'Conteúdo da caixa' });
+  if (real) {
+    return [{ id: `${draft.slug}-tcgdex`, kind: 'image', label: 'Frente', src: real }];
   }
-  return base;
+
+  return [{ id: `${draft.slug}-a`, kind: 'art', label: 'Sem foto' }];
 }
 
 /**
@@ -48,7 +54,7 @@ function defaultMedia(draft: Draft): MediaItem[] {
  */
 export function defineProduct(draft: Draft): Product {
   const seed = hashString(draft.slug);
-  const rating = draft.rating ?? Number((4.2 + ((seed % 8) / 10)).toFixed(1));
+  const rating = draft.rating ?? Number((4.2 + (seed % 8) / 10).toFixed(1));
 
   return {
     id: draft.id ?? `p_${seed.toString(36)}`,
@@ -61,7 +67,8 @@ export function defineProduct(draft: Draft): Product {
     price: draft.price,
     compareAtPrice: draft.compareAtPrice ?? null,
     stock: draft.stock ?? 2 + (seed % 17),
-    sku: draft.sku ?? `GG-${TYPE_PREFIX[draft.type]}-${seed.toString(36).slice(0, 6).toUpperCase()}`,
+    sku:
+      draft.sku ?? `GG-${TYPE_PREFIX[draft.type]}-${seed.toString(36).slice(0, 6).toUpperCase()}`,
     rating: Math.min(5, rating),
     reviewCount: draft.reviewCount ?? 6 + (seed % 184),
     soldCount: draft.soldCount ?? 18 + (seed % 940),

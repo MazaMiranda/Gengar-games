@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/controls';
 import { STATUS_META } from '@/components/account/order-card';
+import { LineThumb } from '@/components/shop/line-thumb';
 import { formatDate, formatPrice } from '@/lib/utils';
 
 export const metadata: Metadata = {
@@ -121,12 +122,15 @@ export default async function OrderDetailPage({ params }: PageProps) {
                 <li key={item.productSlug} className="flex items-center gap-4 py-4 first:pt-0 last:pb-0">
                   <Link
                     href={item.type === 'tcg-card' ? `/carta/${item.productSlug}` : `/produto/${item.productSlug}`}
-                    className="grid size-14 shrink-0 place-items-center rounded-md border border-line transition-transform hover:scale-105"
-                    style={{ background: `linear-gradient(150deg, hsl(${item.accent} 68% 20%), rgba(9,9,12,0.95))` }}
+                    className="block size-14 shrink-0 overflow-hidden rounded-md border border-line transition-transform hover:scale-105"
                   >
-                    <span className="font-display text-sm font-bold text-white/75">
-                      {item.name.charAt(0)}
-                    </span>
+                    <LineThumb
+                      slug={item.productSlug}
+                      name={item.name}
+                      type={item.type}
+                      accent={item.accent}
+                      className="size-full"
+                    />
                   </Link>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-semibold text-ink">{item.name}</p>

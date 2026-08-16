@@ -1,43 +1,49 @@
 import { cn } from '@/lib/utils';
 
-/** Camada de atmosfera: névoas roxas em movimento lento atrás do conteúdo. */
+/**
+ * Camada de atmosfera: varredura de luz prismática, lenta, atrás do
+ * conteúdo — a mesma física do holo, só que grande o bastante pra cobrir a
+ * página, como se uma fonte de luz passasse devagar sobre a loja inteira.
+ *
+ * Antes eram três névoas roxas paradas (nebulosa de arcade). Aqui são
+ * faixas diagonais estreitas que atravessam o viewport em loop — a leitura
+ * é "luz varrendo uma superfície", não "atmosfera ambiente".
+ */
 export function Aurora({ className, intensity = 1 }: { className?: string; intensity?: number }) {
   return (
     <div
       className={cn('pointer-events-none absolute inset-0 overflow-hidden', className)}
-      // --t-aurora-strength derruba a intensidade no tema claro, onde o roxo
-      // satura demais sobre branco.
+      // --t-aurora-strength derruba a intensidade no tema claro, onde a
+      // banda prismática satura demais sobre branco.
       style={{ opacity: 'var(--t-aurora-strength)' }}
       aria-hidden
     >
       {/*
-        Sem filter: blur() de propósito.
-
-        Estas camadas passam de 800px cada e ficam animadas em loop; um blur de
-        120–140px sobre elas obriga o compositor a refiltrar ~2 megapixels por
-        camada a cada quadro. Como a forma já é um radial-gradient — suave por
-        construção — o blur quase não mudava o resultado visual. A suavidade
-        agora vem só das paradas do gradiente, de graça.
+        Sem filter: blur() de propósito — mesmo motivo de sempre: a faixa já
+        nasce suave pelas paradas do gradiente, então refiltrar a cada
+        quadro só custaria quadro sem mudar o resultado visual.
+      */}
+      {/*
+        Sem dourado na névoa ambiente: roxo+dourado sob backdrop-filter
+        saturate(150%) (o "glass" dos botões secundários) misturava pra um
+        marrom sujo, não pra luz de foil. Dourado fica reservado pro
+        primeiro plano (holo, sweep) — aqui só a família roxo→magenta→ciano,
+        que é análoga e não suja o vidro por trás.
       */}
       <div
-        className="absolute -left-[15%] -top-[30%] size-[60vw] rounded-full animate-drift"
+        className="animate-drift absolute -top-1/4 -left-1/3 h-[46vw] w-[140vw] rotate-[-14deg]"
         style={{
-          background: 'radial-gradient(circle, rgba(109,40,217,0.42) 0%, rgba(109,40,217,0.16) 38%, transparent 72%)',
+          background:
+            'linear-gradient(100deg, transparent 0%, rgba(147,51,234,0.26) 34%, rgba(232,57,156,0.18) 58%, rgba(77,216,240,0.14) 80%, transparent 100%)',
           opacity: 0.85 * intensity,
         }}
       />
       <div
-        className="absolute -right-[10%] top-[6%] size-[45vw] rounded-full animate-drift [animation-delay:-8s]"
+        className="animate-drift absolute top-[38%] -right-1/3 h-[34vw] w-[130vw] rotate-[-14deg] [animation-delay:-11s]"
         style={{
-          background: 'radial-gradient(circle, rgba(147,51,234,0.34) 0%, rgba(147,51,234,0.13) 40%, transparent 72%)',
-          opacity: 0.8 * intensity,
-        }}
-      />
-      <div
-        className="absolute bottom-[-25%] left-[25%] size-[52vw] rounded-full animate-drift [animation-delay:-15s]"
-        style={{
-          background: 'radial-gradient(circle, rgba(192,132,252,0.2) 0%, rgba(192,132,252,0.08) 42%, transparent 74%)',
-          opacity: 0.7 * intensity,
+          background:
+            'linear-gradient(100deg, transparent 0%, rgba(77,216,240,0.14) 30%, rgba(147,51,234,0.2) 58%, rgba(232,57,156,0.14) 82%, transparent 100%)',
+          opacity: 0.65 * intensity,
         }}
       />
     </div>

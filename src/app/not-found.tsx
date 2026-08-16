@@ -14,8 +14,14 @@ export default function NotFound() {
         <Logo />
 
         <div className="flex flex-col items-center gap-4">
-          <span className="font-display text-[7rem] font-extrabold leading-none text-gradient-brand">
+          {/* Peso e o sweep de foil embaixo carregam a ênfase — sem
+              texto em degradê (banido pelo craft floor). */}
+          <span className="relative font-display text-[7rem] font-extrabold leading-none text-ink">
             404
+            <span
+              className="absolute -bottom-2 left-1/2 h-[3px] w-2/3 -translate-x-1/2 bg-[image:var(--gradient-foil-sweep)]"
+              aria-hidden
+            />
           </span>
           <h1 className="text-title font-bold text-ink">Essa carta não está no deck</h1>
           <p className="max-w-sm text-sm leading-relaxed text-ink-muted">

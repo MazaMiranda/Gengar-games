@@ -8,6 +8,7 @@ import { ArrowRight, Loader2, Search, TrendingUp } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { LineThumb } from '@/components/shop/line-thumb';
 import { cn, formatPrice } from '@/lib/utils';
 
 interface SearchHit {
@@ -147,16 +148,13 @@ export function SearchDialog({ children }: { children: React.ReactNode }) {
                     onClick={() => setOpen(false)}
                     className="group flex items-center gap-3 rounded-md p-3 transition-colors hover:bg-ink/5"
                   >
-                    <span
-                      className="grid size-11 shrink-0 place-items-center rounded-md border border-line"
-                      style={{
-                        background: `linear-gradient(150deg, hsl(${hit.accent} 70% 20%), rgba(10,10,13,0.9))`,
-                      }}
-                    >
-                      <span className="font-display text-sm font-bold text-white/80">
-                        {hit.name.charAt(0)}
-                      </span>
-                    </span>
+                    <LineThumb
+                      slug={hit.slug}
+                      name={hit.name}
+                      type={hit.type}
+                      accent={hit.accent}
+                      className="size-11 shrink-0 rounded-md border border-line"
+                    />
                     <span className="flex min-w-0 flex-1 flex-col">
                       <span className="truncate text-sm font-semibold text-ink">{hit.name}</span>
                       <span className="truncate text-xs text-ink-faint">
