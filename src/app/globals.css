@@ -2,16 +2,36 @@
 @import 'tw-animate-css';
 
 /* ==========================================================================
-   GENGAR GAMES — DESIGN SYSTEM
+   GENGAR GAMES — VITRINE
    Camada de tokens. Nenhum valor cromático deve ser escrito à mão fora daqui.
+
+   DIREÇÃO
+   O produto é a obra; a interface é a caixa iluminada em volta dele. Vitrine
+   de museu, não HUD de arcade. Papel claro por padrão, neutro frio único,
+   um acento só (o violeta da marca, dessaturado), sombra tingida do fundo.
+
+   O QUE ESTA DIREÇÃO APOSENTOU
+   Banda prismática de foil (violeta+magenta+dourado+ciano varrendo tudo),
+   holo arco-íris em color-dodge, canto recortado (notch), selo de cartolina,
+   scanlines e malha técnica. Eram quatro acentos e três texturas brigando
+   pela mesma tela. Os nomes dos utilitários continuam — o que eles desenham
+   mudou — porque 79 arquivos os consomem e trocar nome de classe seria
+   editar 273 pontos sem ganho nenhum de desenho.
    ========================================================================== */
 
-@theme {
+/*
+ * `inline` não é detalhe: sem ele o Tailwind v4 resolve o valor de
+ * `--color-void: var(--t-void)` no build e escreve o hex do tema claro dentro
+ * de `.bg-void`. O resultado é uma variável que muda no runtime e um utilitário
+ * que ignora a mudança — trocar para o escuro atualizava `--color-void` para
+ * #0c0c0e e o body continuava pintando #f4f4f6. Com `inline`, o utilitário
+ * emite `var(--color-void)` e a troca de tema volta a valer.
+ */
+@theme inline {
   /*
    * Cores tematizáveis apontam para variáveis de runtime (--t-*), definidas
-   * mais abaixo em :root (escuro) e [data-theme='light'] (claro). É o que
-   * permite trocar o tema inteiro sem tocar em nenhum componente — todo o site
-   * consome estes tokens, nunca hex solto.
+   * mais abaixo em :root (claro) e [data-theme='dark'] (escuro). É o que
+   * permite trocar o tema inteiro sem tocar em nenhum componente.
    */
 
   /* ── Cores: superfícies ─────────────────────────────────────────────── */
@@ -21,19 +41,25 @@
   --color-overlay: var(--t-overlay);
 
   /* ── Cores: marca ───────────────────────────────────────────────────── */
-  /* 50–300 são usados quase só como texto: no tema claro eles escurecem para
-     manter contraste sobre fundo branco. 400+ são superfície/glow e não mudam. */
+  /*
+   * Um acento só na página inteira (Color Consistency Lock). O violeta fica
+   * porque é a marca: o logo em public/logo.png é violeta, e trocar o matiz
+   * aqui deixaria a marca órfã da própria identidade.
+   *
+   * Mas dessaturado. O #9333ea anterior era o roxo neon de gradiente de IA;
+   * este fica em 71% de saturação e se comporta como tinta, não como luz.
+   */
   --color-brand-50: var(--t-brand-50);
   --color-brand-100: var(--t-brand-100);
   --color-brand-200: var(--t-brand-200);
   --color-brand-300: var(--t-brand-300);
-  --color-brand-400: #a855f7;
-  --color-brand-500: #9333ea;
-  --color-brand-600: #6d28d9;
-  --color-brand-700: #5b21b6;
-  --color-brand-800: #3f1178;
-  --color-brand-900: #240a44;
-  --color-brand-950: #14062a;
+  --color-brand-400: #8b6ef0;
+  --color-brand-500: #6d4ae2;
+  --color-brand-600: #5a37c9;
+  --color-brand-700: #4a2ba6;
+  --color-brand-800: #371f7d;
+  --color-brand-900: #241452;
+  --color-brand-950: #150b30;
 
   /* ── Cores: texto ───────────────────────────────────────────────────── */
   --color-ink: var(--t-ink);
@@ -47,34 +73,34 @@
   --color-line-brand: var(--t-line-brand);
 
   /* ── Cores: semântica ───────────────────────────────────────────────── */
-  /* Também tematizadas: são quase sempre texto (status de pedido, alerta de
-     estoque), e o tom vibrante que funciona sobre preto some sobre branco. */
   --color-success: var(--t-success);
   --color-warning: var(--t-warning);
   --color-danger: var(--t-danger);
   --color-info: var(--t-info);
 
   /* Preenchimento do botão destrutivo. Não acompanha o tema de propósito: o
-     rótulo é branco fixo, então a chapa precisa ficar escura nos dois lados.
-     Antes eram --danger a 90%/70% sobre o fundo, e no claro a base diluída
-     chegava a 3,9:1. Aqui: 4,7:1 no topo, 8,0:1 na base. */
-  --color-danger-surface: #e11d48;
-  --color-danger-surface-deep: #9f1239;
+     rótulo é branco fixo, então a chapa precisa ficar escura nos dois lados. */
+  --color-danger-surface: #c2283f;
+  --color-danger-surface-deep: #8c1a2c;
 
-  /* ── Cores: foil (difração da carta sob luz) ──────────────────────────── */
-  /* Companheiras do roxo de marca, nunca substitutas: a banda prismática que
-     varre superfície e holo quando algo é tocado — nunca um glow parado. */
-  --color-foil-magenta: #e8399c;
-  --color-foil-gold: #e8b23f;
-  --color-foil-cyan: #4dd8f0;
+  /*
+   * Antigos tokens de foil. A banda prismática saiu, mas os nomes ficam
+   * definidos porque componentes ainda os referenciam; agora são três degraus
+   * do mesmo acento, não três cores concorrentes. Nada aqui reintroduz um
+   * segundo matiz na página.
+   */
+  --color-foil-magenta: var(--color-brand-400);
+  --color-foil-gold: var(--color-brand-300);
+  --color-foil-cyan: var(--color-brand-500);
 
-  /* Cartolina de cert-label — fixa nos dois temas de propósito: um selo
-     impresso não inverte quando a loja troca de tema, do mesmo jeito que o
-     botão destrutivo acima. */
-  --color-label: #f0ebe2;
-  --color-label-ink: #18181b;
+  /* Rótulo impresso — fixo nos dois temas: uma etiqueta de vitrine não
+     inverte quando a loja troca de tema. */
+  --color-label: #ffffff;
+  --color-label-ink: #101012;
 
   /* ── Cores: raridades TCG ───────────────────────────────────────────── */
+  /* Código de cor de dado, não decoração: cada raridade precisa ser lida como
+     "a mesma cor" nos dois temas, então só a luminosidade muda. */
   --color-rarity-common: var(--t-rarity-common);
   --color-rarity-uncommon: var(--t-rarity-uncommon);
   --color-rarity-rare: var(--t-rarity-rare);
@@ -82,47 +108,71 @@
   --color-rarity-secret: var(--t-rarity-secret);
 
   /* ── Tipografia ─────────────────────────────────────────────────────── */
-  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
-  --font-tech: var(--font-chakra), ui-monospace, monospace;
+  /* Uma família, dois cortes. --font-tech continua existindo porque muitos
+     componentes usam `font-tech` para número; agora aponta para a mono. */
+  --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-tech: var(--font-geist-mono), ui-monospace, monospace;
 
   --text-2xs: 0.6875rem;
   --text-2xs--line-height: 1rem;
-  --text-hero: clamp(2.5rem, 5.2vw, 4.75rem);
-  --text-hero--line-height: 0.98;
-  --text-hero--letter-spacing: -0.04em;
-  --text-display: clamp(2rem, 4.6vw, 3.75rem);
-  --text-display--line-height: 1;
-  --text-display--letter-spacing: -0.035em;
-  --text-title: clamp(1.5rem, 2.6vw, 2.25rem);
-  --text-title--line-height: 1.1;
-  --text-title--letter-spacing: -0.025em;
+
+  /*
+   * Escala de display contida de propósito.
+   *
+   * O hero anterior ia a 4,75rem com 5 palavras de título; aqui o teto cai
+   * para 3,75rem. Numa loja o herói divide a dobra com a foto do produto, e
+   * título gigante empurra o botão de compra para fora da tela.
+   */
+  --text-hero: clamp(2.25rem, 4.2vw, 3.75rem);
+  --text-hero--line-height: 1.05;
+  --text-hero--letter-spacing: -0.03em;
+  --text-display: clamp(1.875rem, 3.4vw, 2.75rem);
+  --text-display--line-height: 1.1;
+  --text-display--letter-spacing: -0.025em;
+  --text-title: clamp(1.375rem, 2.1vw, 1.75rem);
+  --text-title--line-height: 1.2;
+  --text-title--letter-spacing: -0.02em;
 
   /* ── Raio ───────────────────────────────────────────────────────────── */
-  --radius-xs: 0.25rem;
+  /*
+   * Regra única e documentada (Shape Consistency Lock):
+   *   xs  chip e badge
+   *   sm  input e select
+   *   md  botão
+   *   lg  card
+   *   xl  contêiner e painel
+   *   2xl/3xl  superfície grande (drawer, modal, hero)
+   * Nada de pill misturado com quadrado na mesma tela.
+   */
+  --radius-xs: 0.375rem;
   --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.25rem;
-  --radius-2xl: 1.75rem;
-  --radius-3xl: 2.25rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.5rem;
 
-  /* ── Sombra e glow ──────────────────────────────────────────────────── */
+  /* ── Sombra ─────────────────────────────────────────────────────────── */
+  /*
+   * Tingida com o matiz do fundo, nunca preto puro. Uma sombra preta sobre
+   * papel claro lê como sujeira; tingida de violeta ela lê como profundidade.
+   * Os tokens de glow ficaram bem mais discretos: o brilho externo neon era
+   * o tique mais forte da direção anterior.
+   */
   --shadow-plate: var(--t-shadow-plate);
   --shadow-lift: var(--t-shadow-lift);
-  --shadow-glow-sm: 0 0 18px -4px rgba(147, 51, 234, 0.5);
-  --shadow-glow: 0 0 40px -8px rgba(147, 51, 234, 0.55);
-  --shadow-glow-lg: 0 0 80px -12px rgba(147, 51, 234, 0.6);
+  --shadow-glow-sm: 0 1px 2px 0 rgba(74, 43, 166, 0.08);
+  --shadow-glow: 0 4px 16px -4px rgba(74, 43, 166, 0.18);
+  --shadow-glow-lg: 0 12px 32px -8px rgba(74, 43, 166, 0.22);
   --shadow-inset-top: inset 0 1px 0 0 var(--t-specular);
 
-  /* Banda de difração do foil — violeta → magenta → dourado → ciano.
-     Usada em ação primária e no selo de cert-label; nunca um glow parado. */
+  /* Sheen de ação primária. Antes era a banda prismática inteira; agora é um
+     degradê do próprio acento, que é o que "um acento só" significa. */
   --gradient-foil-sweep: linear-gradient(
     100deg,
-    var(--color-brand-400) 0%,
-    var(--color-foil-magenta) 32%,
-    var(--color-foil-gold) 62%,
-    var(--color-foil-cyan) 100%
+    var(--color-brand-500) 0%,
+    var(--color-brand-600) 100%
   );
 
   /* ── Movimento ──────────────────────────────────────────────────────── */
@@ -131,169 +181,164 @@
   --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
 
   /* ── Animações ──────────────────────────────────────────────────────── */
-  --animate-shimmer: shimmer 2.4s ease-in-out infinite;
-  --animate-marquee: marquee 42s linear infinite;
-  --animate-float: float 7s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s ease-in-out infinite;
+  --animate-marquee: marquee 46s linear infinite;
+  --animate-float: float 9s ease-in-out infinite;
   --animate-pulse-glow: pulse-glow 4s ease-in-out infinite;
-  --animate-scan: scan 5s linear infinite;
-  --animate-drift: drift 22s ease-in-out infinite alternate;
-  --animate-rise: rise 0.7s var(--ease-out-expo) both;
-  --animate-accordion-down: accordion-down 0.35s var(--ease-out-expo);
-  --animate-accordion-up: accordion-up 0.3s var(--ease-out-expo);
+  --animate-scan: scan 6s linear infinite;
+  --animate-drift: drift 26s ease-in-out infinite alternate;
+  --animate-rise: rise 0.6s var(--ease-out-expo) both;
+  --animate-accordion-down: accordion-down 0.3s var(--ease-out-expo);
+  --animate-accordion-up: accordion-up 0.26s var(--ease-out-expo);
 
   /* ── Larguras de conteúdo ───────────────────────────────────────────── */
   --spacing-gutter: 1.25rem;
+
+  /*
+   * Escala de z-index. Existe para acabar com z-[9999] espalhado: toda camada
+   * do site cabe nestes cinco degraus.
+   */
+  --z-base: 1;
+  --z-sticky: 40;
+  --z-drawer: 50;
+  --z-modal: 60;
+  --z-toast: 70;
 }
 
 /* ==========================================================================
    TEMAS
    O tema é escolhido por data-theme no <html>, gravado antes da primeira
    pintura (ver o script inline em app/layout.tsx) para não haver piscada.
+
+   Claro é o padrão nesta direção: vitrine é sala iluminada. O escuro continua
+   completo, não é um modo de segunda.
    ========================================================================== */
 
 :root,
-[data-theme='dark'] {
-  color-scheme: dark;
-
-  --t-void: #09090b;
-  --t-surface: #111114;
-  --t-elevated: #18181b;
-  --t-overlay: #202024;
-
-  --t-brand-50: #f5f0ff;
-  --t-brand-100: #ede4ff;
-  --t-brand-200: #ddccff;
-  --t-brand-300: #c084fc;
-
-  /*
-   * Rampa de texto.
-   *
-   * Os quatro degraus são medidos contra --t-overlay (#202024), a mais clara
-   * das superfícies escuras, e não contra --t-void. É o que importa na
-   * prática: preço riscado, contagem de facetas e rótulo de gráfico quase
-   * sempre caem sobre plate ou card, não sobre o fundo da página. Aferir pelo
-   * fundo mais escuro dá uma folga que não existe onde o texto realmente está.
-   *
-   * Antes: faint 4,12:1 e ghost 1,91:1 — o preço antigo era quase invisível.
-   */
-  --t-ink: #ffffff; /* 15,3:1 no overlay */
-  --t-ink-muted: #b1b1b9; /*  7,6:1 */
-  --t-ink-faint: #9a9aa1; /*  5,8:1 */
-  --t-ink-ghost: #888894; /*  4,6:1 */
-
-  --t-success: #34d399;
-  --t-warning: #fbbf24;
-  --t-danger: #fb7185;
-  --t-info: #38bdf8;
-
-  --t-rarity-common: #a1a1aa;
-  --t-rarity-uncommon: #34d399;
-  --t-rarity-rare: #38bdf8;
-  --t-rarity-ultra: #c084fc;
-  --t-rarity-secret: #fbbf24;
-
-  --t-line: rgba(255, 255, 255, 0.07);
-  --t-line-strong: rgba(255, 255, 255, 0.13);
-  --t-line-brand: rgba(168, 85, 247, 0.32);
-
-  /* Vidro: no escuro a luz vem de cima, então o tint é branco translúcido. */
-  --t-glass-tint-a: rgba(255, 255, 255, 0.07);
-  --t-glass-tint-b: rgba(255, 255, 255, 0.02);
-  --t-glass-base: rgba(9, 9, 11, 0.72);
-  --t-specular: rgba(255, 255, 255, 0.14);
-  --t-glass-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.95);
-
-  --t-plate-grad: linear-gradient(168deg, #16161a 0%, #101013 55%, #0d0d10 100%);
-  --t-shadow-plate: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
-    0 20px 50px -24px rgba(0, 0, 0, 0.9);
-  --t-shadow-lift: 0 32px 64px -32px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.05);
-
-  /* Texturas: no escuro, riscos claros sobre fundo escuro. */
-  --t-texture-line: rgba(255, 255, 255, 0.035);
-  --t-scanline: rgba(255, 255, 255, 0.045);
-  --t-grain-opacity: 0.035;
-  --t-grain-blend: overlay;
-  --t-aurora-strength: 1;
-}
-
 [data-theme='light'] {
   color-scheme: light;
 
-  /* Fundo com um leve viés lilás — branco puro deixaria a marca sem chão. */
-  --t-void: #f4f3f7;
-  --t-surface: #ffffff;
-  --t-elevated: #fbfbfd;
-  --t-overlay: #eeedf3;
+  /* Neutro frio, uma família só. Sem branco puro no fundo da página: papel
+     puro #fff tira toda a profundidade das superfícies brancas por cima. */
+  --t-void: #f4f4f6;
+  --t-surface: #fdfdfe;
+  --t-elevated: #ffffff;
+  --t-overlay: #eaeaee;
 
-  /* Ramp invertida na ponta clara: estes tons são texto e precisam de contraste. */
-  --t-brand-50: #3f1178;
-  --t-brand-100: #4c1d95;
-  --t-brand-200: #5b21b6;
-  --t-brand-300: #6d28d9;
-
-  /* Mesma régua do escuro, aferida contra --t-overlay (#eeedf3). */
-  --t-ink: #131316; /* 15,5:1 no overlay */
-  --t-ink-muted: #52525b; /*  6,6:1 */
-  --t-ink-faint: #60606a; /*  5,3:1 */
-  --t-ink-ghost: #666671; /*  4,9:1 */
+  /* Estes quatro são texto sobre fundo claro, então escurecem. */
+  --t-brand-50: #4a2ba6;
+  --t-brand-100: #4a2ba6;
+  --t-brand-200: #5a37c9;
+  --t-brand-300: #5a37c9;
 
   /*
-   * Semânticas e raridades escurecem no claro. Os tons do escuro são vivos
-   * para brilhar sobre preto e chegavam a 1,5:1 sobre este fundo — o alerta de
-   * estoque em âmbar era o pior caso. O matiz é o mesmo, só a luminosidade
-   * muda, então o código de cor continua sendo lido como "a mesma cor".
-   *
-   * Cada valor é resolvido contra o fundo em que a cor realmente aparece: o
-   * badge pinta `bg-<cor>/12`, ou seja, o texto cai sobre um tint de 12% de si
-   * mesmo. Aferir contra a superfície limpa dava 4,8:1 no papel e 4,2–4,4 na
-   * tela. Aqui a conta já inclui o tint, e o pior caso medido fica em 4,7:1.
+   * Rampa de texto, medida contra --t-overlay (#eaeaee), que é a mais escura
+   * das superfícies claras. É onde o texto secundário realmente cai: preço
+   * riscado, contagem de faceta, rótulo de gráfico. Aferir contra o branco
+   * daria uma folga que não existe na tela.
    */
-  --t-success: #197251;
-  --t-warning: #825e03;
-  --t-danger: #c50621;
-  --t-info: #066b98;
+  --t-ink: #101012; /* 17,2:1 no overlay */
+  --t-ink-muted: #4d4d55; /*  7,7:1 */
+  --t-ink-faint: #5e5e67; /*  5,9:1 */
+  --t-ink-ghost: #6d6d77; /*  4,8:1 */
 
-  --t-rarity-common: #656570;
-  --t-rarity-uncommon: #197251;
-  --t-rarity-rare: #066b98;
-  --t-rarity-ultra: #8612f9;
-  --t-rarity-secret: #825e03;
+  --t-success: #10684a;
+  --t-warning: #7a5504;
+  --t-danger: #b3172c;
+  --t-info: #0a6288;
 
-  --t-line: rgba(19, 19, 22, 0.1);
-  --t-line-strong: rgba(19, 19, 22, 0.17);
-  --t-line-brand: rgba(109, 40, 217, 0.3);
+  --t-rarity-common: #5e5e67;
+  --t-rarity-uncommon: #10684a;
+  --t-rarity-rare: #0a6288;
+  --t-rarity-ultra: #5a37c9;
+  --t-rarity-secret: #7a5504;
 
-  /* No claro o vidro é branco gelado: o tint clareia e a base fica opaca o
-     bastante para o texto escuro continuar legível sobre qualquer fundo. */
-  --t-glass-tint-a: rgba(255, 255, 255, 0.75);
-  --t-glass-tint-b: rgba(255, 255, 255, 0.45);
-  --t-glass-base: rgba(255, 255, 255, 0.72);
+  --t-line: rgba(16, 16, 18, 0.09);
+  --t-line-strong: rgba(16, 16, 18, 0.16);
+  --t-line-brand: rgba(90, 55, 201, 0.28);
+
+  /* Vidro: no claro o tint clareia e a base fica opaca o bastante para o
+     texto escuro continuar legível sobre qualquer coisa que passe atrás. */
+  --t-glass-tint-a: rgba(255, 255, 255, 0.78);
+  --t-glass-tint-b: rgba(255, 255, 255, 0.52);
+  --t-glass-base: rgba(253, 253, 254, 0.76);
+  --t-glass-solid-fallback: #fbfbfd;
   --t-specular: rgba(255, 255, 255, 0.9);
-  --t-glass-shadow: 0 24px 60px -30px rgba(19, 19, 22, 0.28);
+  --t-glass-shadow: 0 16px 40px -24px rgba(35, 25, 70, 0.24);
 
-  --t-plate-grad: linear-gradient(168deg, #ffffff 0%, #fcfcfe 55%, #f7f6fb 100%);
-  --t-shadow-plate: 0 1px 0 0 rgba(255, 255, 255, 0.9) inset,
-    0 14px 32px -22px rgba(19, 19, 22, 0.3);
-  --t-shadow-lift: 0 28px 56px -34px rgba(19, 19, 22, 0.32), 0 0 0 1px rgba(19, 19, 22, 0.07);
+  /* Card: chapa lisa. O degradê de 168° da direção anterior saiu — superfície
+     de vitrine é plana, a profundidade vem da sombra e do fio de borda. */
+  --t-plate-grad: #fdfdfe;
+  --t-shadow-plate: 0 1px 2px 0 rgba(35, 25, 70, 0.05), 0 1px 1px -1px rgba(35, 25, 70, 0.04);
+  --t-shadow-lift: 0 16px 32px -16px rgba(35, 25, 70, 0.18), 0 0 0 1px rgba(16, 16, 18, 0.05);
 
-  /* Texturas invertem: riscos escuros sobre fundo claro. */
-  --t-texture-line: rgba(19, 19, 22, 0.05);
-  --t-scanline: rgba(19, 19, 22, 0.04);
-  --t-grain-opacity: 0.02;
+  --t-spotlight: rgba(109, 74, 226, 0.1);
+  --t-grain-opacity: 0.014;
   --t-grain-blend: multiply;
-  /* A aurora roxa satura demais sobre branco. */
-  --t-aurora-strength: 0.42;
+  --t-aurora-strength: 0.3;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Sem preto puro: off-black frio, mesma família neutra do claro. */
+  --t-void: #0c0c0e;
+  --t-surface: #141417;
+  --t-elevated: #1a1a1e;
+  --t-overlay: #232328;
+
+  --t-brand-50: #ece7fd;
+  --t-brand-100: #ddd4fb;
+  --t-brand-200: #c5b5f7;
+  --t-brand-300: #a992f3;
+
+  /* Mesma régua do claro, aferida contra --t-overlay (#232328). */
+  --t-ink: #fafafa; /* 15,8:1 no overlay */
+  --t-ink-muted: #b0b0b8; /*  7,7:1 */
+  --t-ink-faint: #97979f; /*  5,7:1 */
+  --t-ink-ghost: #85858e; /*  4,6:1 */
+
+  --t-success: #3ddc9a;
+  --t-warning: #f2c14e;
+  --t-danger: #ff7a8a;
+  --t-info: #4cc4f5;
+
+  --t-rarity-common: #a1a1ab;
+  --t-rarity-uncommon: #3ddc9a;
+  --t-rarity-rare: #4cc4f5;
+  --t-rarity-ultra: #a992f3;
+  --t-rarity-secret: #f2c14e;
+
+  --t-line: rgba(250, 250, 250, 0.08);
+  --t-line-strong: rgba(250, 250, 250, 0.14);
+  --t-line-brand: rgba(139, 110, 240, 0.3);
+
+  --t-glass-tint-a: rgba(250, 250, 250, 0.06);
+  --t-glass-tint-b: rgba(250, 250, 250, 0.02);
+  --t-glass-base: rgba(12, 12, 14, 0.78);
+  --t-glass-solid-fallback: #17171b;
+  --t-specular: rgba(255, 255, 255, 0.1);
+  --t-glass-shadow: 0 16px 40px -24px rgba(0, 0, 0, 0.8);
+
+  --t-plate-grad: #141417;
+  --t-shadow-plate: 0 1px 2px 0 rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(250, 250, 250, 0.03);
+  --t-shadow-lift: 0 20px 40px -20px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(250, 250, 250, 0.07);
+
+  --t-spotlight: rgba(139, 110, 240, 0.16);
+  --t-grain-opacity: 0.022;
+  --t-grain-blend: overlay;
+  --t-aurora-strength: 0.55;
 }
 
 @keyframes shimmer {
   0%,
   100% {
-    opacity: 0.35;
-    transform: translateX(-30%);
+    opacity: 0.5;
+    transform: translateX(-24%);
   }
   50% {
     opacity: 1;
-    transform: translateX(30%);
+    transform: translateX(24%);
   }
 }
 
@@ -309,20 +354,20 @@
 @keyframes float {
   0%,
   100% {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-14px) rotate(1.2deg);
+    transform: translateY(-8px);
   }
 }
 
 @keyframes pulse-glow {
   0%,
   100% {
-    opacity: 0.45;
+    opacity: 0.4;
   }
   50% {
-    opacity: 0.9;
+    opacity: 0.75;
   }
 }
 
@@ -338,24 +383,23 @@
 /*
  * Só translação — sem scale.
  *
- * A Aurora são camadas de ~60vw com blur de 120–140px. Escalar uma camada
- * borrada obriga o navegador a re-rasterizar o blur a cada quadro, e isso
- * segurava a home em 30fps (mediana de 33ms por quadro). Translação pura é
- * composta na GPU: mesma sensação de movimento, 60fps.
+ * As camadas de fundo têm ~60vw com blur pesado. Escalar uma camada borrada
+ * obriga o navegador a re-rasterizar o blur a cada quadro, e isso segurava a
+ * home em 30fps. Translação pura compõe na GPU.
  */
 @keyframes drift {
   from {
     transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(8%, -6%, 0);
+    transform: translate3d(6%, -4%, 0);
   }
 }
 
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
@@ -385,12 +429,23 @@
   }
 }
 
-@keyframes sweep {
+/* Barra de progresso do revezamento. scaleX e não width: largura força
+   layout a cada quadro, transform compõe na GPU. */
+@keyframes progresso {
   from {
-    transform: translateX(-120%) skewX(-18deg);
+    transform: scaleX(0);
   }
   to {
-    transform: translateX(220%) skewX(-18deg);
+    transform: scaleX(1);
+  }
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(-120%) skewX(-16deg);
+  }
+  to {
+    transform: translateX(220%) skewX(-16deg);
   }
 }
 
@@ -412,7 +467,6 @@
     background-color: var(--color-void);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-feature-settings: 'ss01', 'cv01';
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: clip;
@@ -423,25 +477,38 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Todo número da loja é tabular: preço, quantidade, total, estoque. Sem
+     isso a coluna dança quando o valor muda. */
+  .font-tech,
+  [class*='tabular'] {
+    font-variant-numeric: tabular-nums;
   }
 
   ::selection {
-    background: var(--color-brand-500);
-    color: #fff;
+    background: color-mix(in srgb, var(--color-brand-500) 24%, transparent);
+    color: var(--color-ink);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-brand-400);
+    outline: 2px solid var(--color-brand-500);
     outline-offset: 2px;
     border-radius: 2px;
   }
 
-  /* Scrollbar */
+  /* Scrollbar discreta: neutra, não violeta. Barra de rolagem colorida é
+     decoração que compete com o produto. */
   * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(147, 51, 234, 0.35) transparent;
+    scrollbar-color: var(--color-line-strong) transparent;
   }
   ::-webkit-scrollbar {
     width: 10px;
@@ -451,12 +518,12 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, rgba(147, 51, 234, 0.55), rgba(109, 40, 217, 0.35));
+    background: var(--color-line-strong);
     border-radius: 99px;
     border: 3px solid var(--color-void);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, rgba(168, 85, 247, 0.85), rgba(147, 51, 234, 0.5));
+    background: var(--color-ink-ghost);
   }
 
   input[type='number']::-webkit-outer-spin-button,
@@ -485,33 +552,27 @@
  * Realce de campo em foco.
  *
  * São duas leituras diferentes de propósito. O halo suave aparece para todo
- * mundo, inclusive no clique do mouse, e serve só para dizer "é aqui que você
- * está digitando". O anel forte do :focus-visible global entra por cima quando
- * a navegação é por teclado, que é quem realmente depende de enxergar o foco.
- *
- * A cor sai do token da marca em vez de hex solto — antes era um
- * rgba(147,51,234,0.14) escrito à mão no componente, opaco demais para ser
- * percebido e invisível para o tema claro.
+ * mundo, inclusive no clique do mouse, e só diz "é aqui que você está
+ * digitando". O anel forte do :focus-visible global entra por cima quando a
+ * navegação é por teclado, que é quem depende de enxergar o foco.
  */
 @utility focus-halo {
   &:focus {
-    border-color: color-mix(in srgb, var(--color-brand-400) 60%, transparent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-400) 22%, transparent);
+    border-color: color-mix(in srgb, var(--color-brand-500) 55%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 16%, transparent);
   }
 }
 
 /*
  * Área de toque mínima de 44x44 sem mexer no desenho.
  *
- * Vários controles do site são quadrados de 36 ou 40px — favoritar na capa do
- * produto, os ícones do cabeçalho. Aumentar a caixa visual engordaria a
- * interface inteira e, no cabeçalho do celular, não caberia na linha. Então o
- * alvo cresce por um pseudo-elemento invisível, centrado no botão: o dedo
- * acerta 44px, o olho continua vendo 36.
+ * Vários controles são quadrados de 36 ou 40px. Aumentar a caixa visual
+ * engordaria a interface inteira e, no cabeçalho do celular, não caberia na
+ * linha. Então o alvo cresce por um pseudo-elemento invisível, centrado: o
+ * dedo acerta 44px, o olho continua vendo 36.
  *
  * Só serve para elemento de posição estática — o utilitário aplica
  * position:relative, e em algo já absoluto isso desmontaria o posicionamento.
- * Nesses casos, aumente a caixa mesmo (size-11).
  */
 @utility tap-44 {
   position: relative;
@@ -538,18 +599,15 @@
   position: absolute;
   left: 1rem;
   top: 0.5rem;
-  z-index: 100;
+  z-index: var(--z-modal);
   transform: translateY(-160%);
-  border-radius: var(--radius-sm);
-  background: var(--color-brand-500);
+  border-radius: var(--radius-md);
+  background: var(--color-brand-600);
   padding: 0.625rem 1rem;
-  font-family: var(--font-tech);
-  font-size: var(--text-2xs);
+  font-size: 0.8125rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
   color: #fff;
-  box-shadow: var(--shadow-glow);
+  box-shadow: var(--shadow-lift);
   transition: transform 0.25s var(--ease-out-expo);
 
   &:focus-visible {
@@ -565,7 +623,7 @@
   width: 100%;
   margin-inline: auto;
   padding-inline: 1.25rem;
-  max-width: 88rem;
+  max-width: 87.5rem;
 
   @media (min-width: 768px) {
     padding-inline: 2rem;
@@ -576,22 +634,31 @@
 }
 
 /*
- * Vidro — camada base de todos os painéis flutuantes.
+ * Vidro — camada base dos painéis flutuantes (header, drawer, diálogo).
  *
- * O acabamento "liquid glass" vem de três coisas empilhadas: refração
- * (blur + saturação no que está atrás), um tint em degradê, e um brilho
- * especular de 1px na borda de cima, que é o que dá a leitura de "peça de
- * vidro" em vez de "retângulo translúcido". Tudo parametrizado por tema.
+ * Refração (blur + saturação no que está atrás), tint em degradê e um brilho
+ * especular de 1px na borda de cima, que é o que dá leitura de peça de vidro
+ * em vez de retângulo translúcido.
+ *
+ * O bloco de prefers-reduced-transparency não é enfeite: sem ele, quem pede
+ * menos transparência no sistema recebe um painel sem blur e com fundo quase
+ * transparente, ou seja, texto sobre o conteúdo da página.
  */
 @utility glass {
   position: relative;
   background: linear-gradient(180deg, var(--t-glass-tint-a) 0%, var(--t-glass-tint-b) 100%);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
   border: 1px solid var(--color-line);
   box-shadow:
     inset 0 1px 0 0 var(--t-specular),
     var(--t-glass-shadow);
+
+  @media (prefers-reduced-transparency: reduce) {
+    background: var(--t-glass-solid-fallback);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 @utility glass-solid {
@@ -599,15 +666,21 @@
   background:
     linear-gradient(180deg, var(--t-glass-tint-a), var(--t-glass-tint-b)),
     var(--t-glass-base);
-  backdrop-filter: blur(26px) saturate(160%);
-  -webkit-backdrop-filter: blur(26px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
   border: 1px solid var(--color-line);
   box-shadow:
     inset 0 1px 0 0 var(--t-specular),
     var(--t-glass-shadow);
+
+  @media (prefers-reduced-transparency: reduce) {
+    background: var(--t-glass-solid-fallback);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
-/* Placa — superfície de card, com luz superior */
+/* Placa — superfície de card. Lisa, fio de borda, sombra tingida. */
 @utility plate {
   background: var(--t-plate-grad);
   border: 1px solid var(--color-line);
@@ -619,96 +692,90 @@
 }
 
 /*
- * text-gradient / text-gradient-brand removidos: texto em degradê é
- * decoração sem função (banida pelo craft floor — peso e cor sólida
- * carregam ênfase). Nenhum componente usa mais essas classes.
+ * Eyebrow — rótulo curto acima de título de seção.
+ *
+ * Continua existindo, mas o desenho ficou quieto: sem caixa alta gritada nem
+ * tracking de 0.28em, e na cor de texto secundário em vez do acento. Rótulo
+ * acima de todo heading é o tique mais repetido de página gerada; quando ele
+ * não chama atenção, sobra menos motivo para espalhar.
  */
-
-/* Eyebrow: rótulo técnico usado no topo de cada seção */
 @utility eyebrow {
   font-family: var(--font-tech);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--color-brand-300);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-ink-faint);
 }
 
 /*
- * Cert-label — a faixa impressa de autenticação, como a tarja de um slab de
- * grading. Cartolina fixa nos dois temas (um selo impresso não inverte),
- * régua fina no topo e na base, cantos com tique técnico.
+ * Etiqueta de vitrine.
  *
- * Carrega informação real (número do drop, status do envio, número de
- * série) — nunca um kicker decorativo solto acima de título. Onde a página
- * só queria "peso técnico" acima de um heading, isso é o que ganha o lugar.
+ * Era uma tarja de cartolina com régua e tique de canto, imitando slab de
+ * grading. Agora é uma etiqueta lisa de museu: fio de borda, mono, sem
+ * textura. Carrega informação real (número do drop, status do envio, número
+ * de série) — nunca um kicker decorativo solto acima de título.
  */
 @utility cert-label {
-  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.625rem;
-  border-top: 1px solid rgba(24, 24, 27, 0.35);
-  border-bottom: 1px solid rgba(24, 24, 27, 0.35);
-  background: var(--color-label);
-  padding: 0.375rem 0.875rem;
+  gap: 0.5rem;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-xs);
+  background: var(--color-surface);
+  padding: 0.3125rem 0.625rem;
   font-family: var(--font-tech);
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--color-label-ink);
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    bottom: 2px;
-    width: 2px;
-    background: rgba(24, 24, 27, 0.35);
-  }
-  &::before {
-    left: 2px;
-  }
-  &::after {
-    right: 2px;
-  }
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-ink-muted);
 }
 
-/* Corte de canto — assinatura geométrica da marca */
+/*
+ * Canto. Antes era clip-path cortando o vértice (assinatura geométrica da
+ * direção velha). Agora é raio — e continua sendo um utilitário só para não
+ * quebrar os arquivos que o aplicam.
+ */
 @utility notch {
-  clip-path: polygon(0 0, calc(100% - 0.7rem) 0, 100% 0.7rem, 100% 100%, 0.7rem 100%, 0 calc(100% - 0.7rem));
+  border-radius: var(--radius-lg);
 }
 
 @utility notch-sm {
-  clip-path: polygon(0 0, calc(100% - 0.4rem) 0, 100% 0.4rem, 100% 100%, 0.4rem 100%, 0 calc(100% - 0.4rem));
-}
-
-/* Grão — textura fina que tira o aspecto "digital plano" das superfícies */
-@utility grain {
-  position: relative;
-  isolation: isolate;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    opacity: var(--t-grain-opacity);
-    mix-blend-mode: var(--t-grain-blend);
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
+  border-radius: var(--radius-sm);
 }
 
 /*
- * Holo — a assinatura da casa: difração de foil seguindo o ponteiro
- * (--mx/--my), a física de uma carta secret rare inclinada sob a luz.
+ * Grão.
  *
- * Antes era um brilho branco→violeta→ciano só nas cartas. No mundo Foil sob
- * a Luz ele carrega a banda inteira (violeta→magenta→dourado→ciano) e passa
- * a ser o mecanismo de toque do site inteiro, não só um easter egg de card.
+ * Virou no-op de propósito. A versão anterior pendurava um ::after com
+ * textura e mix-blend-mode em card, seção e trilho — ou seja, em contêiner
+ * que rola. Filtro de ruído sobre superfície rolante força repintura de GPU a
+ * cada quadro e derruba o FPS no celular. A textura da página agora vem de
+ * uma única camada fixa, aplicada uma vez no layout (ver `page-grain`).
+ */
+@utility grain {
+  position: relative;
+  isolation: isolate;
+}
+
+/* A camada de grão de verdade: fixa, uma por documento, sem captura de
+   ponteiro. É a única forma barata de ter textura. */
+@utility page-grain {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-toast);
+  pointer-events: none;
+  opacity: var(--t-grain-opacity);
+  mix-blend-mode: var(--t-grain-blend);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/*
+ * Holo — realce que segue o ponteiro (--mx/--my).
+ *
+ * Era difração de foil em arco-íris com mix-blend-mode: color-dodge, o efeito
+ * mais chamativo da direção velha. Agora é um spotlight de um acento só, bem
+ * fraco, sem blend agressivo: o brilho serve para dizer "este card está sob o
+ * cursor", não para competir com a arte da carta.
  */
 @utility holo {
   position: relative;
@@ -721,26 +788,27 @@
     z-index: 2;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.45s var(--ease-out-quart);
-    background:
-      radial-gradient(
-        130% 90% at var(--mx, 50%) var(--my, 50%),
-        rgba(255, 255, 255, 0.32) 0%,
-        rgba(232, 57, 156, 0.22) 18%,
-        rgba(192, 132, 252, 0.22) 36%,
-        rgba(232, 178, 63, 0.16) 54%,
-        rgba(77, 216, 240, 0.14) 72%,
-        transparent 88%
-      );
-    mix-blend-mode: color-dodge;
+    transition: opacity 0.35s var(--ease-out-quart);
+    background: radial-gradient(
+      60% 60% at var(--mx, 50%) var(--my, 50%),
+      var(--t-spotlight) 0%,
+      transparent 72%
+    );
   }
 
   &:hover::before {
     opacity: 1;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      transition: none;
+    }
+  }
 }
 
-/* Varredura de luz — usada em botões primários no hover */
+/* Varredura de luz na ação primária. Discreta: um brilho branco fraco, não a
+   banda prismática de antes. */
 @utility sweep {
   position: relative;
   overflow: hidden;
@@ -751,44 +819,47 @@
     top: -50%;
     bottom: -50%;
     left: 0;
-    width: 45%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
-    transform: translateX(-120%) skewX(-18deg);
+    width: 40%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+    transform: translateX(-120%) skewX(-16deg);
     pointer-events: none;
   }
 
   &:hover::after {
-    animation: sweep 0.85s var(--ease-out-quart);
+    animation: sweep 0.8s var(--ease-out-quart);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:hover::after {
+      animation: none;
+    }
   }
 }
 
 /* Máscaras de esmaecimento para carrosséis e listas longas */
 @utility mask-fade-x {
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
 }
 
 @utility mask-fade-b {
-  mask-image: linear-gradient(180deg, #000 55%, transparent);
-  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent);
+  mask-image: linear-gradient(180deg, #000 60%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
 }
 
-/* Malha técnica de fundo */
+/*
+ * Malha técnica e scanlines: aposentadas.
+ *
+ * Eram o sotaque de terminal da direção velha. Ficam como no-op porque vários
+ * arquivos ainda aplicam a classe; a limpeza das chamadas é passo separado,
+ * e enquanto isso elas simplesmente não desenham nada.
+ */
 @utility grid-tech {
-  background-image:
-    linear-gradient(var(--t-texture-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--t-texture-line) 1px, transparent 1px);
-  background-size: 64px 64px;
+  background-image: none;
 }
 
 @utility scanlines {
-  background-image: repeating-linear-gradient(
-    180deg,
-    var(--t-scanline) 0px,
-    var(--t-scanline) 1px,
-    transparent 1px,
-    transparent 4px
-  );
+  background-image: none;
 }
 
 /* Estabiliza animações longas fora da viewport */

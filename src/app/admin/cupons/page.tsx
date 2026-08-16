@@ -1,5 +1,5 @@
+import { Plus } from '@phosphor-icons/react/dist/ssr';
 import type { Metadata } from 'next';
-import { Plus } from 'lucide-react';
 import { getAdminCoupons } from '@/core/application/admin-service';
 import { AdminCard, AdminPage, DataTable } from '@/components/admin/admin-shell';
 import { Badge } from '@/components/ui/badge';
@@ -38,7 +38,7 @@ export default async function AdminCouponsPage() {
               key: 'code',
               header: 'Código',
               render: (coupon) => (
-                <span className="font-tech text-xs font-bold uppercase tracking-[0.14em] text-ink">
+                <span className="font-tech text-ink text-xs font-bold tracking-[0.14em] uppercase">
                   {coupon.code}
                 </span>
               ),
@@ -56,7 +56,7 @@ export default async function AdminCouponsPage() {
               key: 'value',
               header: 'Benefício',
               render: (coupon) => (
-                <span className="text-xs font-semibold text-brand-200">
+                <span className="text-brand-200 text-xs font-semibold">
                   {coupon.type === 'percent'
                     ? `${coupon.value}% off`
                     : coupon.type === 'shipping'
@@ -85,9 +85,9 @@ export default async function AdminCouponsPage() {
                     {coupon.usageCount}/{coupon.usageLimit || '∞'}
                   </span>
                   {coupon.usageLimit > 0 ? (
-                    <span className="h-1 w-16 overflow-hidden rounded-full bg-ink/8">
+                    <span className="bg-ink/8 h-1 w-16 overflow-hidden rounded-full">
                       <span
-                        className="block h-full rounded-full bg-linear-to-r from-brand-500 to-brand-300"
+                        className="from-brand-500 to-brand-300 block h-full rounded-full bg-linear-to-r"
                         style={{
                           width: `${Math.min(100, (coupon.usageCount / coupon.usageLimit) * 100)}%`,
                         }}

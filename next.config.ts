@@ -14,7 +14,11 @@ const nextConfig: NextConfig = {
     deviceSizes: [360, 480, 640, 768, 1024, 1280, 1536, 1920],
   },
   experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion', '@radix-ui/react-dropdown-menu'],
+    optimizePackageImports: [
+      '@phosphor-icons/react',
+      'framer-motion',
+      '@radix-ui/react-dropdown-menu',
+    ],
   },
   async headers() {
     return [

@@ -1,6 +1,12 @@
+import {
+  ArrowDownRight,
+  ArrowUpRight,
+  Package,
+  Users,
+  Warning,
+} from '@phosphor-icons/react/dist/ssr';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { AlertTriangle, ArrowDownRight, ArrowUpRight, Package, Users } from 'lucide-react';
 import { getAdminOverview } from '@/core/application/admin-service';
 import { AdminCard, AdminPage, DataTable } from '@/components/admin/admin-shell';
 import { ProportionBar, RevenueChart } from '@/components/admin/charts';
@@ -43,14 +49,14 @@ export default async function AdminDashboardPage() {
       <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {overview.metrics.map((metric) => (
           <div key={metric.id} className="plate flex flex-col gap-1.5 rounded-xl p-4">
-            <span className="font-tech text-2xs uppercase tracking-[0.16em] text-ink-faint">
+            <span className="font-tech text-2xs text-ink-faint tracking-[0.16em] uppercase">
               {metric.label}
             </span>
-            <span className="font-display text-2xl font-bold text-ink">{format(metric)}</span>
+            <span className="font-display text-ink text-2xl font-bold">{format(metric)}</span>
             <div className="flex items-center justify-between gap-2">
               <span
                 className={cn(
-                  'inline-flex items-center gap-1 font-tech text-2xs font-semibold',
+                  'font-tech text-2xs inline-flex items-center gap-1 font-semibold',
                   metric.delta >= 0 ? 'text-success' : 'text-danger',
                 )}
               >
@@ -90,7 +96,10 @@ export default async function AdminDashboardPage() {
           title="Pedidos recentes"
           bodyClassName="p-0"
           action={
-            <Link href="/admin/pedidos" className="text-xs font-semibold text-brand-300 hover:text-brand-200">
+            <Link
+              href="/admin/pedidos"
+              className="text-brand-300 hover:text-brand-200 text-xs font-semibold"
+            >
               Ver todos
             </Link>
           }
@@ -105,7 +114,7 @@ export default async function AdminDashboardPage() {
                 render: (order) => (
                   <Link
                     href={`/admin/pedidos/${order.number}`}
-                    className="tap-44 font-tech text-xs font-semibold text-ink transition-colors hover:text-brand-200"
+                    className="tap-44 font-tech text-ink hover:text-brand-200 text-xs font-semibold transition-colors"
                   >
                     {order.number}
                   </Link>
@@ -130,7 +139,7 @@ export default async function AdminDashboardPage() {
                 header: 'Total',
                 align: 'right',
                 render: (order) => (
-                  <span className="font-display text-sm font-bold text-ink">
+                  <span className="font-display text-ink text-sm font-bold">
                     {formatPrice(order.total)}
                   </span>
                 ),
@@ -143,7 +152,10 @@ export default async function AdminDashboardPage() {
           title="Produtos mais rentáveis"
           bodyClassName="p-0"
           action={
-            <Link href="/admin/produtos" className="text-xs font-semibold text-brand-300 hover:text-brand-200">
+            <Link
+              href="/admin/produtos"
+              className="text-brand-300 hover:text-brand-200 text-xs font-semibold"
+            >
               Catálogo
             </Link>
           }
@@ -163,9 +175,11 @@ export default async function AdminDashboardPage() {
                       name={row.product.name}
                       type={row.product.type}
                       accent={row.product.accent}
-                      className="size-7 shrink-0 rounded-md border border-line"
+                      className="border-line size-7 shrink-0 rounded-md border"
                     />
-                    <span className="line-clamp-1 text-xs font-medium text-ink">{row.product.name}</span>
+                    <span className="text-ink line-clamp-1 text-xs font-medium">
+                      {row.product.name}
+                    </span>
                   </div>
                 ),
               },
@@ -180,7 +194,7 @@ export default async function AdminDashboardPage() {
                 header: 'Receita',
                 align: 'right',
                 render: (row) => (
-                  <span className="font-display text-sm font-bold text-ink">
+                  <span className="font-display text-ink text-sm font-bold">
                     {formatPrice(row.revenue)}
                   </span>
                 ),
@@ -195,7 +209,10 @@ export default async function AdminDashboardPage() {
           title="Estoque crítico"
           bodyClassName="p-0"
           action={
-            <Link href="/admin/estoque" className="text-xs font-semibold text-brand-300 hover:text-brand-200">
+            <Link
+              href="/admin/estoque"
+              className="text-brand-300 hover:text-brand-200 text-xs font-semibold"
+            >
               Gerenciar
             </Link>
           }
@@ -209,7 +226,7 @@ export default async function AdminDashboardPage() {
                 key: 'name',
                 header: 'Produto',
                 render: (product) => (
-                  <span className="line-clamp-1 text-xs font-medium text-ink">{product.name}</span>
+                  <span className="text-ink line-clamp-1 text-xs font-medium">{product.name}</span>
                 ),
               },
               {
@@ -224,11 +241,11 @@ export default async function AdminDashboardPage() {
                 render: (product) => (
                   <span
                     className={cn(
-                      'inline-flex items-center gap-1.5 font-tech text-xs font-bold',
+                      'font-tech inline-flex items-center gap-1.5 text-xs font-bold',
                       product.stock === 0 ? 'text-danger' : 'text-warning',
                     )}
                   >
-                    <AlertTriangle className="size-3" />
+                    <Warning className="size-3" />
                     {product.stock}
                   </span>
                 ),
@@ -240,11 +257,13 @@ export default async function AdminDashboardPage() {
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
           <AdminCard>
             <div className="flex items-center gap-3">
-              <span className="grid size-9 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300">
+              <span className="border-line bg-brand-500/12 text-brand-300 grid size-9 place-items-center rounded-md border">
                 <Users className="size-4" />
               </span>
               <div>
-                <p className="font-display text-2xl font-bold text-ink">{overview.customersCount}</p>
+                <p className="font-display text-ink text-2xl font-bold">
+                  {overview.customersCount}
+                </p>
                 <p className="text-2xs text-ink-faint">Clientes cadastrados</p>
               </div>
             </div>
@@ -252,11 +271,11 @@ export default async function AdminDashboardPage() {
 
           <AdminCard>
             <div className="flex items-center gap-4">
-              <span className="grid size-9 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300">
+              <span className="border-line bg-brand-500/12 text-brand-300 grid size-9 place-items-center rounded-md border">
                 <Package className="size-4" />
               </span>
               <div>
-                <p className="font-display text-2xl font-bold text-ink">{overview.productsCount}</p>
+                <p className="font-display text-ink text-2xl font-bold">{overview.productsCount}</p>
                 <p className="text-2xs text-ink-faint">Produtos ativos no catálogo</p>
               </div>
             </div>
@@ -265,7 +284,7 @@ export default async function AdminDashboardPage() {
           <AdminCard className="sm:col-span-2 xl:col-span-1">
             <div className="flex flex-col gap-2">
               <span className="eyebrow">Última atualização</span>
-              <p className="text-sm text-ink-muted">
+              <p className="text-ink-muted text-sm">
                 {formatDate(new Date(), { dateStyle: 'long', timeStyle: 'short' })}
               </p>
             </div>

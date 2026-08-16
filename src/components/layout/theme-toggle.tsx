@@ -1,7 +1,7 @@
 'use client';
 
+import { Moon, Sun } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
-import { Moon, Sun } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export type Theme = 'dark' | 'light';
@@ -51,7 +51,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       className={cn(
         // Sem overflow-hidden: ele recortaria a área de toque do tap-44. Os
         // ícones giram dentro de 16px numa caixa de 40, não vazam.
-        'tap-44 grid size-10 place-items-center rounded-md text-ink-muted transition-colors hover:bg-ink/6 hover:text-ink',
+        'tap-44 text-ink-muted hover:bg-ink/6 hover:text-ink grid size-10 place-items-center rounded-md transition-colors',
         className,
       )}
     >
@@ -59,14 +59,18 @@ export function ThemeToggle({ className }: { className?: string }) {
           desenho na frente do usuário logo após a hidratação. */}
       <Sun
         className={cn(
-          'absolute size-4 transition-all duration-500 ease-out-expo',
-          mounted && theme === 'light' ? 'rotate-0 scale-100 opacity-100' : 'rotate-90 scale-50 opacity-0',
+          'ease-out-expo absolute size-4 transition-all duration-500',
+          mounted && theme === 'light'
+            ? 'scale-100 rotate-0 opacity-100'
+            : 'scale-50 rotate-90 opacity-0',
         )}
       />
       <Moon
         className={cn(
-          'absolute size-4 transition-all duration-500 ease-out-expo',
-          mounted && theme === 'dark' ? 'rotate-0 scale-100 opacity-100' : '-rotate-90 scale-50 opacity-0',
+          'ease-out-expo absolute size-4 transition-all duration-500',
+          mounted && theme === 'dark'
+            ? 'scale-100 rotate-0 opacity-100'
+            : 'scale-50 -rotate-90 opacity-0',
         )}
       />
     </button>

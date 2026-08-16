@@ -1,43 +1,46 @@
 'use client';
 
+import {
+  ChartBar,
+  Cube,
+  GameController,
+  Package,
+  Percent,
+  ShoppingCart,
+  SignOut,
+  Sparkle,
+  SquaresFour,
+  Storefront,
+  Tag,
+  Ticket,
+  Users,
+} from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
-import {
-  BarChart3,
-  Boxes,
-  Gamepad2,
-  LayoutDashboard,
-  LogOut,
-  Package,
-  Percent,
-  ShoppingCart,
-  Sparkles,
-  Store,
-  Tags,
-  Ticket,
-  Users,
-} from 'lucide-react';
 import { Logo } from '@/components/layout/logo';
 import { cn } from '@/lib/utils';
 
-const SECTIONS: { title: string; links: { href: string; label: string; icon: React.ElementType }[] }[] = [
+const SECTIONS: {
+  title: string;
+  links: { href: string; label: string; icon: React.ElementType }[];
+}[] = [
   {
     title: 'Operação',
     links: [
-      { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+      { href: '/admin', label: 'Dashboard', icon: SquaresFour },
       { href: '/admin/pedidos', label: 'Pedidos', icon: ShoppingCart },
-      { href: '/admin/estoque', label: 'Estoque', icon: Boxes },
+      { href: '/admin/estoque', label: 'Estoque', icon: Cube },
     ],
   },
   {
     title: 'Catálogo',
     links: [
       { href: '/admin/produtos', label: 'Produtos', icon: Package },
-      { href: '/admin/categorias', label: 'Categorias', icon: Tags },
-      { href: '/admin/tcgs', label: 'TCGs', icon: Sparkles },
-      { href: '/admin/consoles', label: 'Consoles', icon: Gamepad2 },
+      { href: '/admin/categorias', label: 'Categorias', icon: Tag },
+      { href: '/admin/tcgs', label: 'TCGs', icon: Sparkle },
+      { href: '/admin/consoles', label: 'Consoles', icon: GameController },
     ],
   },
   {
@@ -46,7 +49,7 @@ const SECTIONS: { title: string; links: { href: string; label: string; icon: Rea
       { href: '/admin/cupons', label: 'Cupons', icon: Ticket },
       { href: '/admin/promocoes', label: 'Promoções', icon: Percent },
       { href: '/admin/usuarios', label: 'Usuários', icon: Users },
-      { href: '/admin/relatorios', label: 'Relatórios', icon: BarChart3 },
+      { href: '/admin/relatorios', label: 'Relatórios', icon: ChartBar },
     ],
   },
 ];
@@ -67,7 +70,8 @@ export function AdminNav() {
             <span className="eyebrow px-3">{section.title}</span>
             <ul className="flex flex-col gap-0.5">
               {section.links.map((link) => {
-                const active = link.href === '/admin' ? pathname === '/admin' : pathname.startsWith(link.href);
+                const active =
+                  link.href === '/admin' ? pathname === '/admin' : pathname.startsWith(link.href);
                 return (
                   <li key={link.href}>
                     <Link
@@ -79,7 +83,9 @@ export function AdminNav() {
                           : 'text-ink-muted hover:bg-ink/4 hover:text-ink',
                       )}
                     >
-                      <link.icon className={cn('size-4', active ? 'text-brand-300' : 'text-ink-faint')} />
+                      <link.icon
+                        className={cn('size-4', active ? 'text-brand-300' : 'text-ink-faint')}
+                      />
                       {link.label}
                     </Link>
                   </li>
@@ -90,20 +96,20 @@ export function AdminNav() {
         ))}
       </div>
 
-      <div className="flex flex-col gap-0.5 border-t border-line pt-3">
+      <div className="border-line flex flex-col gap-0.5 border-t pt-3">
         <Link
           href="/"
-          className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium text-ink-muted transition-colors hover:bg-ink/4 hover:text-ink"
+          className="text-ink-muted hover:bg-ink/4 hover:text-ink flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors"
         >
-          <Store className="size-4 text-ink-faint" />
+          <Storefront className="text-ink-faint size-4" />
           Ver a loja
         </Link>
         <button
           type="button"
           onClick={() => signOut({ callbackUrl: '/' })}
-          className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium text-ink-faint transition-colors hover:bg-danger/8 hover:text-danger"
+          className="text-ink-faint hover:bg-danger/8 hover:text-danger flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors"
         >
-          <LogOut className="size-4" />
+          <SignOut className="size-4" />
           Sair
         </button>
       </div>

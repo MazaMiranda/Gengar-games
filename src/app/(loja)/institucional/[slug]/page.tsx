@@ -1,7 +1,7 @@
+import { ArrowUpRight, Check } from '@phosphor-icons/react/dist/ssr';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowUpRight, Check } from 'lucide-react';
 import { institutionalBySlug, institutionalPages } from '@/lib/institucional';
 import { PageHeader } from '@/components/layout/page-header';
 import { Reveal } from '@/components/ui/motion';
@@ -42,18 +42,23 @@ export default async function InstitutionalPage({ params }: PageProps) {
       <div className="container-page grid gap-12 py-12 lg:grid-cols-[1fr_16rem] lg:gap-16">
         <article className="flex max-w-2xl flex-col gap-10">
           {page.sections.map((section, index) => (
-            <Reveal key={section.heading} delay={index * 0.04} as="section" className="flex flex-col gap-4">
-              <h2 className="font-display text-lg font-bold text-ink">{section.heading}</h2>
+            <Reveal
+              key={section.heading}
+              delay={index * 0.04}
+              as="section"
+              className="flex flex-col gap-4"
+            >
+              <h2 className="font-display text-ink text-lg font-bold">{section.heading}</h2>
               {section.body.map((paragraph) => (
-                <p key={paragraph} className="text-sm leading-relaxed text-ink-muted">
+                <p key={paragraph} className="text-ink-muted text-sm leading-relaxed">
                   {paragraph}
                 </p>
               ))}
               {section.list ? (
                 <ul className="flex flex-col gap-2.5 pt-1">
                   {section.list.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm text-ink-muted">
-                      <Check className="mt-0.5 size-4 shrink-0 text-brand-400" />
+                    <li key={item} className="text-ink-muted flex items-start gap-3 text-sm">
+                      <Check className="text-brand-400 mt-0.5 size-4 shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -70,10 +75,10 @@ export default async function InstitutionalPage({ params }: PageProps) {
               <Link
                 key={item.slug}
                 href={`/institucional/${item.slug}`}
-                className="group flex items-center justify-between gap-3 rounded-md px-3 py-2.5 text-sm text-ink-muted transition-colors hover:bg-ink/4 hover:text-ink"
+                className="group text-ink-muted hover:bg-ink/4 hover:text-ink flex items-center justify-between gap-3 rounded-md px-3 py-2.5 text-sm transition-colors"
               >
                 {item.title}
-                <ArrowUpRight className="size-3.5 text-ink-ghost transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <ArrowUpRight className="text-ink-ghost size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             ))}
           </div>

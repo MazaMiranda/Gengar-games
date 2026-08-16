@@ -1,8 +1,8 @@
 'use client';
 
+import { Quotes } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Quote } from 'lucide-react';
 import type { Testimonial } from '@/core/domain/entities';
 import { Rating } from '@/components/ui/rating';
 import { cn } from '@/lib/utils';
@@ -21,10 +21,17 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
     <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
       <div className="lg:col-span-7">
         <div className="plate grain relative min-h-[19rem] overflow-hidden rounded-2xl p-8 md:p-12">
-          <Quote className="absolute right-8 top-8 size-20 text-brand-500/12" strokeWidth={1} aria-hidden />
+          <Quotes
+            className="text-brand-500/12 absolute top-8 right-8 size-20"
+            weight="light"
+            aria-hidden
+          />
           <div
-            className="absolute -left-20 -top-20 size-64 rounded-full opacity-50 blur-3xl"
-            style={{ background: 'radial-gradient(circle, rgba(147,51,234,0.45), transparent 70%)' }}
+            className="absolute -top-20 -left-20 size-64 rounded-full opacity-50 blur-3xl"
+            style={{
+              background:
+                'radial-gradient(circle, color-mix(in srgb, var(--color-brand-500) 20%, transparent), transparent 70%)',
+            }}
             aria-hidden
           />
 
@@ -41,22 +48,22 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
             >
               <div className="flex flex-col gap-5">
                 <Rating value={current.rating} size="lg" showValue={false} />
-                <p className="font-display text-xl leading-relaxed text-ink md:text-2xl">
+                <p className="font-display text-ink text-xl leading-relaxed md:text-2xl">
                   “{current.quote}”
                 </p>
               </div>
 
               <footer className="flex flex-wrap items-center gap-4">
-                <span className="grid size-11 place-items-center rounded-full border border-line bg-linear-to-br from-brand-500/40 to-brand-800/40 font-display text-sm font-bold text-ink">
+                <span className="border-line from-brand-500/40 to-brand-800/40 font-display text-ink grid size-11 place-items-center rounded-full border bg-linear-to-br text-sm font-bold">
                   {current.author.charAt(0)}
                 </span>
                 <div className="flex flex-col">
-                  <cite className="not-italic font-semibold text-ink">{current.author}</cite>
-                  <span className="font-tech text-2xs uppercase tracking-wider text-ink-faint">
+                  <cite className="text-ink font-semibold not-italic">{current.author}</cite>
+                  <span className="font-tech text-2xs text-ink-faint tracking-wider uppercase">
                     {current.handle} · {current.city}
                   </span>
                 </div>
-                <span className="ml-auto rounded-sm border border-line bg-ink/3 px-3 py-1.5 text-2xs text-ink-muted">
+                <span className="border-line bg-ink/3 text-2xs text-ink-muted ml-auto rounded-sm border px-3 py-1.5">
                   Comprou: {current.purchase}
                 </span>
               </footer>
@@ -74,8 +81,10 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
               aria-label={`Depoimento de ${testimonial.author}`}
               onClick={() => setActive(index)}
               className={cn(
-                'h-1 rounded-full transition-all duration-500 ease-out-expo',
-                index === active ? 'w-10 bg-brand-400 shadow-glow-sm' : 'w-5 bg-ink/12 hover:bg-ink/25',
+                'ease-out-expo h-1 rounded-full transition-all duration-500',
+                index === active
+                  ? 'bg-brand-400 shadow-glow-sm w-10'
+                  : 'bg-ink/12 hover:bg-ink/25 w-5',
               )}
             />
           ))}
@@ -91,13 +100,13 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
               key={testimonial.id}
               type="button"
               onClick={() => setActive(testimonials.indexOf(testimonial))}
-              className="group flex flex-col gap-3 rounded-lg border border-line bg-surface/50 p-5 text-left transition-all duration-400 ease-out-expo hover:border-line-brand hover:bg-surface"
+              className="group border-line bg-surface/50 ease-out-expo hover:border-line-brand hover:bg-surface flex flex-col gap-3 rounded-lg border p-5 text-left transition-all duration-400"
             >
               <Rating value={testimonial.rating} size="sm" showValue={false} />
-              <p className="line-clamp-2 text-sm leading-relaxed text-ink-muted transition-colors group-hover:text-ink">
+              <p className="text-ink-muted group-hover:text-ink line-clamp-2 text-sm leading-relaxed transition-colors">
                 {testimonial.quote}
               </p>
-              <span className="font-tech text-2xs uppercase tracking-wider text-ink-ghost">
+              <span className="font-tech text-2xs text-ink-ghost tracking-wider uppercase">
                 {testimonial.author} · {testimonial.city}
               </span>
             </button>

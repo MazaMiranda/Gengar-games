@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr';
 import { useCatalogFilters } from '@/hooks/use-catalog-filters';
 import { PARAM } from '@/lib/catalog-params';
 import { cn } from '@/lib/utils';
@@ -25,7 +25,10 @@ export function Pagination({ page, pageCount }: { page: number; pageCount: numbe
 
   return (
     <nav
-      className={cn('flex items-center justify-center gap-1.5 transition-opacity', pending && 'opacity-50')}
+      className={cn(
+        'flex items-center justify-center gap-1.5 transition-opacity',
+        pending && 'opacity-50',
+      )}
       aria-label="Paginação"
     >
       <button
@@ -33,14 +36,14 @@ export function Pagination({ page, pageCount }: { page: number; pageCount: numbe
         onClick={() => go(page - 1)}
         disabled={page <= 1}
         aria-label="Página anterior"
-        className="grid size-10 place-items-center rounded-md border border-line text-ink-muted transition-all hover:border-brand-400/50 hover:text-ink disabled:opacity-30 disabled:hover:border-line"
+        className="border-line text-ink-muted hover:border-brand-400/50 hover:text-ink disabled:hover:border-line grid size-10 place-items-center rounded-md border transition-all disabled:opacity-30"
       >
-        <ChevronLeft className="size-4" />
+        <CaretLeft className="size-4" />
       </button>
 
       {pageWindow(page, pageCount).map((item, index) =>
         item === 'gap' ? (
-          <span key={`gap-${index}`} className="px-1 text-ink-ghost">
+          <span key={`gap-${index}`} className="text-ink-ghost px-1">
             …
           </span>
         ) : (
@@ -50,7 +53,7 @@ export function Pagination({ page, pageCount }: { page: number; pageCount: numbe
             onClick={() => go(item)}
             aria-current={item === page ? 'page' : undefined}
             className={cn(
-              'grid size-10 place-items-center rounded-md border font-tech text-xs font-semibold transition-all duration-300',
+              'font-tech grid size-10 place-items-center rounded-md border text-xs font-semibold transition-all duration-300',
               item === page
                 ? 'border-brand-400/60 bg-brand-500/18 text-brand-100 shadow-glow-sm'
                 : 'border-line text-ink-muted hover:border-brand-400/40 hover:text-ink',
@@ -66,9 +69,9 @@ export function Pagination({ page, pageCount }: { page: number; pageCount: numbe
         onClick={() => go(page + 1)}
         disabled={page >= pageCount}
         aria-label="Próxima página"
-        className="grid size-10 place-items-center rounded-md border border-line text-ink-muted transition-all hover:border-brand-400/50 hover:text-ink disabled:opacity-30 disabled:hover:border-line"
+        className="border-line text-ink-muted hover:border-brand-400/50 hover:text-ink disabled:hover:border-line grid size-10 place-items-center rounded-md border transition-all disabled:opacity-30"
       >
-        <ChevronRight className="size-4" />
+        <CaretRight className="size-4" />
       </button>
     </nav>
   );

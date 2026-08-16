@@ -1,12 +1,12 @@
 'use client';
 
+import { Eye, EyeSlash, SignIn, WarningCircle } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { getSession, signIn } from 'next-auth/react';
-import { AlertCircle, Eye, EyeOff, LogIn } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Field, Input } from '@/components/ui/input';
@@ -78,7 +78,7 @@ export function LoginForm() {
           role="alert"
           className="border-danger/30 bg-danger/8 flex items-start gap-3 rounded-md border px-4 py-3"
         >
-          <AlertCircle className="text-danger mt-0.5 size-4 shrink-0" />
+          <WarningCircle className="text-danger mt-0.5 size-4 shrink-0" />
           <p className="text-ink-muted text-xs leading-relaxed">
             E-mail ou senha incorretos. Verifique os dados e tente novamente.
           </p>
@@ -127,7 +127,7 @@ export function LoginForm() {
               aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
               className="text-ink-faint hover:text-ink absolute top-1/2 right-1.5 grid size-11 -translate-y-1/2 place-items-center rounded-sm transition-colors"
             >
-              {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+              {showPassword ? <EyeSlash className="size-4" /> : <Eye className="size-4" />}
             </button>
           </div>
         </Field>
@@ -146,7 +146,7 @@ export function LoginForm() {
         </div>
 
         <Button type="submit" size="lg" block loading={isSubmitting}>
-          <LogIn className="size-4" />
+          <SignIn className="size-4" />
           Entrar
         </Button>
       </form>

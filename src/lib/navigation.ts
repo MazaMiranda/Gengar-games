@@ -169,6 +169,18 @@ export const footerNav: NavColumn[] = [
   },
 ];
 
+/**
+ * Termos e privacidade ficam fora das colunas do rodapé de propósito: são
+ * obrigação legal, não caminho de compra. As duas páginas já existiam em
+ * /institucional e entravam no sitemap, mas nenhuma tela do site linkava para
+ * elas — só chegava quem digitasse a URL. O lugar delas é a barra inferior,
+ * ao lado do CNPJ, que é onde o visitante procura.
+ */
+export const legalNav: { label: string; href: string }[] = [
+  { label: 'Termos de uso', href: '/institucional/termos' },
+  { label: 'Política de privacidade', href: '/institucional/privacidade' },
+];
+
 export const announcements = [
   'Frete grátis acima de R$ 299 para todo o Brasil',
   'Singles conferidos carta a carta antes do envio',

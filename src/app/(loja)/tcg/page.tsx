@@ -1,6 +1,6 @@
+import { Scan, ShieldCheck, Stack } from '@phosphor-icons/react/dist/ssr';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Layers, ScanLine, ShieldCheck } from 'lucide-react';
 import { searchCatalog } from '@/core/application/catalog-service';
 import { PageHeader } from '@/components/layout/page-header';
 import { ProductRail } from '@/components/shop/product-rail';
@@ -19,7 +19,7 @@ export const revalidate = 600;
 
 const PROMISES = [
   {
-    icon: ScanLine,
+    icon: Scan,
     title: 'Conferência sob luz UV',
     text: 'Cada single passa por inspeção de centralização, superfície e bordas antes de entrar no estoque.',
   },
@@ -29,7 +29,7 @@ const PROMISES = [
     text: 'Classificamos de M a MP seguindo o padrão internacional. Se não estiver NM, o anúncio diz.',
   },
   {
-    icon: Layers,
+    icon: Stack,
     title: 'Envio nível grading',
     text: 'Sleeve, toploader lacrado, caixa rígida e preenchimento. O mesmo padrão de quem envia para PSA.',
   },
@@ -84,11 +84,11 @@ export default async function TcgPage() {
           {PROMISES.map(({ icon: Icon, title, text }, index) => (
             <Reveal key={title} delay={index * 0.06}>
               <div className="plate flex h-full flex-col gap-4 rounded-xl p-7">
-                <span className="grid size-11 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300">
-                  <Icon className="size-5" strokeWidth={1.6} />
+                <span className="border-line bg-brand-500/12 text-brand-300 grid size-11 place-items-center rounded-md border">
+                  <Icon className="size-5" weight="light" />
                 </span>
-                <h3 className="font-display text-base font-bold text-ink">{title}</h3>
-                <p className="text-sm leading-relaxed text-ink-muted">{text}</p>
+                <h3 className="font-display text-ink text-base font-bold">{title}</h3>
+                <p className="text-ink-muted text-sm leading-relaxed">{text}</p>
               </div>
             </Reveal>
           ))}

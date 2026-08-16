@@ -1,6 +1,6 @@
+import { Plus } from '@phosphor-icons/react/dist/ssr';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Plus } from 'lucide-react';
 import { getAdminCatalog } from '@/core/application/admin-service';
 import { listCategories } from '@/core/application/catalog-service';
 import { AdminPage } from '@/components/admin/admin-shell';

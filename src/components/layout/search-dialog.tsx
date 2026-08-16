@@ -1,11 +1,17 @@
 'use client';
 
+import { ArrowRight, CircleNotch, MagnifyingGlass, TrendUp } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowRight, Loader2, Search, TrendingUp } from 'lucide-react';
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { LineThumb } from '@/components/shop/line-thumb';
@@ -93,17 +99,17 @@ export function SearchDialog({ children }: { children: React.ReactNode }) {
           Digite para encontrar cartas, consoles, jogos e acessórios.
         </DialogDescription>
 
-        <form onSubmit={submit} className="flex items-center gap-3 border-b border-line px-5">
-          <Search className="size-4 shrink-0 text-ink-faint" />
+        <form onSubmit={submit} className="border-line flex items-center gap-3 border-b px-5">
+          <MagnifyingGlass className="text-ink-faint size-4 shrink-0" />
           <input
             autoFocus
             value={term}
             onChange={(event) => setTerm(event.target.value)}
             placeholder="Busque por carta, console, jogo ou acessório…"
-            className="h-16 flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-ink-ghost"
+            className="text-ink placeholder:text-ink-ghost h-16 flex-1 bg-transparent text-sm outline-none"
           />
-          {isFetching ? <Loader2 className="size-4 animate-spin text-brand-300" /> : null}
-          <kbd className="hidden rounded-xs border border-line px-1.5 py-0.5 font-tech text-[0.625rem] text-ink-faint sm:block">
+          {isFetching ? <CircleNotch className="text-brand-300 size-4 animate-spin" /> : null}
+          <kbd className="border-line font-tech text-ink-faint hidden rounded-xs border px-1.5 py-0.5 text-[0.625rem] sm:block">
             ESC
           </kbd>
         </form>
@@ -112,7 +118,7 @@ export function SearchDialog({ children }: { children: React.ReactNode }) {
           {debounced.length < 2 ? (
             <div className="flex flex-col gap-4 p-3">
               <p className="eyebrow flex items-center gap-2">
-                <TrendingUp className="size-3" /> Buscas populares
+                <TrendUp className="size-3" /> Buscas populares
               </p>
               <div className="flex flex-wrap gap-2">
                 {SUGGESTIONS.map((suggestion) => (
@@ -120,7 +126,7 @@ export function SearchDialog({ children }: { children: React.ReactNode }) {
                     key={suggestion}
                     type="button"
                     onClick={() => setTerm(suggestion)}
-                    className="h-9 rounded-sm border border-line bg-ink/3 px-3.5 text-xs font-medium text-ink-muted transition-all hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-ink"
+                    className="border-line bg-ink/3 text-ink-muted hover:border-brand-400/40 hover:bg-brand-500/10 hover:text-ink h-9 rounded-sm border px-3.5 text-xs font-medium transition-all"
                   >
                     {suggestion}
                   </button>
@@ -146,29 +152,31 @@ export function SearchDialog({ children }: { children: React.ReactNode }) {
                   <Link
                     href={hrefFor(hit)}
                     onClick={() => setOpen(false)}
-                    className="group flex items-center gap-3 rounded-md p-3 transition-colors hover:bg-ink/5"
+                    className="group hover:bg-ink/5 flex items-center gap-3 rounded-md p-3 transition-colors"
                   >
                     <LineThumb
                       slug={hit.slug}
                       name={hit.name}
                       type={hit.type}
                       accent={hit.accent}
-                      className="size-11 shrink-0 rounded-md border border-line"
+                      className="border-line size-11 shrink-0 rounded-md border"
                     />
                     <span className="flex min-w-0 flex-1 flex-col">
-                      <span className="truncate text-sm font-semibold text-ink">{hit.name}</span>
-                      <span className="truncate text-xs text-ink-faint">
+                      <span className="text-ink truncate text-sm font-semibold">{hit.name}</span>
+                      <span className="text-ink-faint truncate text-xs">
                         {hit.card ? hit.card.set : hit.subtitle}
                       </span>
                     </span>
                     <span className="flex shrink-0 items-center gap-3">
                       {hit.stock <= 0 ? (
-                        <Badge variant="neutral" size="sm">Esgotado</Badge>
+                        <Badge variant="neutral" size="sm">
+                          Esgotado
+                        </Badge>
                       ) : null}
-                      <span className="font-tech text-xs font-semibold text-ink-muted">
+                      <span className="font-tech text-ink-muted text-xs font-semibold">
                         {formatPrice(hit.price)}
                       </span>
-                      <ArrowRight className="size-3.5 text-ink-ghost transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-brand-300" />
+                      <ArrowRight className="text-ink-ghost group-hover:text-brand-300 size-3.5 transition-all duration-300 group-hover:translate-x-0.5" />
                     </span>
                   </Link>
                 </li>
@@ -176,10 +184,10 @@ export function SearchDialog({ children }: { children: React.ReactNode }) {
             </ul>
           ) : (
             <div className="px-4 py-10 text-center">
-              <p className="text-sm text-ink-muted">
+              <p className="text-ink-muted text-sm">
                 Nada encontrado para <strong className="text-ink">“{debounced}”</strong>.
               </p>
-              <p className="mt-1 text-xs text-ink-faint">
+              <p className="text-ink-faint mt-1 text-xs">
                 Tente o nome da carta, da coleção ou do console.
               </p>
             </div>
@@ -191,7 +199,7 @@ export function SearchDialog({ children }: { children: React.ReactNode }) {
             type="button"
             onClick={submit}
             className={cn(
-              'flex items-center justify-between border-t border-line px-5 py-4 text-xs font-semibold text-ink-muted transition-colors hover:bg-ink/4 hover:text-ink',
+              'border-line text-ink-muted hover:bg-ink/4 hover:text-ink flex items-center justify-between border-t px-5 py-4 text-xs font-semibold transition-colors',
             )}
           >
             Ver todos os resultados para “{debounced}”

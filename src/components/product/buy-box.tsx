@@ -1,7 +1,15 @@
 'use client';
 
+import {
+  Check,
+  CreditCard,
+  MapPin,
+  SealCheck,
+  ShareNetwork,
+  ShieldCheck,
+  Truck,
+} from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
-import { Check, CreditCard, MapPin, PackageCheck, Share2, ShieldCheck, Truck } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Product } from '@/core/domain/entities';
 import { CONDITIONS } from '@/core/domain/taxonomy';
@@ -19,7 +27,7 @@ import { BAIRRO_CIDADE } from '@/lib/loja';
 
 const PAYMENT_ROWS = [
   { icon: CreditCard, label: 'Cartão em até 12x sem juros' },
-  { icon: PackageCheck, label: 'PIX com 5% de desconto adicional' },
+  { icon: SealCheck, label: 'PIX com 5% de desconto adicional' },
   { icon: ShieldCheck, label: 'Compra 100% protegida e nota fiscal' },
 ];
 
@@ -69,13 +77,13 @@ export function BuyBox({ product }: { product: Product }) {
           </Badge>
           {product.compareAtPrice ? <Badge variant="danger">Oferta</Badge> : null}
           {product.preOrder ? <Badge variant="info">Pré-venda</Badge> : null}
-          <span className="font-tech text-2xs uppercase tracking-[0.2em] text-ink-ghost">
+          <span className="font-tech text-2xs text-ink-ghost tracking-[0.2em] uppercase">
             SKU {product.sku}
           </span>
         </div>
 
-        <h1 className="text-title font-bold text-ink">{product.name}</h1>
-        <p className="text-sm text-ink-muted">{product.subtitle}</p>
+        <h1 className="text-title text-ink font-bold">{product.name}</h1>
+        <p className="text-ink-muted text-sm">{product.subtitle}</p>
 
         <div className="flex flex-wrap items-center gap-4">
           <Rating value={product.rating} count={product.reviewCount} size="md" />
@@ -90,13 +98,14 @@ export function BuyBox({ product }: { product: Product }) {
         <Price value={product.price} compareAt={product.compareAtPrice} size="xl" />
         <div className="flex flex-col gap-1.5 text-sm">
           <p className="text-ink-muted">
-            <strong className="font-semibold text-ink">
+            <strong className="text-ink font-semibold">
               {plan.count}x de {formatPrice(plan.value)}
             </strong>{' '}
             sem juros no cartão
           </p>
           <p className="text-success">
-            <strong className="font-semibold">{formatPrice(pixPrice)}</strong> no PIX (5% de desconto)
+            <strong className="font-semibold">{formatPrice(pixPrice)}</strong> no PIX (5% de
+            desconto)
           </p>
         </div>
       </div>
@@ -133,7 +142,7 @@ export function BuyBox({ product }: { product: Product }) {
             max={Math.max(1, product.stock)}
             onChange={setQuantity}
           />
-          <span className="text-xs text-ink-faint">
+          <span className="text-ink-faint text-xs">
             Total: <strong className="text-ink">{formatPrice(product.price * quantity)}</strong>
           </span>
         </div>
@@ -167,9 +176,14 @@ export function BuyBox({ product }: { product: Product }) {
         </Button>
 
         <div className="flex gap-3">
-          <WishlistButton slug={product.slug} name={product.name} variant="inline" className="flex-1" />
+          <WishlistButton
+            slug={product.slug}
+            name={product.name}
+            variant="inline"
+            className="flex-1"
+          />
           <Button variant="outline" size="lg" onClick={share} aria-label="Compartilhar">
-            <Share2 className="size-4" />
+            <ShareNetwork className="size-4" />
             Compartilhar
           </Button>
         </div>
@@ -177,8 +191,8 @@ export function BuyBox({ product }: { product: Product }) {
 
       {/* Frete */}
       <div className="plate flex flex-col gap-4 rounded-lg p-5">
-        <h3 className="flex items-center gap-2 font-display text-sm font-semibold text-ink">
-          <Truck className="size-4 text-brand-300" />
+        <h3 className="font-display text-ink flex items-center gap-2 text-sm font-semibold">
+          <Truck className="text-brand-300 size-4" />
           Calcular frete e prazo
         </h3>
         <form onSubmit={estimate} className="flex gap-2">
@@ -198,30 +212,35 @@ export function BuyBox({ product }: { product: Product }) {
         </form>
 
         {quote ? (
-          <div className="flex items-center justify-between rounded-md border border-line bg-ink/2 px-4 py-3">
+          <div className="border-line bg-ink/2 flex items-center justify-between rounded-md border px-4 py-3">
             <div className="flex items-center gap-2.5">
-              <Check className="size-4 text-success" />
+              <Check className="text-success size-4" />
               <div>
-                <p className="text-xs font-semibold text-ink">Entrega estimada</p>
+                <p className="text-ink text-xs font-semibold">Entrega estimada</p>
                 <p className="text-2xs text-ink-faint">{quote.eta}</p>
               </div>
             </div>
-            <span className={cn('font-tech text-sm font-bold', quote.price === 0 ? 'text-success' : 'text-ink')}>
+            <span
+              className={cn(
+                'font-tech text-sm font-bold',
+                quote.price === 0 ? 'text-success' : 'text-ink',
+              )}
+            >
               {quote.price === 0 ? 'Grátis' : formatPrice(quote.price)}
             </span>
           </div>
         ) : (
-          <p className="text-2xs leading-relaxed text-ink-faint">
-            Frete grátis para todo o Brasil em compras acima de R$ 299. Retirada gratuita na loja
-            do {BAIRRO_CIDADE}.
+          <p className="text-2xs text-ink-faint leading-relaxed">
+            Frete grátis para todo o Brasil em compras acima de R$ 299. Retirada gratuita na loja do{' '}
+            {BAIRRO_CIDADE}.
           </p>
         )}
       </div>
 
       <ul className="flex flex-col gap-3">
         {PAYMENT_ROWS.map(({ icon: Icon, label }) => (
-          <li key={label} className="flex items-center gap-3 text-xs text-ink-muted">
-            <Icon className="size-4 shrink-0 text-brand-400" />
+          <li key={label} className="text-ink-muted flex items-center gap-3 text-xs">
+            <Icon className="text-brand-400 size-4 shrink-0" />
             {label}
           </li>
         ))}

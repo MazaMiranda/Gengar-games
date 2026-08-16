@@ -1,7 +1,7 @@
 'use client';
 
+import { X } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
-import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ChipProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -27,7 +27,7 @@ export function Chip({ className, children, onRemove, active, ...props }: ChipPr
         <button
           type="button"
           onClick={onRemove}
-          className="tap-44 -mr-1 grid size-4 place-items-center rounded-xs text-ink-faint transition-colors hover:bg-ink/10 hover:text-ink"
+          className="tap-44 text-ink-faint hover:bg-ink/10 hover:text-ink -mr-1 grid size-4 place-items-center rounded-xs transition-colors"
           aria-label="Remover filtro"
         >
           <X className="size-3" />
@@ -49,7 +49,7 @@ export function ToggleChip({ className, children, selected, count, ...props }: T
       type="button"
       data-selected={selected}
       className={cn(
-        'inline-flex h-11 items-center gap-2 rounded-sm border px-3.5 text-xs font-semibold transition-all duration-300 ease-out-expo md:h-9',
+        'ease-out-expo inline-flex h-11 items-center gap-2 rounded-sm border px-3.5 text-xs font-semibold transition-all duration-300 md:h-9',
         selected
           ? 'border-brand-400/60 bg-brand-500/18 text-brand-100 shadow-glow-sm'
           : 'border-line bg-ink/3 text-ink-muted hover:border-brand-400/35 hover:bg-brand-500/8 hover:text-ink',
@@ -59,7 +59,7 @@ export function ToggleChip({ className, children, selected, count, ...props }: T
     >
       {children}
       {count !== undefined ? (
-        <span className="font-tech text-[0.625rem] text-ink-faint">{count}</span>
+        <span className="font-tech text-ink-faint text-[0.625rem]">{count}</span>
       ) : null}
     </button>
   );

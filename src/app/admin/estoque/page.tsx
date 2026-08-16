@@ -1,5 +1,5 @@
+import { Prohibit, TrendDown, Warning } from '@phosphor-icons/react/dist/ssr';
 import type { Metadata } from 'next';
-import { AlertTriangle, PackageX, TrendingDown } from 'lucide-react';
 import { getAdminCatalog } from '@/core/application/admin-service';
 import { listCategories } from '@/core/application/catalog-service';
 import { AdminCard, AdminPage } from '@/components/admin/admin-shell';
@@ -20,19 +20,19 @@ export default async function AdminStockPage() {
 
   const cards = [
     {
-      icon: PackageX,
+      icon: Prohibit,
       label: 'Produtos esgotados',
       value: String(outOfStock.length),
       tone: 'text-danger',
     },
     {
-      icon: AlertTriangle,
+      icon: Warning,
       label: 'Estoque crítico (≤ 4)',
       value: String(critical.length),
       tone: 'text-warning',
     },
     {
-      icon: TrendingDown,
+      icon: TrendDown,
       label: 'Valor imobilizado',
       value: formatPrice(inventoryValue),
       tone: 'text-ink',
@@ -48,7 +48,7 @@ export default async function AdminStockPage() {
         {cards.map((card) => (
           <AdminCard key={card.label}>
             <div className="flex items-center gap-4">
-              <span className="grid size-11 place-items-center rounded-md border border-line bg-ink/3">
+              <span className="border-line bg-ink/3 grid size-11 place-items-center rounded-md border">
                 <card.icon className={`size-5 ${card.tone}`} />
               </span>
               <div>

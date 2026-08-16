@@ -1,6 +1,6 @@
+import { Plus } from '@phosphor-icons/react/dist/ssr';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Plus } from 'lucide-react';
 import { listCategories } from '@/core/application/catalog-service';
 import { getAdminCatalog } from '@/core/application/admin-service';
 import { AdminCard, AdminPage, DataTable } from '@/components/admin/admin-shell';
@@ -52,13 +52,13 @@ export default async function AdminCategoriesPage() {
               render: (row) => (
                 <div className="flex items-center gap-3">
                   <span
-                    className="size-8 shrink-0 rounded-md border border-line"
+                    className="border-line size-8 shrink-0 rounded-md border"
                     style={{
                       background: `linear-gradient(150deg, hsl(${row.category.accent} 75% 45%), rgba(9,9,12,0.9))`,
                     }}
                   />
                   <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-ink">{row.category.name}</span>
+                    <span className="text-ink text-xs font-semibold">{row.category.name}</span>
                     <span className="font-tech text-2xs text-ink-ghost">/{row.category.slug}</span>
                   </div>
                 </div>
@@ -77,7 +77,7 @@ export default async function AdminCategoriesPage() {
               key: 'tagline',
               header: 'Descrição',
               render: (row) => (
-                <span className="line-clamp-1 text-xs text-ink-muted">{row.category.tagline}</span>
+                <span className="text-ink-muted line-clamp-1 text-xs">{row.category.tagline}</span>
               ),
             },
             {
@@ -97,7 +97,9 @@ export default async function AdminCategoriesPage() {
               header: 'Valor em estoque',
               align: 'right',
               render: (row) => (
-                <span className="font-display text-sm font-bold text-ink">{formatPrice(row.value)}</span>
+                <span className="font-display text-ink text-sm font-bold">
+                  {formatPrice(row.value)}
+                </span>
               ),
             },
             {
@@ -107,7 +109,7 @@ export default async function AdminCategoriesPage() {
               render: (row) => (
                 <Link
                   href={`/catalogo?categoria=${row.category.slug}`}
-                  className="text-2xs font-semibold text-ink-faint transition-colors hover:text-brand-200"
+                  className="text-2xs text-ink-faint hover:text-brand-200 font-semibold transition-colors"
                 >
                   Ver na loja
                 </Link>

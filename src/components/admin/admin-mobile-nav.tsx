@@ -1,7 +1,7 @@
 'use client';
 
+import { List } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
-import { Menu } from 'lucide-react';
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer';
 import { Logo } from '@/components/layout/logo';
 import { AdminNav } from './admin-nav';
@@ -16,9 +16,9 @@ export function AdminMobileNav() {
           <button
             type="button"
             aria-label="Abrir menu do painel"
-            className="tap-44 grid size-9 place-items-center rounded-md border border-line text-ink-muted transition-colors hover:text-ink lg:hidden"
+            className="tap-44 border-line text-ink-muted hover:text-ink grid size-9 place-items-center rounded-md border transition-colors lg:hidden"
           >
-            <Menu className="size-4" />
+            <List className="size-4" />
           </button>
         </DrawerTrigger>
         <DrawerContent side="left" className="max-w-72 p-0">

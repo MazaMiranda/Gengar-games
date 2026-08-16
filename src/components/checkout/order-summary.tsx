@@ -1,6 +1,6 @@
 'use client';
 
-import { Tag } from 'lucide-react';
+import { Tag } from '@phosphor-icons/react/dist/ssr';
 import type { CartTotals } from '@/core/application/cart';
 import type { CartLine } from '@/core/application/cart';
 import { Separator } from '@/components/ui/controls';

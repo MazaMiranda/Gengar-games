@@ -1,15 +1,21 @@
 'use client';
 
+import { ArrowSquareOut, MagnifyingGlass } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Link from 'next/link';
-import { ExternalLink, Search } from 'lucide-react';
 import type { Product } from '@/core/domain/entities';
 import { CONDITIONS, PRODUCT_TYPES } from '@/core/domain/taxonomy';
 import { DataTable } from '@/components/admin/admin-shell';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { LineThumb } from '@/components/shop/line-thumb';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { cn, formatPrice } from '@/lib/utils';
 
 interface ProductTableProps {
@@ -45,7 +51,7 @@ export function ProductTable({ products, categories, mode = 'catalog' }: Product
           value={term}
           onChange={(event) => setTerm(event.target.value)}
           placeholder="Buscar por nome ou SKU…"
-          icon={<Search className="size-4" />}
+          icon={<MagnifyingGlass className="size-4" />}
           className="h-11 sm:max-w-sm"
           aria-label="Buscar produto"
         />
@@ -62,7 +68,7 @@ export function ProductTable({ products, categories, mode = 'catalog' }: Product
             ))}
           </SelectContent>
         </Select>
-        <span className="text-xs text-ink-faint sm:ml-auto">
+        <span className="text-ink-faint text-xs sm:ml-auto">
           {filtered.length} de {products.length}
         </span>
       </div>
@@ -83,10 +89,12 @@ export function ProductTable({ products, categories, mode = 'catalog' }: Product
                     name={product.name}
                     type={product.type}
                     accent={product.accent}
-                    className="size-8 shrink-0 rounded-md border border-line"
+                    className="border-line size-8 shrink-0 rounded-md border"
                   />
                   <div className="flex min-w-0 flex-col">
-                    <span className="line-clamp-1 text-xs font-semibold text-ink">{product.name}</span>
+                    <span className="text-ink line-clamp-1 text-xs font-semibold">
+                      {product.name}
+                    </span>
                     <span className="font-tech text-2xs text-ink-ghost">{product.sku}</span>
                   </div>
                 </div>
@@ -96,7 +104,9 @@ export function ProductTable({ products, categories, mode = 'catalog' }: Product
               key: 'category',
               header: 'Categoria',
               render: (product) => (
-                <span className="text-xs">{categoryName.get(product.categorySlug) ?? product.categorySlug}</span>
+                <span className="text-xs">
+                  {categoryName.get(product.categorySlug) ?? product.categorySlug}
+                </span>
               ),
             },
             {
@@ -125,7 +135,7 @@ export function ProductTable({ products, categories, mode = 'catalog' }: Product
               align: 'right' as const,
               render: (product: Product) => (
                 <div className="flex flex-col items-end">
-                  <span className="font-display text-sm font-bold text-ink">
+                  <span className="font-display text-ink text-sm font-bold">
                     {formatPrice(product.price)}
                   </span>
                   {product.compareAtPrice ? (
@@ -143,7 +153,7 @@ export function ProductTable({ products, categories, mode = 'catalog' }: Product
               render: (product: Product) => (
                 <span
                   className={cn(
-                    'inline-flex h-7 min-w-9 items-center justify-center rounded-sm px-2 font-tech text-xs font-bold',
+                    'font-tech inline-flex h-7 min-w-9 items-center justify-center rounded-sm px-2 text-xs font-bold',
                     product.stock === 0
                       ? 'bg-danger/12 text-danger'
                       : product.stock <= 4
@@ -161,11 +171,15 @@ export function ProductTable({ products, categories, mode = 'catalog' }: Product
               align: 'right' as const,
               render: (product: Product) => (
                 <Link
-                  href={product.type === 'tcg-card' ? `/carta/${product.slug}` : `/produto/${product.slug}`}
-                  className="tap-44 inline-flex items-center gap-1.5 text-2xs font-semibold text-ink-faint transition-colors hover:text-brand-200"
+                  href={
+                    product.type === 'tcg-card'
+                      ? `/carta/${product.slug}`
+                      : `/produto/${product.slug}`
+                  }
+                  className="tap-44 text-2xs text-ink-faint hover:text-brand-200 inline-flex items-center gap-1.5 font-semibold transition-colors"
                 >
                   Ver
-                  <ExternalLink className="size-3" />
+                  <ArrowSquareOut className="size-3" />
                 </Link>
               ),
             },

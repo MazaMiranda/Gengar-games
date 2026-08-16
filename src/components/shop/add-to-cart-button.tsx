@@ -1,7 +1,7 @@
 'use client';
 
+import { Check, ShoppingBag } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
-import { Check, ShoppingBag } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'sonner';
 import type { Product } from '@/core/domain/entities';
@@ -27,7 +27,12 @@ export function AddToCartButton({
   const [done, setDone] = React.useState(false);
   const timer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  React.useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
+  React.useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+    },
+    [],
+  );
 
   const soldOut = product.stock <= 0;
 

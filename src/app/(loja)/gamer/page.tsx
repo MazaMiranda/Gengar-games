@@ -1,6 +1,11 @@
+import {
+  ArrowUpRight,
+  GameController,
+  PlugsConnected,
+  Wrench,
+} from '@phosphor-icons/react/dist/ssr';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowUpRight, Cable, Gamepad2, Wrench } from 'lucide-react';
 import { searchCatalog } from '@/core/application/catalog-service';
 import { platformList } from '@/core/domain/taxonomy';
 import { PageHeader } from '@/components/layout/page-header';
@@ -24,12 +29,12 @@ const SERVICES = [
     text: 'Todo console usado passa por revisão, limpeza interna e teste de leitura antes de ser anunciado.',
   },
   {
-    icon: Cable,
+    icon: PlugsConnected,
     title: 'Compatibilidade conferida',
     text: 'Listamos exatamente quais acessórios e jogos funcionam com cada plataforma. Sem surpresa na entrega.',
   },
   {
-    icon: Gamepad2,
+    icon: GameController,
     title: '90 dias de garantia',
     text: 'Seminovos e usados têm garantia da loja, com troca sem burocracia em caso de defeito.',
   },
@@ -37,10 +42,18 @@ const SERVICES = [
 
 export default async function GamerPage() {
   const [consoles, jogos, usados, acessorios] = await Promise.all([
-    searchCatalog({ categories: ['consoles', 'consoles-limitados'], sort: 'relevancia', perPage: 8 }),
+    searchCatalog({
+      categories: ['consoles', 'consoles-limitados'],
+      sort: 'relevancia',
+      perPage: 8,
+    }),
     searchCatalog({ categories: ['jogos'], sort: 'mais-vendidos', perPage: 10 }),
     searchCatalog({ categories: ['jogos-usados'], sort: 'relevancia', perPage: 8 }),
-    searchCatalog({ categories: ['controles', 'headsets', 'acessorios'], sort: 'mais-vendidos', perPage: 10 }),
+    searchCatalog({
+      categories: ['controles', 'headsets', 'acessorios'],
+      sort: 'mais-vendidos',
+      perPage: 10,
+    }),
   ]);
 
   return (
@@ -60,7 +73,7 @@ export default async function GamerPage() {
             <Reveal key={platform.slug} delay={index * 0.05}>
               <Link
                 href={`/gamer/${platform.slug}`}
-                className="plate grain group relative flex h-56 flex-col justify-between overflow-hidden rounded-xl p-6 transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:border-line-brand hover:shadow-lift"
+                className="plate grain group ease-out-expo hover:border-line-brand hover:shadow-lift relative flex h-56 flex-col justify-between overflow-hidden rounded-xl p-6 transition-all duration-500 hover:-translate-y-1"
               >
                 <div
                   className="absolute inset-0 opacity-30 transition-opacity duration-700 group-hover:opacity-55"
@@ -70,14 +83,14 @@ export default async function GamerPage() {
                   aria-hidden
                 />
                 <div className="relative flex items-start justify-between">
-                  <span className="font-tech text-2xs font-bold uppercase tracking-[0.26em] text-ink-muted">
+                  <span className="font-tech text-2xs text-ink-muted font-bold tracking-[0.26em] uppercase">
                     {platform.short}
                   </span>
-                  <ArrowUpRight className="size-4 text-ink-ghost transition-all duration-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand-300" />
+                  <ArrowUpRight className="text-ink-ghost group-hover:text-brand-300 size-4 transition-all duration-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
                 <div className="relative flex flex-col gap-2">
-                  <h3 className="font-display text-lg font-bold text-ink">{platform.name}</h3>
-                  <p className="text-xs leading-relaxed text-ink-muted">{platform.tagline}</p>
+                  <h3 className="font-display text-ink text-lg font-bold">{platform.name}</h3>
+                  <p className="text-ink-muted text-xs leading-relaxed">{platform.tagline}</p>
                 </div>
               </Link>
             </Reveal>
@@ -115,11 +128,11 @@ export default async function GamerPage() {
           {SERVICES.map(({ icon: Icon, title, text }, index) => (
             <Reveal key={title} delay={index * 0.06}>
               <div className="plate flex h-full flex-col gap-4 rounded-xl p-7">
-                <span className="grid size-11 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300">
-                  <Icon className="size-5" strokeWidth={1.6} />
+                <span className="border-line bg-brand-500/12 text-brand-300 grid size-11 place-items-center rounded-md border">
+                  <Icon className="size-5" weight="light" />
                 </span>
-                <h3 className="font-display text-base font-bold text-ink">{title}</h3>
-                <p className="text-sm leading-relaxed text-ink-muted">{text}</p>
+                <h3 className="font-display text-ink text-base font-bold">{title}</h3>
+                <p className="text-ink-muted text-sm leading-relaxed">{text}</p>
               </div>
             </Reveal>
           ))}

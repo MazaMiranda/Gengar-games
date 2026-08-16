@@ -1,6 +1,6 @@
+import { Plus } from '@phosphor-icons/react/dist/ssr';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Plus } from 'lucide-react';
 import { searchCatalog } from '@/core/application/catalog-service';
 import { AdminCard, AdminPage, DataTable } from '@/components/admin/admin-shell';
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,8 @@ export default async function AdminPromotionsPage() {
   ]);
 
   const totalDiscount = onSale.items.reduce(
-    (sum, product) => sum + ((product.compareAtPrice ?? product.price) - product.price) * product.stock,
+    (sum, product) =>
+      sum + ((product.compareAtPrice ?? product.price) - product.price) * product.stock,
     0,
   );
   const averageOff =
@@ -28,7 +29,10 @@ export default async function AdminPromotionsPage() {
 
   const cards = [
     { label: 'Produtos em promoção', value: `${onSale.total}` },
-    { label: 'Participação do catálogo', value: `${Math.round((onSale.total / all.total) * 100)}%` },
+    {
+      label: 'Participação do catálogo',
+      value: `${Math.round((onSale.total / all.total) * 100)}%`,
+    },
     { label: 'Desconto médio', value: `${averageOff.toFixed(1)}%` },
     { label: 'Desconto potencial', value: formatPrice(totalDiscount) },
   ];
@@ -48,10 +52,10 @@ export default async function AdminPromotionsPage() {
         {cards.map((card) => (
           <AdminCard key={card.label}>
             <div className="flex flex-col gap-1">
-              <span className="font-tech text-2xs uppercase tracking-[0.16em] text-ink-faint">
+              <span className="font-tech text-2xs text-ink-faint tracking-[0.16em] uppercase">
                 {card.label}
               </span>
-              <span className="font-display text-2xl font-bold text-ink">{card.value}</span>
+              <span className="font-display text-ink text-2xl font-bold">{card.value}</span>
             </div>
           </AdminCard>
         ))}
@@ -73,9 +77,11 @@ export default async function AdminPromotionsPage() {
                     name={product.name}
                     type={product.type}
                     accent={product.accent}
-                    className="size-9 shrink-0 rounded-md border border-line"
+                    className="border-line size-9 shrink-0 rounded-md border"
                   />
-                  <span className="line-clamp-1 text-xs font-semibold text-ink">{product.name}</span>
+                  <span className="text-ink line-clamp-1 text-xs font-semibold">
+                    {product.name}
+                  </span>
                 </div>
               ),
             },
@@ -84,7 +90,7 @@ export default async function AdminPromotionsPage() {
               header: 'De',
               align: 'right',
               render: (product) => (
-                <span className="text-xs text-ink-ghost line-through">
+                <span className="text-ink-ghost text-xs line-through">
                   {formatPrice(product.compareAtPrice ?? product.price)}
                 </span>
               ),
@@ -94,7 +100,7 @@ export default async function AdminPromotionsPage() {
               header: 'Por',
               align: 'right',
               render: (product) => (
-                <span className="font-display text-sm font-bold text-ink">
+                <span className="font-display text-ink text-sm font-bold">
                   {formatPrice(product.price)}
                 </span>
               ),
@@ -121,8 +127,12 @@ export default async function AdminPromotionsPage() {
               align: 'right',
               render: (product) => (
                 <Link
-                  href={product.type === 'tcg-card' ? `/carta/${product.slug}` : `/produto/${product.slug}`}
-                  className="text-2xs font-semibold text-ink-faint transition-colors hover:text-brand-200"
+                  href={
+                    product.type === 'tcg-card'
+                      ? `/carta/${product.slug}`
+                      : `/produto/${product.slug}`
+                  }
+                  className="text-2xs text-ink-faint hover:text-brand-200 font-semibold transition-colors"
                 >
                   Ver
                 </Link>
