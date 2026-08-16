@@ -1,10 +1,10 @@
 'use client';
 
+import { ArrowRight, Check } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { ArrowRight, Check } from 'lucide-react';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -46,14 +46,14 @@ export function NewsletterForm() {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="eyebrow">Newsletter</h3>
-      <p className="text-sm leading-relaxed text-ink-muted">
+      <p className="text-ink-muted text-sm leading-relaxed">
         Pré-vendas, restocks e cupons antes de irem para o site.
       </p>
 
       {subscribed ? (
-        <div className="flex items-center gap-2.5 rounded-md border border-success/30 bg-success/8 px-4 py-3">
-          <Check className="size-4 text-success" />
-          <p className="text-xs text-ink-muted">Tudo certo! Confira sua caixa de entrada.</p>
+        <div className="border-success/30 bg-success/8 flex items-center gap-2.5 rounded-md border px-4 py-3">
+          <Check className="text-success size-4" />
+          <p className="text-ink-muted text-xs">Tudo certo! Confira sua caixa de entrada.</p>
         </div>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2" noValidate>
@@ -71,14 +71,14 @@ export function NewsletterForm() {
               type="submit"
               size="icon-sm"
               loading={isSubmitting}
-              className="absolute right-1.5 top-1.5"
+              className="absolute top-1.5 right-1.5"
               aria-label="Inscrever"
             >
               {!isSubmitting ? <ArrowRight className="size-4" /> : null}
             </Button>
           </div>
-          {errors.email ? <p className="text-xs text-danger">{errors.email.message}</p> : null}
-          <p className="text-2xs leading-relaxed text-ink-ghost">
+          {errors.email ? <p className="text-danger text-xs">{errors.email.message}</p> : null}
+          <p className="text-2xs text-ink-ghost leading-relaxed">
             Ao assinar você concorda em receber e-mails da Gengar Games. Cancele quando quiser.
           </p>
         </form>

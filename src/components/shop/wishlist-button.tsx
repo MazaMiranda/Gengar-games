@@ -1,7 +1,7 @@
 'use client';
 
+import { Heart } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
-import { Heart } from 'lucide-react';
 import { toast } from 'sonner';
 import { useWishlistStore } from '@/stores/wishlist-store';
 import { cn } from '@/lib/utils';
@@ -38,7 +38,7 @@ export function WishlistButton({ slug, name, className, variant = 'icon' }: Wish
         onClick={handleClick}
         aria-pressed={active}
         className={cn(
-          'inline-flex h-12 items-center gap-2.5 rounded-lg border border-line px-5 text-sm font-semibold transition-all duration-300 ease-out-expo hover:border-brand-400/50 hover:bg-brand-500/10',
+          'border-line ease-out-expo hover:border-brand-400/50 hover:bg-brand-500/10 inline-flex h-12 items-center gap-2.5 rounded-lg border px-5 text-sm font-semibold transition-all duration-300',
           active ? 'border-brand-400/50 bg-brand-500/12 text-brand-100' : 'text-ink-muted',
           className,
         )}
@@ -58,14 +58,20 @@ export function WishlistButton({ slug, name, className, variant = 'icon' }: Wish
       className={cn(
         // tap-44: o selo continua com 36px para não pesar na capa do produto,
         // mas o alvo do dedo vai a 44 — é o controle mais repetido do site.
-        'tap-44 grid size-9 place-items-center rounded-md border backdrop-blur-md transition-all duration-300 ease-out-expo',
+        'tap-44 ease-out-expo grid size-9 place-items-center rounded-md border backdrop-blur-md transition-all duration-300',
         active
           ? 'border-brand-400/60 bg-brand-500/25 text-brand-200 shadow-glow-sm'
           : 'border-line bg-void/50 text-ink-muted hover:border-brand-400/40 hover:text-brand-200',
         className,
       )}
     >
-      <Heart className={cn('size-4 transition-transform duration-300', active && 'scale-110 fill-current')} />
+      {/* Cheio quando favoritado vem do `weight`, não de `fill-current`: no
+          Phosphor o glifo já é preenchido com currentColor, então a classe do
+          Lucide não mudava nada e o coração ativo continuava vazado. */}
+      <Heart
+        className={cn('size-4 transition-transform duration-300', active && 'scale-110')}
+        weight={active ? 'fill' : 'regular'}
+      />
     </button>
   );
 }

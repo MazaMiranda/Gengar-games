@@ -1,8 +1,8 @@
 'use client';
 
+import { ArrowCounterClockwise, House, Warning } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Link from 'next/link';
-import { AlertTriangle, Home, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function GlobalError({
@@ -19,18 +19,18 @@ export default function GlobalError({
   return (
     <div className="grid min-h-dvh place-items-center px-6">
       <div className="flex max-w-md flex-col items-center gap-7 text-center">
-        <span className="grid size-16 place-items-center rounded-full border border-danger/30 bg-danger/10">
-          <AlertTriangle className="size-7 text-danger" />
+        <span className="border-danger/30 bg-danger/10 grid size-16 place-items-center rounded-full border">
+          <Warning className="text-danger size-7" />
         </span>
 
         <div className="flex flex-col gap-3">
-          <h1 className="text-title font-bold text-ink">Algo saiu do trilho</h1>
-          <p className="text-sm leading-relaxed text-ink-muted">
+          <h1 className="text-title text-ink font-bold">Algo saiu do trilho</h1>
+          <p className="text-ink-muted text-sm leading-relaxed">
             Tivemos um erro inesperado ao carregar esta página. Já registramos o ocorrido — tente de
             novo em instantes.
           </p>
           {error.digest ? (
-            <p className="font-tech text-2xs uppercase tracking-wider text-ink-ghost">
+            <p className="font-tech text-2xs text-ink-ghost tracking-wider uppercase">
               Código: {error.digest}
             </p>
           ) : null}
@@ -38,12 +38,12 @@ export default function GlobalError({
 
         <div className="flex flex-wrap justify-center gap-3">
           <Button onClick={reset} size="lg">
-            <RotateCcw className="size-4" />
+            <ArrowCounterClockwise className="size-4" />
             Tentar novamente
           </Button>
           <Button asChild variant="secondary" size="lg">
             <Link href="/">
-              <Home className="size-4" />
+              <House className="size-4" />
               Ir para a home
             </Link>
           </Button>

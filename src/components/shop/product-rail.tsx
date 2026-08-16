@@ -1,7 +1,7 @@
 'use client';
 
+import { CaretLeft, CaretRight } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Product } from '@/core/domain/entities';
 import { cn } from '@/lib/utils';
 import { ProductCard } from './product-card';
@@ -50,7 +50,7 @@ export function ProductRail({ products, className, itemClassName }: ProductRailP
     <div className={cn('relative', className)}>
       <div
         ref={trackRef}
-        className="-mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-1 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="-mx-1 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto scroll-smooth px-1 pb-2 [&::-webkit-scrollbar]:hidden"
       >
         {products.map((product, index) => (
           <div
@@ -70,22 +70,22 @@ export function ProductRail({ products, className, itemClassName }: ProductRailP
         onClick={() => scrollBy(-1)}
         aria-label="Anterior"
         className={cn(
-          'absolute -left-4 top-[38%] hidden size-11 place-items-center rounded-full border border-line bg-void/80 text-ink-muted backdrop-blur-xl transition-all duration-300 hover:border-brand-400/50 hover:text-ink hover:shadow-glow-sm lg:grid',
+          'border-line bg-void/80 text-ink-muted hover:border-brand-400/50 hover:text-ink hover:shadow-glow-sm absolute top-[38%] -left-4 hidden size-11 place-items-center rounded-full border backdrop-blur-xl transition-all duration-300 lg:grid',
           edges.start && 'pointer-events-none opacity-0',
         )}
       >
-        <ChevronLeft className="size-4" />
+        <CaretLeft className="size-4" />
       </button>
       <button
         type="button"
         onClick={() => scrollBy(1)}
         aria-label="Próximo"
         className={cn(
-          'absolute -right-4 top-[38%] hidden size-11 place-items-center rounded-full border border-line bg-void/80 text-ink-muted backdrop-blur-xl transition-all duration-300 hover:border-brand-400/50 hover:text-ink hover:shadow-glow-sm lg:grid',
+          'border-line bg-void/80 text-ink-muted hover:border-brand-400/50 hover:text-ink hover:shadow-glow-sm absolute top-[38%] -right-4 hidden size-11 place-items-center rounded-full border backdrop-blur-xl transition-all duration-300 lg:grid',
           edges.end && 'pointer-events-none opacity-0',
         )}
       >
-        <ChevronRight className="size-4" />
+        <CaretRight className="size-4" />
       </button>
     </div>
   );

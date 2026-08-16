@@ -1,10 +1,19 @@
 'use client';
 
+import {
+  BookmarkSimple,
+  Check,
+  ShoppingBag,
+  Tag,
+  Ticket,
+  Trash,
+  Truck,
+  X,
+} from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BookmarkPlus, Check, ShoppingBag, Tag, Ticket, Trash2, Truck, X } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   Drawer,
@@ -203,7 +212,7 @@ export function CartDrawer() {
                         onClick={() => saveForLater(line.slug)}
                         className="text-2xs text-ink-faint hover:text-brand-300 inline-flex w-fit items-center gap-1.5 font-semibold tracking-wider uppercase transition-colors"
                       >
-                        <BookmarkPlus className="size-3" />
+                        <BookmarkSimple className="size-3" />
                         Salvar para depois
                       </button>
                     </div>
@@ -236,7 +245,7 @@ export function CartDrawer() {
                       aria-label={`Descartar ${line.name}`}
                       className="text-ink-ghost hover:text-danger grid size-7 place-items-center rounded-sm"
                     >
-                      <Trash2 className="size-3.5" />
+                      <Trash className="size-3.5" />
                     </button>
                   </li>
                 ))}

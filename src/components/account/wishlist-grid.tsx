@@ -1,9 +1,9 @@
 'use client';
 
+import { Heart } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
-import { Heart } from 'lucide-react';
 import type { Product } from '@/core/domain/entities';
 import { ProductCard } from '@/components/shop/product-card';
 import { ProductGridSkeleton } from '@/components/ui/skeleton';
@@ -41,12 +41,12 @@ export function WishlistGrid() {
   if (!slugs.length || !data?.length) {
     return (
       <div className="plate flex flex-col items-center gap-4 rounded-xl px-6 py-16 text-center">
-        <span className="grid size-14 place-items-center rounded-full border border-line bg-ink/3">
-          <Heart className="size-5 text-ink-faint" />
+        <span className="border-line bg-ink/3 grid size-14 place-items-center rounded-full border">
+          <Heart className="text-ink-faint size-5" />
         </span>
         <div>
-          <h2 className="font-display text-base font-bold text-ink">Sua lista está vazia</h2>
-          <p className="mt-1.5 max-w-sm text-sm text-ink-muted">
+          <h2 className="font-display text-ink text-base font-bold">Sua lista está vazia</h2>
+          <p className="text-ink-muted mt-1.5 max-w-sm text-sm">
             Toque no coração de qualquer produto para guardar aqui e receber alerta de restock.
           </p>
         </div>

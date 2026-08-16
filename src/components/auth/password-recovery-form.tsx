@@ -1,10 +1,10 @@
 'use client';
 
+import { EnvelopeSimple, PaperPlaneTilt } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { MailCheck, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Field, Input } from '@/components/ui/input';
 
@@ -28,13 +28,13 @@ export function PasswordRecoveryForm() {
 
   if (sent) {
     return (
-      <div className="flex flex-col gap-4 rounded-lg border border-success/25 bg-success/8 p-6">
-        <MailCheck className="size-6 text-success" />
+      <div className="border-success/25 bg-success/8 flex flex-col gap-4 rounded-lg border p-6">
+        <EnvelopeSimple className="text-success size-6" />
         <div className="flex flex-col gap-1.5">
-          <p className="font-display text-sm font-semibold text-ink">Link enviado</p>
-          <p className="text-xs leading-relaxed text-ink-muted">
-            Se existir uma conta para <strong className="text-ink">{sent}</strong>, o link de redefinição
-            chega em alguns minutos. Verifique também a caixa de spam.
+          <p className="font-display text-ink text-sm font-semibold">Link enviado</p>
+          <p className="text-ink-muted text-xs leading-relaxed">
+            Se existir uma conta para <strong className="text-ink">{sent}</strong>, o link de
+            redefinição chega em alguns minutos. Verifique também a caixa de spam.
           </p>
         </div>
       </div>
@@ -43,7 +43,12 @@ export function PasswordRecoveryForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5" noValidate>
-      <Field label="E-mail cadastrado" required error={errors.email?.message} htmlFor="recover-email">
+      <Field
+        label="E-mail cadastrado"
+        required
+        error={errors.email?.message}
+        htmlFor="recover-email"
+      >
         <Input
           id="recover-email"
           type="email"
@@ -54,7 +59,7 @@ export function PasswordRecoveryForm() {
         />
       </Field>
       <Button type="submit" size="lg" block loading={isSubmitting}>
-        <Send className="size-4" />
+        <PaperPlaneTilt className="size-4" />
         Enviar link de recuperação
       </Button>
     </form>

@@ -99,56 +99,48 @@ export function ProductVisual({
   }
 
   const seed = hashString(product.slug + frame);
-  const hue = product.accent;
   const Glyph = GLYPHS[CATEGORY_GLYPH[product.categorySlug] ?? 'sparkles'] ?? SparkleIcon;
   const isCard = product.type === 'tcg-card';
   const isDetail = variant === 'detail';
   const rotation = (seed % 7) - 3;
 
-  const base = `hsl(${hue} 62% 9%)`;
-  const mid = `hsl(${(hue + 22) % 360} 70% 16%)`;
-  const beam = `hsl(${hue} 92% 66%)`;
+  /*
+   * Substituto de foto, não obra de arte.
+   *
+   * A versão anterior empilhava sete camadas para dizer "este produto não tem
+   * foto": gradiente de fundo tirado do matiz do produto, halo radial, malha
+   * técnica, faixa diagonal de luz, moldura com borda neon, círculos
+   * concêntricos e vinheta preta. Três efeitos disso já bastariam para ler
+   * como imagem gerada; sete, repetidos sessenta vezes numa página, eram o
+   * item mais chamativo da loja — mais chamativo que os produtos.
+   *
+   * Além do visual, dois defeitos concretos: o matiz vinha de product.accent,
+   * então cada card acendia uma cor diferente e a página perdia o acento
+   * único; e o fundo era escuro cravado, então no tema claro a vitrine virava
+   * uma parede de retângulos pretos.
+   *
+   * Agora é superfície neutra do tema com o glifo da categoria. Um placeholder
+   * deve dizer "aqui entra a foto" e sair da frente.
+   */
+  const beam = 'var(--color-brand-500)';
 
   return (
-    <div
-      className={cn('absolute inset-0 overflow-hidden', className)}
-      style={{ background: `linear-gradient(155deg, ${mid} 0%, ${base} 46%, #0a0a0d 100%)` }}
-      aria-hidden
-    >
-      {/* Halo principal — gradiente já é suave, não precisa de blur() (ver Aurora).
-          Isto se repete uma vez por card; numa vitrine cheia, o filtro somava
-          megapixels de trabalho por quadro sem mudar o que se vê. */}
+    <div className={cn('bg-overlay absolute inset-0 overflow-hidden', className)} aria-hidden>
+      {/* Profundidade monocromática: só o suficiente para a superfície não ser
+          um retângulo chapado. Sem cor própria, sem brilho. */}
       <div
-        className="absolute -top-1/3 -left-1/4 size-[130%] opacity-70"
+        className="absolute inset-0"
         style={{
-          background: `radial-gradient(circle at 34% 30%, ${beam}55 0%, ${beam}22 34%, transparent 66%)`,
-        }}
-      />
-      {/* Malha técnica */}
-      <div className="grid-tech absolute inset-0 [background-size:32px_32px] opacity-[0.35]" />
-      {/* Faixa diagonal de luz */}
-      <div
-        className="absolute inset-y-0 -left-1/3 w-2/3 rotate-12 opacity-25"
-        style={{
-          background: `linear-gradient(90deg, transparent, ${beam}44 45%, ${beam}66 50%, ${beam}44 55%, transparent)`,
+          background:
+            'radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--color-ink) 5%, transparent), transparent 72%)',
         }}
       />
 
       {isCard ? (
         <CardFrame product={product} beam={beam} rotation={rotation} detail={isDetail} />
       ) : (
-        <DeviceFrame
-          product={product}
-          Glyph={Glyph}
-          beam={beam}
-          rotation={rotation}
-          detail={isDetail}
-        />
+        <DeviceFrame product={product} Glyph={Glyph} detail={isDetail} />
       )}
-
-      {/* Vinheta + grão */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_38%,rgba(5,5,8,0.82)_100%)]" />
-      <div className="scanlines absolute inset-0 opacity-[0.18] mix-blend-overlay" />
     </div>
   );
 }
@@ -256,63 +248,55 @@ const CATEGORY_LABEL: Record<string, string> = {
 function DeviceFrame({
   product,
   Glyph,
-  beam,
-  rotation,
   detail,
 }: {
   product: Product;
   Glyph: Icon;
-  beam: string;
-  rotation: number;
   detail: boolean;
 }) {
   const category = CATEGORY_LABEL[product.categorySlug] ?? product.categorySlug;
 
   return (
-    <div className="absolute inset-0 grid place-items-center p-[10%]">
+    <div className="absolute inset-0">
+      {/*
+        Mesa de estúdio, não emblema.
+        A versão anterior desenhava moldura com borda neon, dois anéis girados e
+        um drop-shadow de 22px no ícone. Aqui o objeto é tratado como peça
+        fotografada: luz vinda de cima, o glifo apoiado no centro óptico e uma
+        sombra elíptica no chão. É o que faz a caixa vazia ler como "aqui entra
+        a foto do produto" em vez de "ícone decorativo".
+
+        O centro óptico fica um pouco acima do centro geométrico (top-[46%]):
+        centralizar pela matemática deixa a peça visualmente baixa quando existe
+        sombra embaixo.
+      */}
       <div
-        className="relative flex h-full w-full max-w-[86%] flex-col items-center justify-center gap-[6%] rounded-[8%] border"
+        className="absolute inset-0"
         style={{
-          transform: `rotate(${rotation * 0.4}deg)`,
-          borderColor: `${beam}3d`,
-          background: `linear-gradient(165deg, ${beam}14 0%, rgba(10,10,14,0.72) 48%, rgba(6,6,9,0.9) 100%)`,
+          background:
+            'linear-gradient(180deg, color-mix(in srgb, var(--color-ink) 3%, transparent) 0%, transparent 45%)',
         }}
-      >
-        {/* Emblema — silhueta + glifo, mesma linguagem de antes */}
-        <div className="relative grid place-items-center">
-          <div
-            className="absolute size-[220%] rounded-full border opacity-40 blur-[1px]"
-            style={{ borderColor: `${beam}44`, transform: `rotate(${rotation * 2}deg)` }}
-          />
-          <div
-            className="absolute size-[170%] rounded-full opacity-70"
-            style={{
-              background: `linear-gradient(150deg, ${beam}33, transparent 70%)`,
-              transform: `rotate(${-rotation * 1.4}deg)`,
-            }}
-          />
-          <Glyph
-            className="relative size-[2.6rem] text-white/85 sm:size-[3.2rem]"
-            weight="duotone"
-            style={{ filter: `drop-shadow(0 0 22px ${beam}aa)` }}
-          />
-        </div>
+      />
 
-        {/*
-          Só a categoria — o nome já aparece na legenda que acompanha a
-          imagem em todo lugar que essa ficha renderiza (card, vitrine,
-          galeria), repeti-lo aqui era redundante.
-        */}
-        <span className="font-tech text-[0.5rem] tracking-[0.16em] text-white/50 uppercase sm:text-[0.55rem]">
-          {category}
-        </span>
+      {/* Sombra de chão: dá assentamento à peça. */}
+      <div
+        className="absolute bottom-[26%] left-1/2 h-[6%] w-[42%] -translate-x-1/2 rounded-[50%] blur-md"
+        style={{ background: 'color-mix(in srgb, var(--color-ink) 14%, transparent)' }}
+      />
 
-        {detail ? (
-          <span className="cert-label absolute bottom-[6%] text-[0.5rem]">
-            Sem foto — {product.sku}
-          </span>
-        ) : null}
+      <div className="absolute top-[46%] left-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-4">
+        <Glyph className="text-ink-faint size-16 sm:size-20" weight="duotone" />
       </div>
+
+      <span className="text-ink-faint absolute inset-x-0 bottom-[12%] text-center text-xs">
+        {category}
+      </span>
+
+      {detail ? (
+        <span className="cert-label absolute bottom-[4%] left-1/2 -translate-x-1/2">
+          Sem foto — {product.sku}
+        </span>
+      ) : null}
     </div>
   );
 }

@@ -1,5 +1,5 @@
+import { Ticket } from '@phosphor-icons/react/dist/ssr';
 import type { Metadata } from 'next';
-import { Ticket } from 'lucide-react';
 import { auth } from '@/lib/auth';
 import { getRepositories } from '@/infrastructure/container';
 import { CouponCard } from '@/components/account/coupon-card';
@@ -22,8 +22,8 @@ export default async function CouponsPage() {
   return (
     <div className="flex flex-col gap-10">
       <header className="flex flex-col gap-1.5">
-        <h1 className="font-display text-xl font-bold text-ink">Meus cupons</h1>
-        <p className="text-sm text-ink-muted">
+        <h1 className="font-display text-ink text-xl font-bold">Meus cupons</h1>
+        <p className="text-ink-muted text-sm">
           Aplique no carrinho antes de finalizar. Um cupom por pedido.
         </p>
       </header>
@@ -39,12 +39,14 @@ export default async function CouponsPage() {
         </section>
       ) : (
         <div className="plate flex flex-col items-center gap-4 rounded-xl px-6 py-14 text-center">
-          <span className="grid size-14 place-items-center rounded-full border border-line bg-ink/3">
-            <Ticket className="size-5 text-ink-faint" />
+          <span className="border-line bg-ink/3 grid size-14 place-items-center rounded-full border">
+            <Ticket className="text-ink-faint size-5" />
           </span>
           <div>
-            <h2 className="font-display text-base font-bold text-ink">Nenhum cupom na sua carteira</h2>
-            <p className="mt-1.5 text-sm text-ink-muted">
+            <h2 className="font-display text-ink text-base font-bold">
+              Nenhum cupom na sua carteira
+            </h2>
+            <p className="text-ink-muted mt-1.5 text-sm">
               Assine a newsletter para receber cupons exclusivos antes de todo mundo.
             </p>
           </div>

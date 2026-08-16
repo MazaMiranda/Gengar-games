@@ -1,10 +1,10 @@
 'use client';
 
+import { Heart, List, MagnifyingGlass, ShoppingBag, User } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
-import { Heart, Menu, Search, ShoppingBag, User } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { primaryNav } from '@/lib/navigation';
@@ -60,6 +60,20 @@ export function Header() {
 
   const active = primaryNav.find((entry) => entry.id === activeMenu);
 
+  /**
+   * Página atual e menu aberto são leituras diferentes.
+   *
+   * Antes as duas dividiam o mesmo `isActive`: o sublinhado acendia no hover e
+   * apagava assim que o ponteiro saía, então em nenhum momento a barra dizia
+   * onde o visitante está — só onde o mouse estava.
+   *
+   * Entram na conta apenas as entradas cujo href não tem query. As outras
+   * (Acessórios, Colecionáveis, Ofertas) são filtros do catálogo, não seções:
+   * casar só pelo pathname acenderia as três de uma vez em qualquer /catalogo.
+   */
+  const isCurrentRoute = (href: string) =>
+    !href.includes('?') && (pathname === href || pathname.startsWith(`${href}/`));
+
   const isAdmin = session?.user?.role === 'admin';
   const destinoDaConta = !session?.user ? '/login' : isAdmin ? '/admin' : '/conta';
   const rotuloDaConta = !session?.user ? 'Entrar' : isAdmin ? 'Painel' : 'Minha conta';
@@ -84,7 +98,7 @@ export function Header() {
                 aria-label="Abrir menu"
                 className="tap-44 border-line text-ink-muted hover:border-line-strong hover:text-ink grid size-10 place-items-center rounded-md border transition-colors lg:hidden"
               >
-                <Menu className="size-4" />
+                <List className="size-4" />
               </button>
             </MobileNav>
 
@@ -92,23 +106,35 @@ export function Header() {
 
             <nav className="hidden items-center gap-1 lg:flex" aria-label="Navegação principal">
               {primaryNav.map((entry) => {
-                const isActive = activeMenu === entry.id;
+                const isOpen = activeMenu === entry.id;
+                const isCurrent = isCurrentRoute(entry.href);
                 return (
                   <div key={entry.id} onMouseEnter={() => openMenu(entry.id)}>
                     <Link
                       href={entry.href}
                       onFocus={() => openMenu(entry.id)}
-                      aria-expanded={entry.columns ? isActive : undefined}
+                      aria-expanded={entry.columns ? isOpen : undefined}
+                      aria-current={isCurrent ? 'page' : undefined}
                       className={cn(
                         'relative flex h-10 items-center rounded-md px-3.5 text-sm font-semibold transition-colors duration-300',
-                        isActive ? 'text-ink' : 'text-ink-muted hover:text-ink',
+                        isOpen || isCurrent ? 'text-ink' : 'text-ink-muted hover:text-ink',
                       )}
                     >
                       {entry.label}
+                      {/* Duas marcas distintas de propósito: a seção atual fica
+                          com o traço cheio e permanente, o hover continua sendo
+                          o degradê que some. Se as duas fossem iguais, abrir o
+                          menu de outra seção apagaria a única pista de onde o
+                          visitante está. */}
                       <span
                         className={cn(
-                          'from-brand-400 ease-out-expo absolute inset-x-3 -bottom-px h-px origin-left bg-linear-to-r to-transparent transition-transform duration-400',
-                          isActive ? 'scale-x-100' : 'scale-x-0',
+                          'ease-out-expo absolute inset-x-3 -bottom-px h-px origin-left transition-transform duration-400',
+                          isCurrent
+                            ? 'bg-brand-400 scale-x-100'
+                            : cn(
+                                'from-brand-400 bg-linear-to-r to-transparent',
+                                isOpen ? 'scale-x-100' : 'scale-x-0',
+                              ),
                         )}
                       />
                     </Link>
@@ -124,7 +150,7 @@ export function Header() {
                 type="button"
                 className="group border-line bg-ink/3 text-ink-faint hover:border-brand-400/40 hover:bg-brand-500/8 hidden h-10 items-center gap-3 rounded-md border pr-2 pl-3.5 text-sm transition-all duration-300 md:flex md:w-56 lg:w-64"
               >
-                <Search className="size-4" />
+                <MagnifyingGlass className="size-4" />
                 <span className="flex-1 text-left text-xs">Buscar produtos…</span>
                 {/* Fundo próprio: encostado no botão translúcido o contraste
                     da tecla dependia do que passasse atrás. Sobre --surface é
@@ -141,7 +167,7 @@ export function Header() {
                 aria-label="Buscar"
                 className="tap-44 text-ink-muted hover:bg-ink/6 hover:text-ink grid size-10 place-items-center rounded-md transition-colors md:hidden"
               >
-                <Search className="size-4" />
+                <MagnifyingGlass className="size-4" />
               </button>
             </SearchDialog>
 
@@ -239,7 +265,7 @@ export function Header() {
                         className="absolute -top-10 -right-10 size-40 rounded-full blur-3xl"
                         style={{
                           background:
-                            'radial-gradient(circle, rgba(147,51,234,0.5), transparent 70%)',
+                            'radial-gradient(circle, color-mix(in srgb, var(--color-brand-500) 26%, transparent), transparent 70%)',
                         }}
                       />
                       <div className="relative flex flex-col gap-2">

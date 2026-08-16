@@ -1,5 +1,15 @@
 'use client';
 
+import {
+  ArrowLeft,
+  CircleNotch,
+  ImageBroken,
+  Package,
+  Plus,
+  Repeat,
+  Sparkle,
+  Trash,
+} from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -12,17 +22,6 @@ import {
   type UseFormWatch,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  ArrowLeft,
-  ImageOff,
-  Loader2,
-  PackagePlus,
-  Plus,
-  Repeat2,
-  Sparkles,
-  Package,
-  Trash2,
-} from 'lucide-react';
 import { toast } from 'sonner';
 import type { Brand, Category } from '@/core/domain/entities';
 import type { TcgdexMatch } from '@/infrastructure/tcgdex/client';
@@ -224,7 +223,7 @@ function PhotoUrlFields({
                 aria-label={`Remover foto ${index + 1}`}
                 onClick={() => removeRow(index)}
               >
-                <Trash2 className="size-4" />
+                <Trash className="size-4" />
               </Button>
             </div>
           ))}
@@ -321,7 +320,7 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
             className="group border-line bg-ink/2 hover:border-brand-400/50 hover:bg-brand-500/8 flex flex-col items-start gap-3 rounded-lg border p-6 text-left transition-all duration-300 hover:-translate-y-0.5"
           >
             <span className="border-line bg-brand-500/12 text-brand-300 group-hover:border-brand-400/50 grid size-11 place-items-center rounded-md border transition-colors">
-              <Sparkles className="size-5" />
+              <Sparkle className="size-5" />
             </span>
             <span className="font-display text-ink text-base font-bold">Carta avulsa</span>
             <span className="text-ink-muted text-xs leading-relaxed">
@@ -370,7 +369,7 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
                   <Image src={chosen.imageUrl} alt={chosen.name} fill className="object-cover" />
                 ) : (
                   <span className="text-ink-ghost grid h-full place-items-center">
-                    <ImageOff className="size-6" />
+                    <ImageBroken className="size-6" />
                   </span>
                 )}
               </div>
@@ -404,7 +403,7 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
                   className="w-fit"
                   onClick={() => setPickerOpen(true)}
                 >
-                  <Repeat2 className="size-4" />
+                  <Repeat className="size-4" />
                   {chosen ? 'Trocar carta' : 'Buscar carta na TCGdex'}
                 </Button>
                 {errors.name ? <p className="text-danger text-xs">{errors.name.message}</p> : null}
@@ -764,9 +763,9 @@ export function ProductForm({ categories, brands }: ProductFormProps) {
         <div className={cn('flex flex-wrap items-center gap-3')}>
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? (
-              <Loader2 className="size-4 animate-spin" />
+              <CircleNotch className="size-4 animate-spin" />
             ) : (
-              <PackagePlus className="size-4" />
+              <Package className="size-4" />
             )}
             Cadastrar produto
           </Button>

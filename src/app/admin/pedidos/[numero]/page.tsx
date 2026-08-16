@@ -1,7 +1,7 @@
+import { ArrowLeft, MapPin, Receipt, User } from '@phosphor-icons/react/dist/ssr';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, MapPin, Receipt, User } from 'lucide-react';
 import { getOrder } from '@/core/application/order-service';
 import { AdminCard, AdminPage, DataTable } from '@/components/admin/admin-shell';
 import { OrderStatusSelect } from '@/components/admin/order-status-select';
@@ -28,7 +28,7 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
     >
       <Link
         href="/admin/pedidos"
-        className="inline-flex w-fit items-center gap-2 text-xs font-semibold text-ink-faint transition-colors hover:text-ink"
+        className="text-ink-faint hover:text-ink inline-flex w-fit items-center gap-2 text-xs font-semibold transition-colors"
       >
         <ArrowLeft className="size-3.5" />
         Voltar para a lista
@@ -50,11 +50,15 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
                       name={item.name}
                       type={item.type}
                       accent={item.accent}
-                      className="size-9 shrink-0 rounded-md border border-line"
+                      className="border-line size-9 shrink-0 rounded-md border"
                     />
                     <Link
-                      href={item.type === 'tcg-card' ? `/carta/${item.productSlug}` : `/produto/${item.productSlug}`}
-                      className="line-clamp-1 text-xs font-medium text-ink hover:text-brand-200"
+                      href={
+                        item.type === 'tcg-card'
+                          ? `/carta/${item.productSlug}`
+                          : `/produto/${item.productSlug}`
+                      }
+                      className="text-ink hover:text-brand-200 line-clamp-1 text-xs font-medium"
                     >
                       {item.name}
                     </Link>
@@ -78,7 +82,7 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
                 header: 'Subtotal',
                 align: 'right',
                 render: (item) => (
-                  <span className="font-display text-sm font-bold text-ink">
+                  <span className="font-display text-ink text-sm font-bold">
                     {formatPrice(item.unitPrice * item.quantity)}
                   </span>
                 ),
@@ -90,11 +94,11 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
         <div className="flex flex-col gap-4">
           <AdminCard title="Cliente">
             <div className="flex items-start gap-3">
-              <span className="grid size-9 shrink-0 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300">
+              <span className="border-line bg-brand-500/12 text-brand-300 grid size-9 shrink-0 place-items-center rounded-md border">
                 <User className="size-4" />
               </span>
               <div className="flex flex-col gap-0.5 text-xs">
-                <span className="font-semibold text-ink">{order.customerName}</span>
+                <span className="text-ink font-semibold">{order.customerName}</span>
                 <span className="text-ink-muted">{order.customerEmail}</span>
                 <span className="font-tech text-2xs text-ink-ghost">ID {order.userId}</span>
               </div>
@@ -103,10 +107,10 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
 
           <AdminCard title="Entrega">
             <div className="flex items-start gap-3">
-              <span className="grid size-9 shrink-0 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300">
+              <span className="border-line bg-brand-500/12 text-brand-300 grid size-9 shrink-0 place-items-center rounded-md border">
                 <MapPin className="size-4" />
               </span>
-              <address className="not-italic text-xs leading-relaxed text-ink-muted">
+              <address className="text-ink-muted text-xs leading-relaxed not-italic">
                 {order.address.recipient}
                 <br />
                 {order.address.street}, {order.address.number}
@@ -118,7 +122,7 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
               </address>
             </div>
             {order.trackingCode ? (
-              <p className="mt-4 border-t border-line pt-4 font-tech text-2xs text-ink-muted">
+              <p className="border-line font-tech text-2xs text-ink-muted mt-4 border-t pt-4">
                 Rastreio: {order.trackingCode}
               </p>
             ) : null}
@@ -126,28 +130,30 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
 
           <AdminCard title="Financeiro">
             <div className="flex items-start gap-3">
-              <span className="grid size-9 shrink-0 place-items-center rounded-md border border-line bg-brand-500/12 text-brand-300">
+              <span className="border-line bg-brand-500/12 text-brand-300 grid size-9 shrink-0 place-items-center rounded-md border">
                 <Receipt className="size-4" />
               </span>
               <dl className="flex flex-1 flex-col gap-2 text-xs">
-                <div className="flex justify-between text-ink-muted">
+                <div className="text-ink-muted flex justify-between">
                   <dt>Subtotal</dt>
                   <dd>{formatPrice(order.subtotal)}</dd>
                 </div>
                 {order.discount > 0 ? (
-                  <div className="flex justify-between text-success">
+                  <div className="text-success flex justify-between">
                     <dt>Desconto {order.couponCode ? `(${order.couponCode})` : ''}</dt>
                     <dd>−{formatPrice(order.discount)}</dd>
                   </div>
                 ) : null}
-                <div className="flex justify-between text-ink-muted">
+                <div className="text-ink-muted flex justify-between">
                   <dt>Frete</dt>
                   <dd>{order.shipping === 0 ? 'Grátis' : formatPrice(order.shipping)}</dd>
                 </div>
                 <Separator className="my-1" />
                 <div className="flex items-end justify-between">
-                  <dt className="font-semibold text-ink">Total</dt>
-                  <dd className="font-display text-lg font-bold text-ink">{formatPrice(order.total)}</dd>
+                  <dt className="text-ink font-semibold">Total</dt>
+                  <dd className="font-display text-ink text-lg font-bold">
+                    {formatPrice(order.total)}
+                  </dd>
                 </div>
                 <p className="text-2xs text-ink-faint">
                   {order.paymentMethod}

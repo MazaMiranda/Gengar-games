@@ -1,7 +1,7 @@
 'use client';
 
+import { SlidersHorizontal, X } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
-import { SlidersHorizontal, X } from 'lucide-react';
 import type { CatalogFacets, FacetBucket } from '@/core/ports/repositories';
 import {
   Accordion,
@@ -35,7 +35,8 @@ const GROUPS: { key: string; title: string; facet: keyof CatalogFacets }[] = [
 ];
 
 export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarProps) {
-  const { toggle, set, apply, isSelected, clearAll, activeCount, searchParams } = useCatalogFilters();
+  const { toggle, set, apply, isSelected, clearAll, activeCount, searchParams } =
+    useCatalogFilters();
 
   const min = facets.priceRange.min;
   const max = facets.priceRange.max;
@@ -82,11 +83,11 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
   return (
     <aside className={cn('flex flex-col gap-6', className)} aria-label="Filtros do catálogo">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="flex items-center gap-2 font-display text-sm font-bold text-ink">
-          <SlidersHorizontal className="size-4 text-brand-300" />
+        <h2 className="font-display text-ink flex items-center gap-2 text-sm font-bold">
+          <SlidersHorizontal className="text-brand-300 size-4" />
           Filtros
           {activeCount > 0 ? (
-            <span className="grid size-5 place-items-center rounded-full bg-brand-500 font-tech text-[0.625rem] font-bold text-white">
+            <span className="bg-brand-500 font-tech grid size-5 place-items-center rounded-full text-[0.625rem] font-bold text-white">
               {activeCount}
             </span>
           ) : null}
@@ -98,7 +99,7 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
               clearAll();
               onNavigate?.();
             }}
-            className="inline-flex items-center gap-1 text-2xs font-semibold uppercase tracking-wider text-ink-faint transition-colors hover:text-danger"
+            className="text-2xs text-ink-faint hover:text-danger inline-flex items-center gap-1 font-semibold tracking-wider uppercase transition-colors"
           >
             <X className="size-3" />
             Limpar
@@ -107,9 +108,9 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
       </div>
 
       {/* Chaves rápidas */}
-      <div className="flex flex-col gap-3 rounded-lg border border-line bg-ink/2 p-4">
+      <div className="border-line bg-ink/2 flex flex-col gap-3 rounded-lg border p-4">
         <label className="flex cursor-pointer items-center justify-between gap-3">
-          <span className="text-xs font-medium text-ink-muted">Somente em estoque</span>
+          <span className="text-ink-muted text-xs font-medium">Somente em estoque</span>
           <Switch
             checked={searchParams.get(PARAM.inStock) === '1'}
             onCheckedChange={(checked) => set(PARAM.inStock, checked ? '1' : null)}
@@ -117,7 +118,7 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
         </label>
         <Separator />
         <label className="flex cursor-pointer items-center justify-between gap-3">
-          <span className="text-xs font-medium text-ink-muted">Somente em promoção</span>
+          <span className="text-ink-muted text-xs font-medium">Somente em promoção</span>
           <Switch
             checked={searchParams.get(PARAM.onSale) === '1'}
             onCheckedChange={(checked) => set(PARAM.onSale, checked ? '1' : null)}
@@ -127,9 +128,9 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
 
       {/* Faixa de preço */}
       {max > min ? (
-        <div className="flex flex-col gap-4 rounded-lg border border-line bg-ink/2 p-4">
+        <div className="border-line bg-ink/2 flex flex-col gap-4 rounded-lg border p-4">
           <div className="flex items-center justify-between">
-            <span className="font-tech text-2xs font-semibold uppercase tracking-[0.18em] text-ink-muted">
+            <span className="font-tech text-2xs text-ink-muted font-semibold tracking-[0.18em] uppercase">
               Faixa de preço
             </span>
           </div>
@@ -142,7 +143,7 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
             onValueCommit={commitRange}
             aria-label="Faixa de preço"
           />
-          <div className="flex items-center justify-between font-tech text-2xs text-ink-faint">
+          <div className="font-tech text-2xs text-ink-faint flex items-center justify-between">
             <span>{formatPrice(range[0])}</span>
             <span>{formatPrice(range[1])}</span>
           </div>
@@ -165,7 +166,7 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
                           className={cn(
                             // min-h-11: a linha inteira é o alvo do toque, e com
                             // py-2 ela media 34px — abaixo do mínimo de 44.
-                            'flex min-h-11 cursor-pointer items-center gap-3 rounded-sm px-2 py-2 transition-colors hover:bg-ink/4',
+                            'hover:bg-ink/4 flex min-h-11 cursor-pointer items-center gap-3 rounded-sm px-2 py-2 transition-colors',
                             checked && 'bg-brand-500/8',
                           )}
                         >
@@ -179,12 +180,14 @@ export function FilterSidebar({ facets, className, onNavigate }: FilterSidebarPr
                           <span
                             className={cn(
                               'flex-1 text-xs transition-colors',
-                              checked ? 'font-semibold text-ink' : 'text-ink-muted',
+                              checked ? 'text-ink font-semibold' : 'text-ink-muted',
                             )}
                           >
                             {bucket.label}
                           </span>
-                          <span className="font-tech text-[0.625rem] text-ink-ghost">{bucket.count}</span>
+                          <span className="font-tech text-ink-ghost text-[0.625rem]">
+                            {bucket.count}
+                          </span>
                         </label>
                       </li>
                     );

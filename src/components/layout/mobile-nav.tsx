@@ -1,8 +1,8 @@
 'use client';
 
+import { CaretRight } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 import {
   Drawer,
   DrawerBody,
@@ -51,10 +51,10 @@ export function MobileNav({ children }: { children: React.ReactNode }) {
                                 <Link
                                   href={link.href}
                                   onClick={() => setOpen(false)}
-                                  className="flex items-center justify-between rounded-sm py-2.5 text-sm text-ink-muted transition-colors hover:text-ink"
+                                  className="text-ink-muted hover:text-ink flex items-center justify-between rounded-sm py-2.5 text-sm transition-colors"
                                 >
                                   {link.label}
-                                  <ChevronRight className="size-3.5 text-ink-ghost" />
+                                  <CaretRight className="text-ink-ghost size-3.5" />
                                 </Link>
                               </li>
                             ))}
@@ -69,10 +69,10 @@ export function MobileNav({ children }: { children: React.ReactNode }) {
                   key={entry.id}
                   href={entry.href}
                   onClick={() => setOpen(false)}
-                  className="flex items-center justify-between border-b border-line px-2 py-4 text-sm font-semibold text-ink transition-colors hover:text-brand-200"
+                  className="border-line text-ink hover:text-brand-200 flex items-center justify-between border-b px-2 py-4 text-sm font-semibold transition-colors"
                 >
                   {entry.label}
-                  <ChevronRight className="size-4 text-ink-ghost" />
+                  <CaretRight className="text-ink-ghost size-4" />
                 </Link>
               ),
             )}

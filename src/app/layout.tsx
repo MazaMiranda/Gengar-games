@@ -23,10 +23,10 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#09090B' },
-    { media: '(prefers-color-scheme: light)', color: '#F4F3F7' },
+    { media: '(prefers-color-scheme: dark)', color: '#0C0C0E' },
+    { media: '(prefers-color-scheme: light)', color: '#F4F4F6' },
   ],
-  colorScheme: 'dark light',
+  colorScheme: 'light dark',
   width: 'device-width',
   initialScale: 1,
 };
@@ -37,14 +37,17 @@ export const viewport: Viewport = {
  * Precisa ser síncrono e inline: qualquer coisa que rode depois da pintura
  * mostraria o tema errado por um quadro.
  *
- * O escuro é o padrão porque é a identidade da loja — o claro é uma escolha
- * explícita, guardada no localStorage. (Para seguir a preferência do sistema
- * na primeira visita, bastaria consultar prefers-color-scheme aqui.)
+ * Na direção Vitrine o claro é o padrão: a loja é sala iluminada, e a arte da
+ * carta é o que deve brilhar, não o fundo. O escuro continua completo e é
+ * escolha explícita, guardada no localStorage.
+ *
+ * A chave continua 'gengar-theme'. Trocar o nome apagaria a preferência de
+ * quem já visitou a loja e jogaria todo mundo de volta no padrão.
  */
 const themeScript = `(function(){try{
 var s=localStorage.getItem('gengar-theme');
-document.documentElement.dataset.theme=(s==='light'||s==='dark')?s:'dark';
-}catch(e){document.documentElement.dataset.theme='dark';}})();`;
+document.documentElement.dataset.theme=(s==='light'||s==='dark')?s:'light';
+}catch(e){document.documentElement.dataset.theme='light';}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -64,16 +67,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           style={{ display: 'contents' }}
           dangerouslySetInnerHTML={{
             __html: `<!--
-IMPECCABLE DIRECTION CONTRACT
-THESIS: Cada produto reage à luz como a carta que você acabou de puxar do booster — foil, não neon; recusa o HUD de arcade que todo concorrente do nicho já usa.
-OWN-WORLD: Preto fosco de sleeve; violeta, magenta, ciano e dourado como banda de difração prismática que varre a superfície, nunca glow estático; plate/glass herdados do sistema; label de cartolina para selos, eyebrows e faixas de drop.
-STORY: O visitante entende, em segundos, que cada item foi conferido como uma carta avaliada na hora — autenticidade é o clímax visual da loja, não decoração de fundo.
-FIRST VIEWPORT: Hero inclina o produto em destaque sob varredura de luz que segue o ponteiro; o eyebrow vira faixa de cert-label impressa no lugar de badge genérica de promoção.
-FORM: Foil sob a Luz — candidata 3 de 7 da lista própria, atribuída pelo sorteio contra 2 concorrentes competitivos e 4 recusados; seed key 025e12ca.
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+DIRECTION CONTRACT
+THESIS: O produto e a obra; a interface e a caixa iluminada em volta dele. Vitrine de museu, nao HUD de arcade.
+OWN-WORLD: Papel claro por padrao, neutro frio de familia unica, um acento so (violeta da marca, dessaturado a 71%), sombra tingida do fundo, raio documentado por papel (chip/input/botao/card/conteiner), tipografia de uma familia em dois cortes (Geist, Geist Mono para numero).
+STORY: Colecionavel conferido merece sala iluminada. O visitante ve a carta antes de ver a interface; nada na tela disputa atencao com a arte do produto.
+FIRST VIEWPORT: Hero divide a dobra com a foto do produto, titulo contido em 3.75rem de teto para o botao de compra nunca sair da tela.
+RETIRED: banda prismatica de foil, holo arco-iris em color-dodge, canto recortado, selo de cartolina, scanlines, malha tecnica. Eram quatro acentos e tres texturas disputando a mesma tela.
+DIALS: DESIGN_VARIANCE 7, MOTION_INTENSITY 5, VISUAL_DENSITY 3.
 -->`,
           }}
         />
+        {/*
+          Grão da página: uma camada fixa, sem captura de ponteiro, aplicada
+          uma única vez no documento. A direção anterior pendurava textura em
+          cada card e seção — filtro de ruído sobre contêiner que rola força
+          repintura de GPU a cada quadro e derruba o FPS no celular.
+        */}
+        <div className="page-grain" aria-hidden />
         <Providers>{children}</Providers>
       </body>
     </html>

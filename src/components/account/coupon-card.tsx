@@ -1,7 +1,7 @@
 'use client';
 
+import { Check, Copy, Ticket } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
-import { Check, Copy, Ticket } from 'lucide-react';
 import { toast } from 'sonner';
 import type { Coupon } from '@/core/domain/entities';
 import { Badge } from '@/components/ui/badge';
@@ -31,13 +31,13 @@ export function CouponCard({ coupon, owned }: { coupon: Coupon; owned?: boolean 
       )}
     >
       {/* Talão perfurado */}
-      <div className="relative flex w-28 shrink-0 flex-col items-center justify-center gap-1 border-r border-dashed border-line bg-brand-500/8 p-4">
-        <Ticket className="size-4 text-brand-300" />
-        <span className="text-center font-display text-sm font-bold leading-tight text-brand-100">
+      <div className="border-line bg-brand-500/8 relative flex w-28 shrink-0 flex-col items-center justify-center gap-1 border-r border-dashed p-4">
+        <Ticket className="text-brand-300 size-4" />
+        <span className="font-display text-brand-100 text-center text-sm leading-tight font-bold">
           {valueLabel(coupon)}
         </span>
-        <span className="absolute -right-2 top-0 size-4 -translate-y-1/2 rounded-full bg-void" />
-        <span className="absolute -right-2 bottom-0 size-4 translate-y-1/2 rounded-full bg-void" />
+        <span className="bg-void absolute top-0 -right-2 size-4 -translate-y-1/2 rounded-full" />
+        <span className="bg-void absolute -right-2 bottom-0 size-4 translate-y-1/2 rounded-full" />
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5">
@@ -45,21 +45,25 @@ export function CouponCard({ coupon, owned }: { coupon: Coupon; owned?: boolean 
           <button
             type="button"
             onClick={copy}
-            className="group/code inline-flex items-center gap-2 rounded-sm border border-dashed border-line-strong px-3 py-1.5 font-tech text-xs font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:border-brand-400/50 hover:text-brand-200"
+            className="group/code border-line-strong font-tech text-ink hover:border-brand-400/50 hover:text-brand-200 inline-flex items-center gap-2 rounded-sm border border-dashed px-3 py-1.5 text-xs font-bold tracking-[0.14em] uppercase transition-colors"
           >
             {coupon.code}
             {copied ? (
-              <Check className="size-3 text-success" />
+              <Check className="text-success size-3" />
             ) : (
-              <Copy className="size-3 text-ink-faint transition-colors group-hover/code:text-brand-300" />
+              <Copy className="text-ink-faint group-hover/code:text-brand-300 size-3 transition-colors" />
             )}
           </button>
-          {!coupon.active ? <Badge variant="neutral" size="sm">Expirado</Badge> : null}
+          {!coupon.active ? (
+            <Badge variant="neutral" size="sm">
+              Expirado
+            </Badge>
+          ) : null}
         </div>
 
-        <p className="text-xs leading-relaxed text-ink-muted">{coupon.description}</p>
+        <p className="text-ink-muted text-xs leading-relaxed">{coupon.description}</p>
 
-        <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 text-2xs text-ink-faint">
+        <div className="text-2xs text-ink-faint mt-auto flex flex-wrap items-center gap-x-4 gap-y-1">
           <span>Válido até {formatDate(coupon.expiresAt)}</span>
           {coupon.minSubtotal > 0 ? <span>Mínimo {formatPrice(coupon.minSubtotal)}</span> : null}
         </div>

@@ -1,9 +1,9 @@
 'use client';
 
+import { CircleNotch } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
@@ -20,18 +20,25 @@ const buttonVariants = cva(
          * contrário do que se espera do estado de foco da ação principal.
          * Medido atrás da glifo: 6,4–7,5:1 em repouso, 4,9–5,8:1 no hover.
          */
-        // A ação primária carrega a banda de foil (violeta→magenta→dourado→
-        // ciano) em vez do degradê só-violeta — é o mecanismo de toque do
-        // mundo Foil sob a Luz, não decoração.
+        /*
+         * Chapa sólida de um acento só.
+         *
+         * Antes a ação primária carregava a banda prismática inteira e dois
+         * anéis de hex cravado (violeta em repouso, magenta no hover) — a
+         * assinatura da direção velha, e a única cor da página que ninguém
+         * conseguia mudar pelo token. Agora é brand-600 sólido: 7,7:1 com o
+         * rótulo branco, e o hover escurece em vez de clarear, que é o que
+         * se espera do estado ativo da ação principal.
+         */
         primary:
-          'sweep bg-[image:var(--gradient-foil-sweep)] bg-[length:220%_100%] bg-[position:0%_0%] text-white shadow-[0_0_0_1px_rgba(147,51,234,0.5),var(--shadow-glow-sm),var(--shadow-inset-top)] transition-[background-position,box-shadow,transform] duration-300 hover:bg-[position:100%_0%] hover:shadow-[0_0_0_1px_rgba(232,57,156,0.55),var(--shadow-glow),var(--shadow-inset-top)] active:scale-[0.98]',
+          'sweep bg-brand-600 text-white shadow-glow-sm hover:bg-brand-700 hover:shadow-glow active:scale-[0.98]',
         secondary:
           'glass text-ink hover:border-line-brand hover:bg-ink/8 hover:shadow-glow-sm active:scale-[0.98]',
         outline:
           'border border-line-strong bg-transparent text-ink hover:border-brand-400/60 hover:bg-brand-500/10 hover:text-brand-200',
         ghost: 'text-ink-muted hover:bg-ink/6 hover:text-ink',
         danger:
-          'bg-linear-to-b from-danger-surface to-danger-surface-deep text-white shadow-[0_0_0_1px_rgba(225,29,72,0.45)] hover:brightness-110',
+          'bg-linear-to-b from-danger-surface to-danger-surface-deep text-white hover:brightness-110',
         link: 'text-brand-300 underline-offset-4 hover:text-brand-200 hover:underline',
       },
       size: {
@@ -73,7 +80,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {loading ? (
           <>
-            <Loader2 className="size-4 animate-spin" aria-hidden />
+            <CircleNotch className="size-4 animate-spin" aria-hidden />
             <span className="sr-only">Carregando</span>
             {children}
           </>

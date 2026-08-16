@@ -1,9 +1,9 @@
 'use client';
 
+import { X } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export const Drawer = DialogPrimitive.Root;
@@ -28,13 +28,18 @@ const drawerVariants = cva(
 
 export const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & VariantProps<typeof drawerVariants>
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> &
+    VariantProps<typeof drawerVariants>
 >(({ className, children, side, ...props }, ref) => (
   <DialogPrimitive.Portal>
-    <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-void/70 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0" />
-    <DialogPrimitive.Content ref={ref} className={cn(drawerVariants({ side }), className)} {...props}>
+    <DialogPrimitive.Overlay className="bg-void/70 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 fixed inset-0 z-50 backdrop-blur-sm" />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn(drawerVariants({ side }), className)}
+      {...props}
+    >
       {side === 'bottom' ? (
-        <div className="mx-auto mt-3 h-1 w-10 shrink-0 rounded-full bg-ink/15" aria-hidden />
+        <div className="bg-ink/15 mx-auto mt-3 h-1 w-10 shrink-0 rounded-full" aria-hidden />
       ) : null}
       {children}
     </DialogPrimitive.Content>
@@ -45,20 +50,28 @@ DrawerContent.displayName = 'DrawerContent';
 export function DrawerHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn('flex items-start justify-between gap-4 border-b border-line px-6 py-5', className)}
+      className={cn(
+        'border-line flex items-start justify-between gap-4 border-b px-6 py-5',
+        className,
+      )}
       {...props}
     />
   );
 }
 
 export function DrawerBody({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('flex-1 overflow-y-auto overscroll-contain px-6 py-5', className)} {...props} />;
+  return (
+    <div
+      className={cn('flex-1 overflow-y-auto overscroll-contain px-6 py-5', className)}
+      {...props}
+    />
+  );
 }
 
 export function DrawerFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn('border-t border-line bg-void/40 px-6 py-5 backdrop-blur-xl', className)}
+      className={cn('border-line bg-void/40 border-t px-6 py-5 backdrop-blur-xl', className)}
       {...props}
     />
   );
@@ -70,7 +83,7 @@ export const DrawerTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn('font-display text-lg font-bold tracking-tight text-ink', className)}
+    className={cn('font-display text-ink text-lg font-bold tracking-tight', className)}
     {...props}
   />
 ));
@@ -80,7 +93,11 @@ export const DrawerDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Description ref={ref} className={cn('text-xs text-ink-muted', className)} {...props} />
+  <DialogPrimitive.Description
+    ref={ref}
+    className={cn('text-ink-muted text-xs', className)}
+    {...props}
+  />
 ));
 DrawerDescription.displayName = 'DrawerDescription';
 
@@ -88,7 +105,7 @@ export function DrawerCloseButton({ className }: { className?: string }) {
   return (
     <DialogPrimitive.Close
       className={cn(
-        'grid size-9 shrink-0 place-items-center rounded-md text-ink-faint transition-colors hover:bg-ink/8 hover:text-ink',
+        'text-ink-faint hover:bg-ink/8 hover:text-ink grid size-9 shrink-0 place-items-center rounded-md transition-colors',
         className,
       )}
     >

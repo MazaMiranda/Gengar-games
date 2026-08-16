@@ -1,25 +1,25 @@
-import Link from 'next/link';
 import {
   Anchor,
   ArrowUpRight,
   Cpu,
   Crown,
-  Disc3,
+  Disc,
   Eye,
-  Gamepad2,
+  GameController,
   Headphones,
+  Lightning,
+  MagicWand,
   Plug,
   Recycle,
   Shield,
-  Shirt,
-  Sparkles,
+  Sparkle,
   Star,
   Sword,
+  TShirt,
   Trophy,
-  Wand2,
-  Zap,
-  type LucideIcon,
-} from 'lucide-react';
+} from '@phosphor-icons/react/dist/ssr';
+import type { Icon } from '@phosphor-icons/react/lib';
+import Link from 'next/link';
 import type { Brand, Category } from '@/core/domain/entities';
 import { platformList } from '@/core/domain/taxonomy';
 import { Reveal } from '@/components/ui/motion';
@@ -27,16 +27,16 @@ import { Marquee } from '@/components/ui/motion';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-const GLYPHS: Record<string, LucideIcon> = {
-  zap: Zap,
+const GLYPHS: Record<string, Icon> = {
+  zap: Lightning,
   anchor: Anchor,
-  sparkles: Sparkles,
+  sparkles: Sparkle,
   eye: Eye,
-  wand: Wand2,
+  wand: MagicWand,
   sword: Sword,
   cpu: Cpu,
-  gamepad: Gamepad2,
-  disc: Disc3,
+  gamepad: GameController,
+  disc: Disc,
   recycle: Recycle,
   headphones: Headphones,
   plug: Plug,
@@ -44,7 +44,7 @@ const GLYPHS: Record<string, LucideIcon> = {
   trophy: Trophy,
   crown: Crown,
   star: Star,
-  shirt: Shirt,
+  shirt: TShirt,
 };
 
 /** Bento de categorias — o primeiro bloco tem peso visual maior. */
@@ -76,45 +76,54 @@ export function CategoryBento({ categories }: { categories: Category[] }) {
   return (
     <div className="grid auto-rows-[11rem] grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-6">
       {featured.map((category, index) => {
-        const Glyph = GLYPHS[category.glyph] ?? Sparkles;
+        const Glyph = GLYPHS[category.glyph] ?? Sparkle;
         const large = index === 0;
 
         return (
-          <Reveal key={category.slug} delay={index * 0.05} className={cn(spans[index], 'min-h-[11rem]')}>
+          <Reveal
+            key={category.slug}
+            delay={index * 0.05}
+            className={cn(spans[index], 'min-h-[11rem]')}
+          >
             <Link
               href={`/catalogo?categoria=${category.slug}`}
-              className="plate grain group relative flex h-full flex-col justify-between overflow-hidden rounded-xl p-6 transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:border-line-brand hover:shadow-lift"
+              className="plate grain group ease-out-expo hover:border-line-brand hover:shadow-lift relative flex h-full flex-col justify-between overflow-hidden rounded-xl p-6 transition-all duration-500 hover:-translate-y-1"
             >
               <div
-                className="absolute -right-16 -top-16 size-48 rounded-full opacity-45 blur-3xl transition-all duration-700 ease-out-expo group-hover:opacity-80"
+                className="ease-out-expo absolute -top-16 -right-16 size-48 rounded-full opacity-45 blur-3xl transition-all duration-700 group-hover:opacity-80"
+                /* Um acento na página inteira. Cada categoria tinha o próprio
+                   matiz (category.accent), então a home acendia oito cores
+                   diferentes na mesma grade e nenhuma delas era a da marca. */
                 style={{
-                  background: `radial-gradient(circle, hsl(${category.accent} 85% 55% / 0.55), transparent 70%)`,
+                  background:
+                    'radial-gradient(circle, color-mix(in srgb, var(--color-brand-500) 28%, transparent), transparent 70%)',
                 }}
                 aria-hidden
               />
 
               <div className="relative flex items-start justify-between gap-4">
                 <span
-                  className="grid size-11 place-items-center rounded-md border border-line bg-ink/4 transition-all duration-500 group-hover:scale-110"
-                  style={{ color: `hsl(${category.accent} 90% 72%)` }}
+                  className="border-line bg-ink/4 text-brand-300 grid size-11 place-items-center rounded-md border transition-all duration-500 group-hover:scale-110"
                 >
-                  <Glyph className="size-5" strokeWidth={1.6} />
+                  <Glyph className="size-5" weight="light" />
                 </span>
-                <ArrowUpRight className="size-4 text-ink-ghost transition-all duration-400 ease-out-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand-300" />
+                <ArrowUpRight className="text-ink-ghost ease-out-expo group-hover:text-brand-300 size-4 transition-all duration-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </div>
 
               <div className="relative flex flex-col gap-1.5">
                 <h3
                   className={cn(
-                    'font-display font-bold leading-tight text-ink transition-colors group-hover:text-brand-100',
+                    'font-display text-ink group-hover:text-brand-100 leading-tight font-bold transition-colors',
                     large ? 'text-2xl' : 'text-base',
                   )}
                 >
                   {category.name}
                 </h3>
-                <p className={cn('text-ink-muted', large ? 'text-sm' : 'text-xs')}>{category.tagline}</p>
+                <p className={cn('text-ink-muted', large ? 'text-sm' : 'text-xs')}>
+                  {category.tagline}
+                </p>
                 {category.productCount !== undefined ? (
-                  <span className="mt-1 font-tech text-2xs uppercase tracking-[0.2em] text-ink-ghost">
+                  <span className="font-tech text-ink-ghost mt-1 text-xs">
                     {category.productCount} produtos
                   </span>
                 ) : null}
@@ -135,23 +144,26 @@ export function PlatformStrip() {
         <Reveal key={platform.slug} delay={index * 0.05}>
           <Link
             href={`/gamer/${platform.slug}`}
-            className="plate group relative flex h-40 flex-col justify-end overflow-hidden rounded-lg p-5 transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:border-line-brand"
+            className="plate group ease-out-expo hover:border-line-brand relative flex h-40 flex-col justify-end overflow-hidden rounded-lg p-5 transition-all duration-500 hover:-translate-y-1"
           >
             <div
               className="absolute inset-0 opacity-25 transition-opacity duration-700 group-hover:opacity-45"
+              /* Mesmo motivo do bento: platform.accent dava cinco matizes numa
+                 faixa de cinco itens. Aqui é o acento único da marca. */
               style={{
-                background: `radial-gradient(120% 90% at 20% 0%, hsl(${platform.accent} 85% 50% / 0.6), transparent 62%)`,
+                background:
+                  'radial-gradient(120% 90% at 20% 0%, color-mix(in srgb, var(--color-brand-500) 30%, transparent), transparent 62%)',
               }}
               aria-hidden
             />
-            <Gamepad2
-              className="absolute -right-4 -top-3 size-24 opacity-8 transition-all duration-700 group-hover:opacity-15 group-hover:rotate-6"
-              strokeWidth={0.8}
+            <GameController
+              className="absolute -top-3 -right-4 size-24 opacity-8 transition-all duration-700 group-hover:rotate-6 group-hover:opacity-15"
+              weight="light"
               aria-hidden
             />
             <div className="relative flex flex-col gap-1">
-              <h3 className="font-display text-base font-bold text-ink">{platform.name}</h3>
-              <p className="text-2xs leading-relaxed text-ink-faint">{platform.tagline}</p>
+              <h3 className="font-display text-ink text-base font-bold">{platform.name}</h3>
+              <p className="text-2xs text-ink-faint leading-relaxed">{platform.tagline}</p>
             </div>
           </Link>
         </Reveal>
@@ -162,13 +174,13 @@ export function PlatformStrip() {
 
 export function BrandStrip({ brands }: { brands: Brand[] }) {
   return (
-    <div className="border-y border-line py-10">
+    <div className="border-line border-y py-10">
       <Marquee speed={46}>
         <div className="flex items-center gap-14">
           {brands.map((brand) => (
             <span
               key={brand.slug}
-              className="whitespace-nowrap font-display text-lg font-bold tracking-tight text-ink-ghost transition-colors duration-500 hover:text-ink-muted"
+              className="font-display text-ink-ghost hover:text-ink-muted text-lg font-bold tracking-tight whitespace-nowrap transition-colors duration-500"
             >
               {brand.name}
             </span>
@@ -179,67 +191,51 @@ export function BrandStrip({ brands }: { brands: Brand[] }) {
   );
 }
 
-/** Banner promocional de largura total. */
+/**
+ * Faixa de promoção.
+ *
+ * Reescrita por dois motivos, não por gosto:
+ *
+ * 1. Era uma chapa violeta escura cravada em hex no meio de uma página clara.
+ *    Uma seção que inverte o tema no meio do rolo lê como erro de montagem,
+ *    não como ênfase. Agora é a mesma superfície das outras seções, e o
+ *    destaque vem de borda de acento e do botão, não de trocar o fundo.
+ *
+ * 2. A coluna da direita era uma pilha de três cards vazios feitos de <div>:
+ *    retângulo cinza com duas barrinhas dentro, imitando carta. Placeholder
+ *    de layout entregue como conteúdo. Saiu inteiro — a promoção se sustenta
+ *    no valor e no cupom, e o catálogo logo abaixo já mostra produto real.
+ */
 export function PromoBanner() {
   return (
     <Reveal className="container-page">
-      <div className="grain relative overflow-hidden rounded-2xl border border-line-brand">
+      <div className="plate border-line-brand relative overflow-hidden rounded-2xl border">
         <div
-          className="absolute inset-0"
+          className="absolute inset-y-0 left-0 w-1/2"
           style={{
             background:
-              'linear-gradient(115deg, #240a44 0%, #3f1178 38%, #6d28d9 72%, #9333ea 100%)',
+              'radial-gradient(80% 120% at 0% 50%, color-mix(in srgb, var(--color-brand-500) 14%, transparent), transparent 70%)',
           }}
           aria-hidden
         />
-        <div className="grid-tech absolute inset-0 opacity-25" aria-hidden />
-        <div
-          className="absolute -bottom-24 -right-16 size-96 rounded-full blur-[90px]"
-          style={{ background: 'radial-gradient(circle, rgba(192,132,252,0.65), transparent 70%)' }}
-          aria-hidden
-        />
 
-        <div className="relative grid gap-10 p-8 md:grid-cols-2 md:items-center md:p-14">
-          <div className="flex flex-col gap-5">
-            <span className="font-tech text-2xs font-bold uppercase tracking-[0.3em] text-brand-100/90">
-              Semana do TCG · até domingo
-            </span>
-            <h2 className="text-display font-extrabold leading-[0.95] text-white">
-              15% OFF em
-              <br />
-              singles e selados
-            </h2>
-            <p className="max-w-md text-sm leading-relaxed text-white/75">
-              Use o cupom <strong className="font-tech tracking-wider text-white">TCG15</strong> em
-              compras acima de R$ 500. Válido para singles e selados de Pokémon TCG.
+        <div className="relative flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-14">
+          <div className="flex max-w-xl flex-col gap-4">
+            <span className="cert-label self-start">Semana do TCG, até domingo</span>
+            <h2 className="text-display text-ink font-semibold">15% off em singles e selados</h2>
+            <p className="text-ink-muted max-w-md text-sm leading-relaxed">
+              Cupom <strong className="font-tech text-ink font-semibold">TCG15</strong> em compras
+              acima de R$ 500, para singles e selados de Pokémon TCG.
             </p>
-            <div className="flex flex-wrap gap-3 pt-1">
-              <Button asChild size="lg" variant="secondary" className="border-ink/25 bg-ink/12 text-white hover:bg-ink/20">
-                <Link href="/catalogo?tipo=tcg-card&tipo=tcg-sealed">Aproveitar agora</Link>
-              </Button>
-              <Button asChild size="lg" variant="ghost" className="text-white/80 hover:bg-ink/10 hover:text-white">
-                <Link href="/tcg">Ver regras da promoção</Link>
-              </Button>
-            </div>
           </div>
 
-          <div className="relative hidden justify-end md:flex">
-            <div className="flex gap-4">
-              {[0, 1, 2].map((index) => (
-                <div
-                  key={index}
-                  className="h-52 w-36 rounded-lg border border-ink/20 bg-ink/8 backdrop-blur-md"
-                  style={{
-                    transform: `rotate(${(index - 1) * 7}deg) translateY(${index === 1 ? -14 : 0}px)`,
-                    boxShadow: '0 30px 60px -25px rgba(0,0,0,0.7)',
-                  }}
-                >
-                  <div className="m-3 h-24 rounded-sm bg-linear-to-br from-ink/25 to-transparent" />
-                  <div className="mx-3 h-2 w-2/3 rounded-full bg-ink/25" />
-                  <div className="mx-3 mt-2 h-2 w-1/2 rounded-full bg-ink/15" />
-                </div>
-              ))}
-            </div>
+          <div className="flex shrink-0 flex-wrap gap-3">
+            <Button asChild size="lg">
+              <Link href="/catalogo?tipo=tcg-card&tipo=tcg-sealed">Aproveitar agora</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link href="/tcg">Ver regras</Link>
+            </Button>
           </div>
         </div>
       </div>

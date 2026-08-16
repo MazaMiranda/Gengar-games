@@ -1,11 +1,5 @@
 'use client';
 
-import * as React from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowLeft,
   ArrowRight,
@@ -16,7 +10,13 @@ import {
   QrCode,
   ShoppingBag,
   Truck,
-} from 'lucide-react';
+} from '@phosphor-icons/react/dist/ssr';
+import * as React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Field, Input } from '@/components/ui/input';
@@ -144,12 +144,14 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
   if (mounted && lines.length === 0) {
     return (
       <div className="plate flex flex-col items-center gap-5 rounded-xl px-6 py-20 text-center">
-        <span className="grid size-16 place-items-center rounded-full border border-line bg-ink/3">
-          <ShoppingBag className="size-6 text-ink-faint" />
+        <span className="border-line bg-ink/3 grid size-16 place-items-center rounded-full border">
+          <ShoppingBag className="text-ink-faint size-6" />
         </span>
         <div>
-          <h2 className="font-display text-lg font-bold text-ink">Seu carrinho está vazio</h2>
-          <p className="mt-2 text-sm text-ink-muted">Adicione produtos para continuar o checkout.</p>
+          <h2 className="font-display text-ink text-lg font-bold">Seu carrinho está vazio</h2>
+          <p className="text-ink-muted mt-2 text-sm">
+            Adicione produtos para continuar o checkout.
+          </p>
         </div>
         <Button asChild>
           <Link href="/catalogo">Ver catálogo</Link>
@@ -176,13 +178,13 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                   disabled={!done}
                   className={cn(
                     'flex items-center gap-2.5 whitespace-nowrap transition-colors',
-                    done ? 'cursor-pointer text-ink-muted hover:text-ink' : '',
+                    done ? 'text-ink-muted hover:text-ink cursor-pointer' : '',
                     active ? 'text-ink' : 'text-ink-ghost',
                   )}
                 >
                   <span
                     className={cn(
-                      'tap-44 grid size-8 shrink-0 place-items-center rounded-full border font-tech text-2xs font-bold transition-all duration-400',
+                      'tap-44 font-tech text-2xs grid size-8 shrink-0 place-items-center rounded-full border font-bold transition-all duration-400',
                       done
                         ? 'border-success/40 bg-success/15 text-success'
                         : active
@@ -223,18 +225,40 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                 noValidate
               >
                 <header className="flex flex-col gap-1">
-                  <h2 className="font-display text-lg font-bold text-ink">Quem está comprando</h2>
-                  <p className="text-sm text-ink-muted">Usamos esses dados para emitir a nota fiscal.</p>
+                  <h2 className="font-display text-ink text-lg font-bold">Quem está comprando</h2>
+                  <p className="text-ink-muted text-sm">
+                    Usamos esses dados para emitir a nota fiscal.
+                  </p>
                 </header>
 
                 <div className="grid gap-5 sm:grid-cols-2">
-                  <Field label="Nome completo" required error={identificationForm.formState.errors.name?.message} className="sm:col-span-2">
-                    <Input placeholder="Ana Beatriz Lopes" {...identificationForm.register('name')} />
+                  <Field
+                    label="Nome completo"
+                    required
+                    error={identificationForm.formState.errors.name?.message}
+                    className="sm:col-span-2"
+                  >
+                    <Input
+                      placeholder="Ana Beatriz Lopes"
+                      {...identificationForm.register('name')}
+                    />
                   </Field>
-                  <Field label="E-mail" required error={identificationForm.formState.errors.email?.message}>
-                    <Input type="email" placeholder="voce@email.com" {...identificationForm.register('email')} />
+                  <Field
+                    label="E-mail"
+                    required
+                    error={identificationForm.formState.errors.email?.message}
+                  >
+                    <Input
+                      type="email"
+                      placeholder="voce@email.com"
+                      {...identificationForm.register('email')}
+                    />
                   </Field>
-                  <Field label="Telefone" required error={identificationForm.formState.errors.phone?.message}>
+                  <Field
+                    label="Telefone"
+                    required
+                    error={identificationForm.formState.errors.phone?.message}
+                  >
                     <Input
                       placeholder="(31) 90000-0000"
                       inputMode="numeric"
@@ -245,7 +269,11 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                       })}
                     />
                   </Field>
-                  <Field label="CPF" required error={identificationForm.formState.errors.document?.message}>
+                  <Field
+                    label="CPF"
+                    required
+                    error={identificationForm.formState.errors.document?.message}
+                  >
                     <Input
                       placeholder="000.000.000-00"
                       inputMode="numeric"
@@ -272,12 +300,19 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                 noValidate
               >
                 <header className="flex flex-col gap-1">
-                  <h2 className="font-display text-lg font-bold text-ink">Endereço de entrega</h2>
-                  <p className="text-sm text-ink-muted">Confira com atenção — é para onde o pedido vai.</p>
+                  <h2 className="font-display text-ink text-lg font-bold">Endereço de entrega</h2>
+                  <p className="text-ink-muted text-sm">
+                    Confira com atenção — é para onde o pedido vai.
+                  </p>
                 </header>
 
                 <div className="grid gap-5 sm:grid-cols-6">
-                  <Field label="CEP" required error={addressForm.formState.errors.zip?.message} className="sm:col-span-2">
+                  <Field
+                    label="CEP"
+                    required
+                    error={addressForm.formState.errors.zip?.message}
+                    className="sm:col-span-2"
+                  >
                     <Input
                       placeholder="00000-000"
                       inputMode="numeric"
@@ -288,34 +323,69 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                       })}
                     />
                   </Field>
-                  <Field label="Destinatário" required error={addressForm.formState.errors.recipient?.message} className="sm:col-span-4">
+                  <Field
+                    label="Destinatário"
+                    required
+                    error={addressForm.formState.errors.recipient?.message}
+                    className="sm:col-span-4"
+                  >
                     <Input placeholder="Quem vai receber" {...addressForm.register('recipient')} />
                   </Field>
-                  <Field label="Rua" required error={addressForm.formState.errors.street?.message} className="sm:col-span-4">
+                  <Field
+                    label="Rua"
+                    required
+                    error={addressForm.formState.errors.street?.message}
+                    className="sm:col-span-4"
+                  >
                     <Input placeholder="Rua Barata Ribeiro" {...addressForm.register('street')} />
                   </Field>
-                  <Field label="Número" required error={addressForm.formState.errors.number?.message} className="sm:col-span-2">
+                  <Field
+                    label="Número"
+                    required
+                    error={addressForm.formState.errors.number?.message}
+                    className="sm:col-span-2"
+                  >
                     <Input placeholder="502" {...addressForm.register('number')} />
                   </Field>
                   <Field label="Complemento" className="sm:col-span-3">
                     <Input placeholder="Apto 71" {...addressForm.register('complement')} />
                   </Field>
-                  <Field label="Bairro" required error={addressForm.formState.errors.district?.message} className="sm:col-span-3">
+                  <Field
+                    label="Bairro"
+                    required
+                    error={addressForm.formState.errors.district?.message}
+                    className="sm:col-span-3"
+                  >
                     <Input placeholder="Copacabana" {...addressForm.register('district')} />
                   </Field>
-                  <Field label="Cidade" required error={addressForm.formState.errors.city?.message} className="sm:col-span-4">
+                  <Field
+                    label="Cidade"
+                    required
+                    error={addressForm.formState.errors.city?.message}
+                    className="sm:col-span-4"
+                  >
                     <Input placeholder="Rio de Janeiro" {...addressForm.register('city')} />
                   </Field>
-                  <Field label="UF" required error={addressForm.formState.errors.state?.message} className="sm:col-span-2">
-                    <Input placeholder="RJ" maxLength={2} className="uppercase" {...addressForm.register('state')} />
+                  <Field
+                    label="UF"
+                    required
+                    error={addressForm.formState.errors.state?.message}
+                    className="sm:col-span-2"
+                  >
+                    <Input
+                      placeholder="RJ"
+                      maxLength={2}
+                      className="uppercase"
+                      {...addressForm.register('state')}
+                    />
                   </Field>
                 </div>
 
                 <Separator />
 
                 <div className="flex flex-col gap-3">
-                  <h3 className="flex items-center gap-2 font-display text-sm font-semibold text-ink">
-                    <Truck className="size-4 text-brand-300" />
+                  <h3 className="font-display text-ink flex items-center gap-2 text-sm font-semibold">
+                    <Truck className="text-brand-300 size-4" />
                     Forma de envio
                   </h3>
                   <div className="grid gap-2 sm:grid-cols-2">
@@ -335,12 +405,17 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                           )}
                         >
                           <div>
-                            <p className="text-xs font-semibold text-ink">{option.name}</p>
+                            <p className="text-ink text-xs font-semibold">{option.name}</p>
                             <p className="text-2xs text-ink-faint">
                               {option.carrier} · {etaLabel(option)}
                             </p>
                           </div>
-                          <span className={cn('font-tech text-xs font-bold', free ? 'text-success' : 'text-ink-muted')}>
+                          <span
+                            className={cn(
+                              'font-tech text-xs font-bold',
+                              free ? 'text-success' : 'text-ink-muted',
+                            )}
+                          >
                             {free ? 'Grátis' : formatPrice(option.price)}
                           </span>
                         </button>
@@ -350,7 +425,12 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <Button type="button" variant="ghost" size="lg" onClick={() => goTo('identificacao')}>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="lg"
+                    onClick={() => goTo('identificacao')}
+                  >
                     <ArrowLeft className="size-4" />
                     Voltar
                   </Button>
@@ -369,22 +449,36 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                 noValidate
               >
                 <header className="flex flex-col gap-1">
-                  <h2 className="font-display text-lg font-bold text-ink">Como você prefere pagar</h2>
-                  <p className="flex items-center gap-1.5 text-sm text-ink-muted">
-                    <Lock className="size-3.5 text-success" />
+                  <h2 className="font-display text-ink text-lg font-bold">
+                    Como você prefere pagar
+                  </h2>
+                  <p className="text-ink-muted flex items-center gap-1.5 text-sm">
+                    <Lock className="text-success size-3.5" />
                     Ambiente seguro — dados criptografados de ponta a ponta.
                   </p>
                 </header>
 
                 <RadioGroup
                   value={method}
-                  onValueChange={(value) => paymentForm.setValue('method', value as PaymentInput['method'])}
+                  onValueChange={(value) =>
+                    paymentForm.setValue('method', value as PaymentInput['method'])
+                  }
                   className="grid gap-2 sm:grid-cols-3"
                 >
                   {[
-                    { value: 'credit', label: 'Cartão de crédito', hint: `até ${installmentPlan.count}x sem juros`, icon: CreditCard },
+                    {
+                      value: 'credit',
+                      label: 'Cartão de crédito',
+                      hint: `até ${installmentPlan.count}x sem juros`,
+                      icon: CreditCard,
+                    },
                     { value: 'pix', label: 'PIX', hint: '5% de desconto', icon: QrCode },
-                    { value: 'boleto', label: 'Boleto', hint: 'compensa em 1-3 dias', icon: Barcode },
+                    {
+                      value: 'boleto',
+                      label: 'Boleto',
+                      hint: 'compensa em 1-3 dias',
+                      icon: Barcode,
+                    },
                   ].map((option) => (
                     <label
                       key={option.value}
@@ -396,10 +490,10 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                       )}
                     >
                       <div className="flex items-center justify-between">
-                        <option.icon className="size-4 text-brand-300" />
+                        <option.icon className="text-brand-300 size-4" />
                         <RadioGroupItem value={option.value} />
                       </div>
-                      <span className="text-xs font-semibold text-ink">{option.label}</span>
+                      <span className="text-ink text-xs font-semibold">{option.label}</span>
                       <span className="text-2xs text-ink-faint">{option.hint}</span>
                     </label>
                   ))}
@@ -407,7 +501,12 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
 
                 {method === 'credit' ? (
                   <div className="grid gap-5 sm:grid-cols-6">
-                    <Field label="Número do cartão" required error={paymentForm.formState.errors.cardNumber?.message} className="sm:col-span-6">
+                    <Field
+                      label="Número do cartão"
+                      required
+                      error={paymentForm.formState.errors.cardNumber?.message}
+                      className="sm:col-span-6"
+                    >
                       <Input
                         placeholder="0000 0000 0000 0000"
                         inputMode="numeric"
@@ -418,10 +517,24 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                         })}
                       />
                     </Field>
-                    <Field label="Nome impresso" required error={paymentForm.formState.errors.cardName?.message} className="sm:col-span-6">
-                      <Input placeholder="ANA B LOPES" className="uppercase" {...paymentForm.register('cardName')} />
+                    <Field
+                      label="Nome impresso"
+                      required
+                      error={paymentForm.formState.errors.cardName?.message}
+                      className="sm:col-span-6"
+                    >
+                      <Input
+                        placeholder="ANA B LOPES"
+                        className="uppercase"
+                        {...paymentForm.register('cardName')}
+                      />
                     </Field>
-                    <Field label="Validade" required error={paymentForm.formState.errors.cardExpiry?.message} className="sm:col-span-2">
+                    <Field
+                      label="Validade"
+                      required
+                      error={paymentForm.formState.errors.cardExpiry?.message}
+                      className="sm:col-span-2"
+                    >
                       <Input
                         placeholder="MM/AA"
                         inputMode="numeric"
@@ -432,45 +545,57 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                         })}
                       />
                     </Field>
-                    <Field label="CVV" required error={paymentForm.formState.errors.cardCvv?.message} className="sm:col-span-2">
-                      <Input placeholder="123" maxLength={4} inputMode="numeric" {...paymentForm.register('cardCvv')} />
+                    <Field
+                      label="CVV"
+                      required
+                      error={paymentForm.formState.errors.cardCvv?.message}
+                      className="sm:col-span-2"
+                    >
+                      <Input
+                        placeholder="123"
+                        maxLength={4}
+                        inputMode="numeric"
+                        {...paymentForm.register('cardCvv')}
+                      />
                     </Field>
                     <Field label="Parcelas" className="sm:col-span-2">
                       <select
-                        className="h-12 w-full rounded-md border border-line bg-ink/3 px-4 text-sm text-ink outline-none transition-all focus:border-brand-400/60"
+                        className="border-line bg-ink/3 text-ink focus:border-brand-400/60 h-12 w-full rounded-md border px-4 text-sm transition-all outline-none"
                         {...paymentForm.register('installments', { valueAsNumber: true })}
                       >
-                        {Array.from({ length: installmentPlan.count }, (_, index) => index + 1).map((count) => (
-                          <option key={count} value={count} className="bg-elevated">
-                            {count}x de {formatPrice(Math.round(totals.total / count))} sem juros
-                          </option>
-                        ))}
+                        {Array.from({ length: installmentPlan.count }, (_, index) => index + 1).map(
+                          (count) => (
+                            <option key={count} value={count} className="bg-elevated">
+                              {count}x de {formatPrice(Math.round(totals.total / count))} sem juros
+                            </option>
+                          ),
+                        )}
                       </select>
                     </Field>
                   </div>
                 ) : null}
 
                 {method === 'pix' ? (
-                  <div className="flex items-start gap-4 rounded-md border border-success/25 bg-success/8 p-5">
-                    <QrCode className="size-5 shrink-0 text-success" />
+                  <div className="border-success/25 bg-success/8 flex items-start gap-4 rounded-md border p-5">
+                    <QrCode className="text-success size-5 shrink-0" />
                     <div className="flex flex-col gap-1">
-                      <p className="text-sm font-semibold text-ink">
+                      <p className="text-ink text-sm font-semibold">
                         Pague {formatPrice(Math.round(totals.total * 0.95))} com 5% de desconto
                       </p>
-                      <p className="text-xs leading-relaxed text-ink-muted">
-                        O QR Code é gerado na confirmação e vale por 30 minutos. A liberação do pedido é
-                        imediata após o pagamento.
+                      <p className="text-ink-muted text-xs leading-relaxed">
+                        O QR Code é gerado na confirmação e vale por 30 minutos. A liberação do
+                        pedido é imediata após o pagamento.
                       </p>
                     </div>
                   </div>
                 ) : null}
 
                 {method === 'boleto' ? (
-                  <div className="flex items-start gap-4 rounded-md border border-line bg-ink/2 p-5">
-                    <Barcode className="size-5 shrink-0 text-ink-muted" />
+                  <div className="border-line bg-ink/2 flex items-start gap-4 rounded-md border p-5">
+                    <Barcode className="text-ink-muted size-5 shrink-0" />
                     <div className="flex flex-col gap-1">
-                      <p className="text-sm font-semibold text-ink">Boleto bancário</p>
-                      <p className="text-xs leading-relaxed text-ink-muted">
+                      <p className="text-ink text-sm font-semibold">Boleto bancário</p>
+                      <p className="text-ink-muted text-xs leading-relaxed">
                         O boleto vence em 3 dias úteis. O pedido é separado assim que o pagamento
                         compensa — itens com estoque baixo não ficam reservados.
                       </p>
@@ -494,8 +619,10 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
             {step === 'revisao' ? (
               <div className="flex flex-col gap-6">
                 <header className="flex flex-col gap-1">
-                  <h2 className="font-display text-lg font-bold text-ink">Confira antes de finalizar</h2>
-                  <p className="text-sm text-ink-muted">Está tudo certo? É só confirmar.</p>
+                  <h2 className="font-display text-ink text-lg font-bold">
+                    Confira antes de finalizar
+                  </h2>
+                  <p className="text-ink-muted text-sm">Está tudo certo? É só confirmar.</p>
                 </header>
 
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -527,7 +654,9 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                             'Cartão de crédito',
                             `Final ${(paymentForm.getValues('cardNumber') ?? '').replace(/\D/g, '').slice(-4)}`,
                             `${paymentForm.getValues('installments')}x de ${formatPrice(
-                              Math.round(totals.total / (paymentForm.getValues('installments') || 1)),
+                              Math.round(
+                                totals.total / (paymentForm.getValues('installments') || 1),
+                              ),
                             )}`,
                           ]
                         : method === 'pix'
@@ -535,10 +664,12 @@ export function CheckoutFlow({ defaults }: CheckoutFlowProps) {
                           : ['Boleto bancário', 'Vencimento em 3 dias úteis']
                     }
                   />
-                  <div className="flex flex-col gap-2 rounded-lg border border-line bg-ink/2 p-5">
+                  <div className="border-line bg-ink/2 flex flex-col gap-2 rounded-lg border p-5">
                     <span className="eyebrow">Total a pagar</span>
-                    <span className="font-display text-3xl font-bold text-ink">
-                      {formatPrice(method === 'pix' ? Math.round(totals.total * 0.95) : totals.total)}
+                    <span className="font-display text-ink text-3xl font-bold">
+                      {formatPrice(
+                        method === 'pix' ? Math.round(totals.total * 0.95) : totals.total,
+                      )}
                     </span>
                     {totals.savings > 0 ? (
                       <Badge variant="success" className="self-start">
@@ -586,20 +717,20 @@ function ReviewBlock({
   onEdit: () => void;
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-lg border border-line bg-ink/2 p-5">
+    <div className="border-line bg-ink/2 flex flex-col gap-2 rounded-lg border p-5">
       <div className="flex items-center justify-between">
         <span className="eyebrow">{title}</span>
         <button
           type="button"
           onClick={onEdit}
-          className="text-2xs font-semibold uppercase tracking-wider text-ink-faint transition-colors hover:text-brand-300"
+          className="text-ink-faint hover:text-brand-300 text-xs font-medium transition-colors"
         >
           Editar
         </button>
       </div>
       <div className="flex flex-col gap-0.5">
         {rows.filter(Boolean).map((row) => (
-          <span key={row} className="text-xs text-ink-muted">
+          <span key={row} className="text-ink-muted text-xs">
             {row}
           </span>
         ))}

@@ -1,5 +1,5 @@
+import { CaretRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface Crumb {
@@ -27,7 +27,7 @@ export function Breadcrumbs({ crumbs, className }: { crumbs: Crumb[]; className?
       <ol className="text-2xs text-ink-faint flex flex-wrap items-center gap-1.5">
         {crumbs.map((crumb, index) => (
           <li key={crumb.label} className="flex items-center gap-1.5">
-            {index > 0 ? <ChevronRight className="text-ink-ghost size-3 shrink-0" /> : null}
+            {index > 0 ? <CaretRight className="text-ink-ghost size-3 shrink-0" /> : null}
             {crumb.href ? (
               // py-2.5 -my-2.5: alvo de toque de ~36px sem empurrar o layout —
               // o texto continua do tamanho visual de sempre.

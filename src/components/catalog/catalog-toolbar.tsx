@@ -1,7 +1,7 @@
 'use client';
 
+import { GridFour, Rows, SlidersHorizontal } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
-import { LayoutGrid, Rows3, SlidersHorizontal } from 'lucide-react';
 import type { CatalogFacets, FacetBucket } from '@/core/ports/repositories';
 import {
   Drawer,
@@ -14,7 +14,13 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Chip } from '@/components/ui/chip';
 import { useCatalogFilters } from '@/hooks/use-catalog-filters';
 import { PARAM, SORT_OPTIONS } from '@/lib/catalog-params';
@@ -75,8 +81,13 @@ export function CatalogToolbar({ facets, total, density, onDensityChange }: Tool
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-ink-muted">
-          <strong className={cn('font-display font-bold text-ink transition-opacity', pending && 'opacity-40')}>
+        <p className="text-ink-muted text-sm">
+          <strong
+            className={cn(
+              'font-display text-ink font-bold transition-opacity',
+              pending && 'opacity-40',
+            )}
+          >
             {total}
           </strong>{' '}
           {total === 1 ? 'produto encontrado' : 'produtos encontrados'}
@@ -90,7 +101,7 @@ export function CatalogToolbar({ facets, total, density, onDensityChange }: Tool
                 <SlidersHorizontal className="size-4" />
                 Filtros
                 {activeCount > 0 ? (
-                  <span className="grid size-5 place-items-center rounded-full bg-brand-500 font-tech text-[0.625rem] font-bold text-white">
+                  <span className="bg-brand-500 font-tech grid size-5 place-items-center rounded-full text-[0.625rem] font-bold text-white">
                     {activeCount}
                   </span>
                 ) : null}
@@ -112,7 +123,7 @@ export function CatalogToolbar({ facets, total, density, onDensityChange }: Tool
             </DrawerContent>
           </Drawer>
 
-          <div className="hidden items-center rounded-md border border-line p-0.5 sm:flex">
+          <div className="border-line hidden items-center rounded-md border p-0.5 sm:flex">
             <button
               type="button"
               onClick={() => onDensityChange('comfortable')}
@@ -120,10 +131,12 @@ export function CatalogToolbar({ facets, total, density, onDensityChange }: Tool
               aria-pressed={density === 'comfortable'}
               className={cn(
                 'grid size-8 place-items-center rounded-sm transition-colors',
-                density === 'comfortable' ? 'bg-ink/8 text-ink' : 'text-ink-faint hover:text-ink-muted',
+                density === 'comfortable'
+                  ? 'bg-ink/8 text-ink'
+                  : 'text-ink-faint hover:text-ink-muted',
               )}
             >
-              <LayoutGrid className="size-3.5" />
+              <GridFour className="size-3.5" />
             </button>
             <button
               type="button"
@@ -135,7 +148,7 @@ export function CatalogToolbar({ facets, total, density, onDensityChange }: Tool
                 density === 'compact' ? 'bg-ink/8 text-ink' : 'text-ink-faint hover:text-ink-muted',
               )}
             >
-              <Rows3 className="size-3.5" />
+              <Rows className="size-3.5" />
             </button>
           </div>
 
@@ -186,7 +199,7 @@ export function CatalogToolbar({ facets, total, density, onDensityChange }: Tool
           <button
             type="button"
             onClick={clearAll}
-            className="ml-1 text-2xs font-semibold uppercase tracking-wider text-ink-faint transition-colors hover:text-danger"
+            className="text-2xs text-ink-faint hover:text-danger ml-1 font-semibold tracking-wider uppercase transition-colors"
           >
             Limpar tudo
           </button>

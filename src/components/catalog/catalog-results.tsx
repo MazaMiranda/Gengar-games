@@ -1,8 +1,8 @@
 'use client';
 
+import { Package } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Link from 'next/link';
-import { PackageSearch } from 'lucide-react';
 import type { Product } from '@/core/domain/entities';
 import type { CatalogFacets } from '@/core/ports/repositories';
 import { ProductCard } from '@/components/shop/product-card';
@@ -24,16 +24,21 @@ export function CatalogResults({ items, facets, total, page, pageCount }: Catalo
 
   return (
     <div className="flex flex-col gap-8">
-      <CatalogToolbar facets={facets} total={total} density={density} onDensityChange={setDensity} />
+      <CatalogToolbar
+        facets={facets}
+        total={total}
+        density={density}
+        onDensityChange={setDensity}
+      />
 
       {items.length === 0 ? (
         <div className="plate flex flex-col items-center gap-5 rounded-xl px-6 py-20 text-center">
-          <span className="grid size-16 place-items-center rounded-full border border-line bg-ink/3">
-            <PackageSearch className="size-6 text-ink-faint" />
+          <span className="border-line bg-ink/3 grid size-16 place-items-center rounded-full border">
+            <Package className="text-ink-faint size-6" />
           </span>
           <div className="max-w-sm">
-            <h3 className="font-display text-lg font-bold text-ink">Nenhum produto encontrado</h3>
-            <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+            <h3 className="font-display text-ink text-lg font-bold">Nenhum produto encontrado</h3>
+            <p className="text-ink-muted mt-2 text-sm leading-relaxed">
               Tente remover alguns filtros ou buscar por outro termo. Nosso estoque muda todo dia.
             </p>
           </div>

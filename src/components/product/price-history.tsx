@@ -33,7 +33,9 @@ export function PriceHistory({ points, current }: PriceHistoryProps) {
     point,
   }));
 
-  const line = coords.map((coord, index) => `${index === 0 ? 'M' : 'L'}${coord.x},${coord.y}`).join(' ');
+  const line = coords
+    .map((coord, index) => `${index === 0 ? 'M' : 'L'}${coord.x},${coord.y}`)
+    .join(' ');
   const area = `${line} L${coords.at(-1)!.x},${PADDING.top + innerHeight} L${coords[0]!.x},${PADDING.top + innerHeight} Z`;
 
   const lowest = points.reduce((best, point) => (point.price < best.price ? point : best));
@@ -42,23 +44,33 @@ export function PriceHistory({ points, current }: PriceHistoryProps) {
   const activeCoord = hover !== null ? coords[hover] : null;
 
   const monthLabel = (date: string) =>
-    new Intl.DateTimeFormat('pt-BR', { month: 'short' }).format(new Date(`${date}T12:00:00`)).replace('.', '');
+    new Intl.DateTimeFormat('pt-BR', { month: 'short' })
+      .format(new Date(`${date}T12:00:00`))
+      .replace('.', '');
 
   return (
     <div className="flex flex-col gap-6">
       <div className="grid gap-4 sm:grid-cols-3">
         {[
-          { label: 'Menor preço (12 meses)', value: formatPrice(lowest.price), tone: 'text-success' },
-          { label: 'Maior preço (12 meses)', value: formatPrice(highest.price), tone: 'text-danger' },
+          {
+            label: 'Menor preço (12 meses)',
+            value: formatPrice(lowest.price),
+            tone: 'text-success',
+          },
+          {
+            label: 'Maior preço (12 meses)',
+            value: formatPrice(highest.price),
+            tone: 'text-danger',
+          },
           {
             label: 'Variação no período',
             value: `${variation >= 0 ? '+' : ''}${variation.toFixed(1)}%`,
             tone: variation > 0 ? 'text-warning' : 'text-success',
           },
         ].map((stat) => (
-          <div key={stat.label} className="rounded-lg border border-line bg-ink/2 p-4">
-            <p className="font-tech text-2xs uppercase tracking-[0.16em] text-ink-faint">{stat.label}</p>
-            <p className={`mt-1.5 font-display text-lg font-bold ${stat.tone}`}>{stat.value}</p>
+          <div key={stat.label} className="border-line bg-ink/2 rounded-lg border p-4">
+            <p className="text-ink-faint text-xs">{stat.label}</p>
+            <p className={`font-display mt-1.5 text-lg font-bold ${stat.tone}`}>{stat.value}</p>
           </div>
         ))}
       </div>
@@ -91,7 +103,13 @@ export function PriceHistory({ points, current }: PriceHistoryProps) {
           ))}
 
           <path d={area} fill="url(#price-area)" />
-          <path d={line} fill="none" stroke="var(--color-brand-300)" strokeWidth="2" strokeLinejoin="round" />
+          <path
+            d={line}
+            fill="none"
+            stroke="var(--color-brand-300)"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
 
           {coords.map((coord, index) => (
             <g key={coord.point.date}>
@@ -115,7 +133,7 @@ export function PriceHistory({ points, current }: PriceHistoryProps) {
                 x={coord.x}
                 y={HEIGHT - 6}
                 textAnchor="middle"
-                className="fill-[var(--color-ink-ghost)] font-tech"
+                className="font-tech fill-[var(--color-ink-ghost)]"
                 fontSize="10"
               >
                 {monthLabel(coord.point.date)}
@@ -137,20 +155,22 @@ export function PriceHistory({ points, current }: PriceHistoryProps) {
 
         {activeCoord ? (
           <div
-            className="pointer-events-none absolute top-3 rounded-md border border-line bg-void/90 px-3 py-2 backdrop-blur-md"
+            className="border-line bg-void/90 pointer-events-none absolute top-3 rounded-md border px-3 py-2 backdrop-blur-md"
             style={{ left: `${(activeCoord.x / WIDTH) * 100}%`, transform: 'translateX(-50%)' }}
           >
-            <p className="font-tech text-2xs uppercase tracking-wider text-ink-faint">
+            <p className="text-ink-faint text-xs capitalize">
               {new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' }).format(
                 new Date(`${activeCoord.point.date}T12:00:00`),
               )}
             </p>
-            <p className="font-display text-sm font-bold text-ink">{formatPrice(activeCoord.point.price)}</p>
+            <p className="font-display text-ink text-sm font-bold">
+              {formatPrice(activeCoord.point.price)}
+            </p>
           </div>
         ) : null}
       </div>
 
-      <p className="text-2xs leading-relaxed text-ink-faint">
+      <p className="text-2xs text-ink-faint leading-relaxed">
         Série calculada a partir do preço praticado por esta loja. Não considera cupons promocionais
         nem descontos por PIX.
       </p>

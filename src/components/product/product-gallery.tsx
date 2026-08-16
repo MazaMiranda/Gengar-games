@@ -1,8 +1,8 @@
 'use client';
 
+import { ArrowsOut, MagnifyingGlassPlus, Play } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Maximize2, Play, ZoomIn } from 'lucide-react';
 import type { Product } from '@/core/domain/entities';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { ProductVisual } from '@/components/shop/product-visual';
@@ -77,8 +77,8 @@ export function ProductGallery({ product }: { product: Product }) {
             </span>
           ) : null}
 
-          <span className="border-line bg-void/70 font-tech text-2xs text-ink-muted pointer-events-none absolute bottom-4 left-4 z-3 flex items-center gap-1.5 rounded-sm border px-2.5 py-1.5 tracking-wider uppercase opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">
-            <ZoomIn className="size-3" />
+          <span className="border-line bg-void/70 text-ink-muted pointer-events-none absolute bottom-4 left-4 z-3 flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">
+            <MagnifyingGlassPlus className="size-3" />
             Passe o mouse para ampliar
           </span>
 
@@ -88,7 +88,7 @@ export function ProductGallery({ product }: { product: Product }) {
             aria-label="Ampliar imagem"
             className="border-line bg-void/60 text-ink-muted hover:border-brand-400/50 hover:text-ink absolute top-4 right-4 z-3 grid size-11 place-items-center rounded-md border backdrop-blur-md transition-all"
           >
-            <Maximize2 className="size-4" />
+            <ArrowsOut className="size-4" />
           </button>
         </div>
       </div>

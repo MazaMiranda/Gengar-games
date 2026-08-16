@@ -1,12 +1,12 @@
 'use client';
 
+import { Check, UserPlus, WarningCircle } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
-import { AlertCircle, Check, UserPlus } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Field, Input } from '@/components/ui/input';
@@ -85,7 +85,7 @@ export function RegisterForm() {
           role="alert"
           className="border-danger/30 bg-danger/8 flex items-start gap-3 rounded-md border px-4 py-3"
         >
-          <AlertCircle className="text-danger mt-0.5 size-4 shrink-0" />
+          <WarningCircle className="text-danger mt-0.5 size-4 shrink-0" />
           <p className="text-ink-muted text-xs leading-relaxed">{error}</p>
         </div>
       ) : null}

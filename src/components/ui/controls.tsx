@@ -1,12 +1,12 @@
 'use client';
 
+import { Check, Minus, Plus } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import * as SwitchPrimitive from '@radix-ui/react-switch';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import * as SeparatorPrimitive from '@radix-ui/react-separator';
-import { Check, Minus, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export const Checkbox = React.forwardRef<
@@ -16,7 +16,7 @@ export const Checkbox = React.forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(
-      'peer grid size-[18px] shrink-0 place-items-center rounded-xs border border-line-strong bg-ink/4 transition-all duration-200 ease-out-expo hover:border-brand-400/60 data-[state=checked]:border-brand-400 data-[state=checked]:bg-brand-500 data-[state=checked]:shadow-glow-sm',
+      'peer border-line-strong bg-ink/4 ease-out-expo hover:border-brand-400/60 data-[state=checked]:border-brand-400 data-[state=checked]:bg-brand-500 data-[state=checked]:shadow-glow-sm grid size-[18px] shrink-0 place-items-center rounded-xs border transition-all duration-200',
       className,
     )}
     {...props}
@@ -43,12 +43,12 @@ export const RadioGroupItem = React.forwardRef<
   <RadioGroupPrimitive.Item
     ref={ref}
     className={cn(
-      'grid size-[18px] shrink-0 place-items-center rounded-full border border-line-strong bg-ink/4 transition-all duration-200 hover:border-brand-400/60 data-[state=checked]:border-brand-400 data-[state=checked]:shadow-glow-sm',
+      'border-line-strong bg-ink/4 hover:border-brand-400/60 data-[state=checked]:border-brand-400 data-[state=checked]:shadow-glow-sm grid size-[18px] shrink-0 place-items-center rounded-full border transition-all duration-200',
       className,
     )}
     {...props}
   >
-    <RadioGroupPrimitive.Indicator className="size-2 rounded-full bg-brand-400" />
+    <RadioGroupPrimitive.Indicator className="bg-brand-400 size-2 rounded-full" />
   </RadioGroupPrimitive.Item>
 ));
 RadioGroupItem.displayName = 'RadioGroupItem';
@@ -60,12 +60,12 @@ export const Switch = React.forwardRef<
   <SwitchPrimitive.Root
     ref={ref}
     className={cn(
-      'peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border border-line-strong bg-ink/6 p-0.5 transition-all duration-300 ease-out-expo data-[state=checked]:border-brand-400/60 data-[state=checked]:bg-brand-500/80 data-[state=checked]:shadow-glow-sm',
+      'peer border-line-strong bg-ink/6 ease-out-expo data-[state=checked]:border-brand-400/60 data-[state=checked]:bg-brand-500/80 data-[state=checked]:shadow-glow-sm inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border p-0.5 transition-all duration-300',
       className,
     )}
     {...props}
   >
-    <SwitchPrimitive.Thumb className="pointer-events-none block size-4.5 rounded-full bg-white shadow-sm transition-transform duration-300 ease-out-expo data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0" />
+    <SwitchPrimitive.Thumb className="ease-out-expo pointer-events-none block size-4.5 rounded-full bg-white shadow-sm transition-transform duration-300 data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0" />
   </SwitchPrimitive.Root>
 ));
 Switch.displayName = 'Switch';
@@ -76,16 +76,16 @@ export const Slider = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SliderPrimitive.Root
     ref={ref}
-    className={cn('relative flex w-full touch-none select-none items-center py-2', className)}
+    className={cn('relative flex w-full touch-none items-center py-2 select-none', className)}
     {...props}
   >
-    <SliderPrimitive.Track className="relative h-1 w-full grow overflow-hidden rounded-full bg-ink/8">
-      <SliderPrimitive.Range className="absolute h-full bg-linear-to-r from-brand-600 to-brand-400" />
+    <SliderPrimitive.Track className="bg-ink/8 relative h-1 w-full grow overflow-hidden rounded-full">
+      <SliderPrimitive.Range className="from-brand-600 to-brand-400 absolute h-full bg-linear-to-r" />
     </SliderPrimitive.Track>
     {(props.value ?? props.defaultValue ?? [0]).map((_, index) => (
       <SliderPrimitive.Thumb
         key={index}
-        className="block size-4 rounded-full border-2 border-brand-300 bg-void shadow-glow-sm transition-transform duration-200 hover:scale-115 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/50"
+        className="border-brand-300 bg-void shadow-glow-sm focus-visible:ring-brand-400/50 block size-4 rounded-full border-2 transition-transform duration-200 hover:scale-115 focus-visible:ring-2 focus-visible:outline-none"
       />
     ))}
   </SliderPrimitive.Root>
@@ -101,7 +101,7 @@ export const Separator = React.forwardRef<
     decorative={decorative}
     orientation={orientation}
     className={cn(
-      'shrink-0 bg-line',
+      'bg-line shrink-0',
       orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px',
       className,
     )}
@@ -134,7 +134,7 @@ export function QuantityStepper({
   return (
     <div
       className={cn(
-        'inline-flex items-center overflow-hidden rounded-md border border-line bg-ink/3',
+        'border-line bg-ink/3 inline-flex items-center overflow-hidden rounded-md border',
         dimension,
         className,
       )}
@@ -145,7 +145,7 @@ export function QuantityStepper({
         disabled={value <= min}
         aria-label="Diminuir quantidade"
         className={cn(
-          'grid place-items-center text-ink-muted transition-colors hover:bg-ink/8 hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent',
+          'text-ink-muted hover:bg-ink/8 hover:text-ink grid place-items-center transition-colors disabled:opacity-30 disabled:hover:bg-transparent',
           button,
         )}
       >
@@ -153,7 +153,7 @@ export function QuantityStepper({
       </button>
       <span
         className={cn(
-          'grid min-w-10 place-items-center font-tech font-semibold tabular-nums text-ink',
+          'font-tech text-ink grid min-w-10 place-items-center font-semibold tabular-nums',
           size === 'sm' ? 'text-xs' : 'text-sm',
         )}
         aria-live="polite"
@@ -166,7 +166,7 @@ export function QuantityStepper({
         disabled={value >= max}
         aria-label="Aumentar quantidade"
         className={cn(
-          'grid place-items-center text-ink-muted transition-colors hover:bg-ink/8 hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent',
+          'text-ink-muted hover:bg-ink/8 hover:text-ink grid place-items-center transition-colors disabled:opacity-30 disabled:hover:bg-transparent',
           button,
         )}
       >

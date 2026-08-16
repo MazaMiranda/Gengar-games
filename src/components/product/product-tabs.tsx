@@ -1,7 +1,7 @@
 'use client';
 
+import { ChatCircleDots, CheckCircle, Star, ThumbsUp } from '@phosphor-icons/react/dist/ssr';
 import * as React from 'react';
-import { CheckCircle2, MessageCircleQuestion, Star, ThumbsUp } from 'lucide-react';
 import type { PricePoint, Product, Question, Review } from '@/core/domain/entities';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/disclosure';
 import { Rating } from '@/components/ui/rating';
@@ -39,13 +39,13 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
       <TabsContent value="descricao">
         <div className="grid gap-10 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <p className="text-base leading-relaxed text-ink-muted">{product.description}</p>
+            <p className="text-ink-muted text-base leading-relaxed">{product.description}</p>
 
             {product.highlights.length ? (
               <ul className="mt-8 flex flex-col gap-3">
                 {product.highlights.map((highlight) => (
-                  <li key={highlight} className="flex items-start gap-3 text-sm text-ink-muted">
-                    <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-brand-400" />
+                  <li key={highlight} className="text-ink-muted flex items-start gap-3 text-sm">
+                    <CheckCircle className="text-brand-400 mt-0.5 size-4 shrink-0" />
                     {highlight}
                   </li>
                 ))}
@@ -54,14 +54,14 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
           </div>
 
           <aside className="plate flex flex-col gap-4 rounded-lg p-6">
-            <h3 className="font-display text-sm font-semibold text-ink">Como enviamos</h3>
-            <p className="text-xs leading-relaxed text-ink-muted">
+            <h3 className="font-display text-ink text-sm font-semibold">Como enviamos</h3>
+            <p className="text-ink-muted text-xs leading-relaxed">
               {product.type === 'tcg-card'
                 ? 'Cartas seguem em sleeve, toploader lacrado e caixa rígida com preenchimento — o mesmo padrão que usamos para enviar itens de grading.'
                 : 'Embalamos na caixa original protegida por plástico bolha, dentro de uma caixa externa com preenchimento e lacre de segurança.'}
             </p>
             <Separator />
-            <div className="flex flex-col gap-2 text-xs text-ink-faint">
+            <div className="text-ink-faint flex flex-col gap-2 text-xs">
               <span>Nota fiscal em todo pedido</span>
               <span>Rastreio enviado por e-mail e WhatsApp</span>
               <span>7 dias para arrependimento</span>
@@ -75,23 +75,23 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
           {product.specs.map((spec, index) => (
             <div
               key={spec.label}
-              className={`flex items-start justify-between gap-6 border-b border-line py-4 ${
+              className={`border-line flex items-start justify-between gap-6 border-b py-4 ${
                 index === 0 ? 'md:border-t' : ''
               } ${index === 1 ? 'md:border-t' : ''}`}
             >
-              <dt className="font-tech text-2xs uppercase tracking-[0.16em] text-ink-faint">
-                {spec.label}
-              </dt>
-              <dd className="text-right text-sm font-medium text-ink">{spec.value}</dd>
+              <dt className="text-ink-faint text-xs">{spec.label}</dt>
+              <dd className="text-ink text-right text-sm font-medium">{spec.value}</dd>
             </div>
           ))}
-          <div className="flex items-start justify-between gap-6 border-b border-line py-4">
-            <dt className="font-tech text-2xs uppercase tracking-[0.16em] text-ink-faint">SKU</dt>
-            <dd className="text-right font-tech text-sm text-ink">{product.sku}</dd>
+          <div className="border-line flex items-start justify-between gap-6 border-b py-4">
+            <dt className="text-ink-faint text-xs">SKU</dt>
+            {/* O valor continua em mono: SKU é código, e mono ajuda a comparar
+                caractere a caractere. O que saiu foi a caixa alta do rótulo. */}
+            <dd className="font-tech text-ink text-right text-sm">{product.sku}</dd>
           </div>
-          <div className="flex items-start justify-between gap-6 border-b border-line py-4">
-            <dt className="font-tech text-2xs uppercase tracking-[0.16em] text-ink-faint">Lançamento</dt>
-            <dd className="text-right text-sm text-ink">{formatDate(product.releasedAt)}</dd>
+          <div className="border-line flex items-start justify-between gap-6 border-b py-4">
+            <dt className="text-ink-faint text-xs">Lançamento</dt>
+            <dd className="text-ink text-right text-sm">{formatDate(product.releasedAt)}</dd>
           </div>
         </div>
       </TabsContent>
@@ -100,27 +100,29 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
         <div className="grid gap-10 lg:grid-cols-[18rem_1fr]">
           <aside className="plate flex h-fit flex-col gap-5 rounded-lg p-6">
             <div className="flex flex-col items-center gap-2 text-center">
-              <span className="font-display text-5xl font-bold text-ink">
+              <span className="font-display text-ink text-5xl font-bold">
                 {product.rating.toFixed(1)}
               </span>
               <Rating value={product.rating} size="lg" showValue={false} />
-              <span className="text-xs text-ink-faint">{product.reviewCount} avaliações</span>
+              <span className="text-ink-faint text-xs">{product.reviewCount} avaliações</span>
             </div>
 
             <div className="flex flex-col gap-2">
               {distribution.map((row) => (
                 <div key={row.stars} className="flex items-center gap-3">
-                  <span className="flex w-8 items-center gap-1 font-tech text-2xs text-ink-faint">
+                  <span className="font-tech text-2xs text-ink-faint flex w-8 items-center gap-1">
                     {row.stars}
-                    <Star className="size-2.5 fill-current" />
+                    <Star className="size-2.5" weight="fill" />
                   </span>
-                  <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink/8">
+                  <div className="bg-ink/8 h-1.5 flex-1 overflow-hidden rounded-full">
                     <div
-                      className="h-full rounded-full bg-linear-to-r from-brand-500 to-brand-300"
+                      className="from-brand-500 to-brand-300 h-full rounded-full bg-linear-to-r"
                       style={{ width: `${(row.count / total) * 100}%` }}
                     />
                   </div>
-                  <span className="w-6 text-right font-tech text-2xs text-ink-ghost">{row.count}</span>
+                  <span className="font-tech text-2xs text-ink-ghost w-6 text-right">
+                    {row.count}
+                  </span>
                 </div>
               ))}
             </div>
@@ -135,11 +137,11 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
               <article key={review.id} className="plate flex flex-col gap-3 rounded-lg p-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <span className="grid size-9 place-items-center rounded-full border border-line bg-linear-to-br from-brand-500/35 to-brand-800/35 font-display text-xs font-bold text-ink">
+                    <span className="border-line from-brand-500/35 to-brand-800/35 font-display text-ink grid size-9 place-items-center rounded-full border bg-linear-to-br text-xs font-bold">
                       {review.author.charAt(0)}
                     </span>
                     <div>
-                      <p className="text-sm font-semibold text-ink">{review.author}</p>
+                      <p className="text-ink text-sm font-semibold">{review.author}</p>
                       <p className="text-2xs text-ink-faint">{formatDate(review.createdAt)}</p>
                     </div>
                   </div>
@@ -153,12 +155,12 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
                   </div>
                 </div>
 
-                <h4 className="font-display text-sm font-semibold text-ink">{review.title}</h4>
-                <p className="text-sm leading-relaxed text-ink-muted">{review.body}</p>
+                <h4 className="font-display text-ink text-sm font-semibold">{review.title}</h4>
+                <p className="text-ink-muted text-sm leading-relaxed">{review.body}</p>
 
                 <button
                   type="button"
-                  className="inline-flex w-fit items-center gap-2 text-2xs font-semibold uppercase tracking-wider text-ink-faint transition-colors hover:text-brand-300"
+                  className="text-ink-faint hover:text-brand-300 inline-flex w-fit items-center gap-2 text-xs font-medium transition-colors"
                 >
                   <ThumbsUp className="size-3" />
                   Útil ({review.helpful})
@@ -175,9 +177,9 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
             {questions.map((question) => (
               <article key={question.id} className="plate flex flex-col gap-4 rounded-lg p-6">
                 <div className="flex items-start gap-3">
-                  <MessageCircleQuestion className="mt-0.5 size-4 shrink-0 text-brand-300" />
+                  <ChatCircleDots className="text-brand-300 mt-0.5 size-4 shrink-0" />
                   <div className="flex flex-col gap-1">
-                    <p className="text-sm font-semibold text-ink">{question.question}</p>
+                    <p className="text-ink text-sm font-semibold">{question.question}</p>
                     <p className="text-2xs text-ink-faint">
                       {question.author} · {formatDate(question.createdAt)}
                     </p>
@@ -185,14 +187,14 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
                 </div>
 
                 {question.answer ? (
-                  <div className="ml-7 flex flex-col gap-2 border-l-2 border-brand-500/40 pl-4">
-                    <span className="font-tech text-2xs font-bold uppercase tracking-wider text-brand-300">
+                  <div className="border-brand-500/40 ml-7 flex flex-col gap-2 border-l-2 pl-4">
+                    <span className="text-brand-300 text-xs font-semibold">
                       Resposta Gengar Games
                     </span>
-                    <p className="text-sm leading-relaxed text-ink-muted">{question.answer}</p>
+                    <p className="text-ink-muted text-sm leading-relaxed">{question.answer}</p>
                   </div>
                 ) : (
-                  <p className="ml-7 text-xs italic text-ink-ghost">
+                  <p className="text-ink-ghost ml-7 text-xs italic">
                     Ainda não respondida — nossa equipe responde em até 1 dia útil.
                   </p>
                 )}
@@ -201,12 +203,15 @@ export function ProductTabs({ product, reviews, questions, priceHistory }: Produ
           </div>
 
           <aside className="plate flex h-fit flex-col gap-4 rounded-lg p-6">
-            <h3 className="font-display text-sm font-semibold text-ink">Ficou com dúvida?</h3>
-            <Textarea placeholder="Escreva sua pergunta sobre este produto…" aria-label="Sua pergunta" />
+            <h3 className="font-display text-ink text-sm font-semibold">Ficou com dúvida?</h3>
+            <Textarea
+              placeholder="Escreva sua pergunta sobre este produto…"
+              aria-label="Sua pergunta"
+            />
             <Button size="sm" block>
               Enviar pergunta
             </Button>
-            <p className="text-2xs leading-relaxed text-ink-faint">
+            <p className="text-2xs text-ink-faint leading-relaxed">
               Respondemos em até 1 dia útil. Perguntas e respostas ficam públicas para ajudar outros
               compradores.
             </p>
